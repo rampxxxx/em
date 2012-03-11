@@ -1,0 +1,6 @@
+<job_desc>
+<task>
+<application>em</application>
+<command_line> -i ./in -o ./out</command_line>
+</task>
+</job_desc>
