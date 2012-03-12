@@ -12,21 +12,19 @@ $size = (int) count($_REQUEST);
 db_init();
 $user = get_logged_in_user();
 
-echo "Tamano parametros  :(" . $size . ")";
+echo "Tamano parametrosss  :(" . $size . ")";
 
 $contador=1;
 foreach($_REQUEST as $key => $value)
 {
-	if($value==1){
+echo "key : " . $key . " value : " . $value . "<br/>";
 	$pathBorrado="../../sample_results/";
 	$fichero0=$pathBorrado . $key . "_0.gz";
 	$fichero1=$pathBorrado . $key . "_1.gz";
 	$salida=shell_exec('rm -f ' . $fichero0 . " " . $fichero1);
-	}
+$result=mysql_query("delete from user_workunit where workunit_id = " . $value );
 	$contador+=1;	
 } 
-
-
 echo "FICHEROS BORRADOS!!!";
 
 
