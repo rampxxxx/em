@@ -22,7 +22,7 @@ foreach($_REQUEST as $key => $value)
 	$result=mysql_query("select parameters from user_workunit where workunit_id = " . $value );
 	while($row=mysql_fetch_array($result))
 	{
-		echo "<tr><td> " . $row['parameters'] . "</td>";
+		echo "<tr><td> " . nl2br($row['parameters']) . "</td>";
 	}
 
 	$contador+=1;	
