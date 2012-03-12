@@ -47,25 +47,32 @@ row1("Current finish works ", '9');
 echo "<tr><td>Work ID</td>";
 echo "<td width=\"15\">" . "First Data File" . "</td>\n";
 echo "<td width=\"15\">" . "Second Data File" . "</td>\n";
+echo "<td width=\"15\">" . "Work Parameters " . "</td>\n";
 echo "<td width=\"15\">" . "Delete Data Files From SERVER!!" . "</td>\n";
 echo "</tr>";
 
-    $user_workunits = get_mysql_user_workunit("SELECT workunit_id, w.name FROM user_workunit u, workunit w ,result r WHERE u.workunit_id=w.id and u.workunit_id=r.workunitid and r.outcome=1 and r.validate_state=1 and u.user_id=" . $user->id);
-    foreach($user_workunits as $user_workunit) {
-        $user_workunitid = $user_workunit["workunit_id"];
-        $name = $user_workunit["name"];
-    echo "<form action=\"emListTaskFormAction.php\" method=\"POST\">\n";
-$downloadName0=$name . "_0.gz";
-$downloadName1=$name . "_1.gz";
-$dataDownloadName0="/data/" . $downloadName0 ;
-$dataDownloadName1="/data/" . $downloadName1 ;
-        echo "<tr><td>" . $user_workunitid . "</td>";
-echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
-echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
-echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n";
-        echo " </tr>"
-        ;
-    }
+$user_workunits = get_mysql_user_workunit("SELECT workunit_id, w.name FROM user_workunit u, workunit w ,result r WHERE u.workunit_id=w.id and u.workunit_id=r.workunitid and r.outcome=1 and r.validate_state=1 and u.user_id=" . $user->id . " order by workunit_id desc ");
+foreach($user_workunits as $user_workunit) {
+	$user_workunitid = $user_workunit["workunit_id"];
+	$name = $user_workunit["name"];
+	echo "<form action=\"emListTaskFormAction.php\" method=\"POST\">\n";
+	$downloadName0=$name . "_0.gz";
+	$downloadName1=$name . "_1.gz";
+	$dataDownloadName0="/data/" . $downloadName0 ;
+	$dataDownloadName1="/data/" . $downloadName1 ;
+	echo "<tr><td>" . $user_workunitid . "</td>";
+	echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
+	echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
+//INI:Details
+echo "<td>
+<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">".$user_workunitid."</a>
+</td>
+";
+//END:Details
+	echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n";
+	echo " </tr>"
+		;
+}
 
     echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
     echo "</tr>\n";
