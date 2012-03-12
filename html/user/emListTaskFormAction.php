@@ -16,21 +16,18 @@ echo "Tamano parametros  :(" . $size . ")";
 
 $contador=1;
 foreach($_REQUEST as $key => $value)
-
 {
-	$cadena=$key;
-	if(stristr($cadena, 'stimulus') != FALSE) {
-		echo 'Encontrado en :' . $contador . "<br/>";
-	}	
-	echo $key;
-	echo ": " . $value;
-	echo "<br/>";
+	if($value==1){
+	$pathBorrado="../../sample_results/";
+	$fichero0=$pathBorrado . $key . "_0.gz";
+	$fichero1=$pathBorrado . $key . "_1.gz";
+	$salida=shell_exec('rm -f ' . $fichero0 . " " . $fichero1);
+	}
 	$contador+=1;	
 } 
 
 
-$salida=shell_exec('echo "desde php" > /tmp/php.out');
-echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>";
+echo "FICHEROS BORRADOS!!!";
 
 
 

@@ -20,25 +20,16 @@ require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/cache.inc");
 function get_mysql_user_workunit($query) {
-echo "INI get_mysql_user_workunit " . "<br/>";
     $user_workunits = unserialize(get_cached_data(3600, "get_mysql_user_workunit".$query));
-echo "get_cached_data get_mysql_user_workunit " . "<br/>";
     if ($user_workunits == false) {
-echo " user_workunits == false get_mysql_user_workunit " . "<br/>";
         $result = mysql_query($query);
-echo " mysql_query get_mysql_user_workunit " . "<br/>";
         while($row = mysql_fetch_assoc($result)) {
-echo " while get_mysql_user_workunit " . "<br/>";
             $user_workunits[] = $row;
         }
-echo " end while get_mysql_user_workunit " . "<br/>";
         mysql_free_result($result);
-echo " free result get_mysql_user_workunit " . "<br/>";
         set_cached_data(3600, serialize($user_workunits), "get_mysql_user_workunit".$query);
     }else{
-echo "ELSE user_workunits==false get_mysql_user_workunit " . "<br/>";
 }
-echo "FIN get_mysql_user_workunit " . "<br/>";
     return $user_workunits;
 }
 
@@ -46,36 +37,45 @@ echo "FIN get_mysql_user_workunit " . "<br/>";
 db_init();
 $user = get_logged_in_user();
 
-//page_head(tra("List Of Task Executed By The User "));
+page_head(tra("List Of Task Executed By The User "));
 
 //echo "<form method=get action=emListBorra.php>";
 echo form_tokens($user->authenticator);
-//start_table();
+start_table("align=\"center\"");
+row1("Current finish works ", '9');
+
+echo "<tr><td>Work ID</td>";
+echo "<td width=\"15\">" . "First Data File" . "</td>\n";
+echo "<td width=\"15\">" . "Second Data File" . "</td>\n";
+echo "<td width=\"15\">" . "Delete Data Files From SERVER!!" . "</td>\n";
+echo "</tr>";
 
     $user_workunits = get_mysql_user_workunit("SELECT workunit_id, w.name FROM user_workunit u, workunit w ,result r WHERE u.workunit_id=w.id and u.workunit_id=r.workunitid and r.outcome=1 and r.validate_state=1 and u.user_id=" . $user->id);
     foreach($user_workunits as $user_workunit) {
         $user_workunitid = $user_workunit["workunit_id"];
         $name = $user_workunit["name"];
-//row2(tra("User ID %1 User unique identifier %2", "<br><span class=note>", "</span>"),
-//    "<input name=model type=text size=2 >"
-//);
-$downloadName=$name . "_0.gz";
-echo "<a href=/data/" . $downloadName . ">" . $downloadName . "</a>" . "<br/>";
-        echo "<tr><td>$user_workunitid</td>
-            <td>" . $name . "_0.gz</td>
-            <td>" . $name . "_1.gz</td>
-            <td>"
-        ;
+
+    echo "<form action=\"emListTaskFormAction.php\" method=\"POST\">\n";
+
+$downloadName0=$name . "_0.gz";
+$downloadName1=$name . "_1.gz";
+$dataDownloadName0="/data/" . $downloadName0 ;
+$dataDownloadName1="/data/" . $downloadName1 ;
+        echo "<tr><td>" . $user_workunitid . "</td>";
+echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
+echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
+echo "<td><input type=\"checkbox\" name=\"$name\" value=\"1\"" . "></td>\n";
         echo " </tr>"
         ;
     }
 
-//row2("", "<input type=submit value='Delete Permanently Result Data Files!!'>");
+    echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
+    echo "</tr>\n";
 
 
 
-//end_table();
-//echo "</form>\n";
+end_table();
+echo "</form>\n";
 page_tail();
 
 ?>
