@@ -90,21 +90,66 @@ echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "<hola> Cadena </hola>";
 echo "
 <script> 
-var numero = 9;
+var cur;
+var numeroStim = 9;
 function addRowToTable()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
-$(\"st\").append(\" <tr><td width=40% class=fieldname>#STIMULUS <br><span class=note> Extra STIMULUS parameters </span></td><td class=fieldvalue><input name=stimulus\" + numero + \" type=text size=30 ></td></tr> \" ); 
-numero+=1;
+$(\"st\").append(\" <tr><td width=40% class=fieldname>#STIMULUS <br><span class=note> Extra STIMULUS parameters </span></td><td class=fieldvalue><input name=stimulus\" + numeroStim + \" type=text size=30 ></td></tr> \" ); 
+numeroStim+=1;
+}
+
+var numeroParameter = 9;
+function addParameterTable()
+{
+document.getElementById('tra').innerHTML = 'addParameterTable!! '; 
+
+var restoSelect='';
+			for(var i=0;i<cur.length;i++)
+			{
+document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
+restoSelect+='<option value=' + i + ' >' + cur[i] + '</option>';
+			}
+
+
+$(\"sp\").append(\"<tr> <td width=40% class=fieldname>#PARAMETERS <br><span class=note> Extra PARAMETERS </span></td><td class=fieldvalue><select name=pxx > \" + restoSelect + \"</select></td> </tr> \" ); 
+
+
+
+numeroParameter+=1;
+
+
+document.getElementById('tra').innerHTML += ' campo añadido!! '; 
+		if(!cur){return;}
+document.getElementById('tra').innerHTML += ' cur existe!! '; 
+			d=document.getElementById('sp');
+if(!d){
+document.getElementById('tra').innerHTML += ' d NO existe!! '; 
+}else{
+document.getElementById('tra').innerHTML += ' d SI existe!! '; 
+}
+document.getElementById('tra').innerHTML += ' sp encontrado!! '; 
+document.getElementById('tra').innerHTML += ' cur length!! ' + cur.length; 
+			//d.options.length=0;
+			//d.options.length=cur.length;
+document.getElementById('tra').innerHTML += ' asigna  length!! ';
+			for(var i=0;i<cur.length;i++)
+			{
+document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
+				d.options[i].text=cur[i];
+				d.options[i].value=i;
+			}
+document.getElementById('tra').innerHTML += ' hecho !! ' ;
+
 }
 
 
 		function populate(o)
 		{
-			d=document.getElementById('de');
+			//d=document.getElementById('de');
 document.getElementById('tra').innerHTML = 'dentro!! '; 
-			if(!d){return;}			
+			//if(!d){return;}			
 document.getElementById('tra').innerHTML += 'd existe!! '; 
 			var mitems=new Array();
 			mitems['Ischemic Zone']=['Burger Meals','Breakfast','Steaks','Fish Dishes','Vegetarian Dishes'];
@@ -113,22 +158,23 @@ document.getElementById('tra').innerHTML += 'd existe!! ';
 			mitems['Salads']=['Tuna Salad','Cesar Salad','Green Salad','Prawn Salad'];
 			mitems['Deserts']=['Pancakes','Waffles','Ice Cream','Fresh Fruit'];
 document.getElementById('tra').innerHTML += ' array de datos'; 
-			d.options.length=0;
+			//d.options.length=0;
 			cur=mitems[o.options[o.selectedIndex].text];
 document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
 			if(!cur){return;}
 document.getElementById('tra').innerHTML += ' cur existe '; 
-			d.options.length=cur.length;
+			//d.options.length=cur.length;
 			for(var i=0;i<cur.length;i++)
 			{
-				d.options[i].text=cur[i];
-				d.options[i].value=cur[i];
+			//	d.options[i].text=cur[i];
+			//	d.options[i].value=i;
 			}
 		}
 
 </script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
 echo "<input type=\"button\" value=\"Add\" onclick=\"addRowToTable();\" />";
+echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable();\" />";
 echo form_tokens($user->authenticator);
 start_table();
 //row2(tra("#MODEL %1 Defines the model ID %2", "<br><span class=note>", "</span>"),
@@ -138,16 +184,24 @@ row2_init(tra("#MODEL"),
     "<select name=model  onchange=\"populate(this)\">"
 );
 print_model_select();
-echo "</select></td></tr>\n";
-row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
-    "<input name=parameters type=text size=30 > "
-);
-row2_init(tra("#P1"),
-"
-<select name=\"de\" id=\"de\">
-	</select>
-");
-echo "</select></td></tr>\n";
+echo "</select><sp> </sp></td></tr>\n";
+//row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
+//    "<input name=parameters type=text size=30 > "
+//);
+//row2_init(tra("#P1"),
+//"
+//<select name=\"de\" id=\"de\">
+//	</select>
+//    <input name=parameters1 type=text size=30 >
+//");
+//echo "</select></td></tr>\n";
+//row2_init(tra("#P2"),
+//"
+//<select name=\"de\" id=\"de\">
+//	</select>
+//    <input name=parameters2 type=text size=30 >
+//");
+//echo "</select></td></tr>\n";
 row2(tra("#STEP %1 Defines total simulation time and time increment %2", "<br><span class=note>", "</span>"),
     "<input name=step type=text size=30 >"
 );
