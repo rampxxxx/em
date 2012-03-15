@@ -45,8 +45,10 @@ require_once("../inc/countries.inc");
 #############################
 ### INI : FUNCTIONS SELECT
 #############################
+const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
+
 $models = array(
-    "Isquemic Zone" => "-1",
+    "Ischemic Zone" => "-1",
     "Roger y McCulloc " => "0",
     "Ten Tusscher ENDO" => "1",
     "Ten Tusscher MID " => "2",
@@ -70,15 +72,9 @@ $models = array(
 
 function print_model_select() {
     global $models;
-/*
-    $numModels = count($models);
-    for ($i=0; $i<$numModels; $i++) {
-        $model = $models[$i];
-        echo "<option value=\"$model\" >$model</option>\n";
-    }*/
-foreach($models as $i => $value){
-        echo "<option value=\"$value\" >$i</option>\n";
-}
+    foreach($models as $i => $value){
+	    echo "<option value=\"$value\" >$i</option>\n";
+    }
 } 
 
 #############################
@@ -97,29 +93,40 @@ echo "
 var numero = 9;
 function addRowToTable()
 {
+document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
 $(\"st\").append(\" <tr><td width=40% class=fieldname>#STIMULUS <br><span class=note> Extra STIMULUS parameters </span></td><td class=fieldvalue><input name=stimulus\" + numero + \" type=text size=30 ></td></tr> \" ); 
 numero+=1;
 }
 
 
-</script>";
-/*
+		function populate(o)
+		{
+			d=document.getElementById('de');
+document.getElementById('tra').innerHTML = 'dentro!! '; 
+			if(!d){return;}			
+document.getElementById('tra').innerHTML += 'd existe!! '; 
+			var mitems=new Array();
+			mitems['Ischemic Zone']=['Burger Meals','Breakfast','Steaks','Fish Dishes','Vegetarian Dishes'];
+			mitems['Snacks']=['Brownies','Cookies'];
+			mitems['Drinks']=['Shakes','Sodas','Cocktails','Juices'];
+			mitems['Salads']=['Tuna Salad','Cesar Salad','Green Salad','Prawn Salad'];
+			mitems['Deserts']=['Pancakes','Waffles','Ice Cream','Fresh Fruit'];
+document.getElementById('tra').innerHTML += ' array de datos'; 
+			d.options.length=0;
+			cur=mitems[o.options[o.selectedIndex].text];
+document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
+			if(!cur){return;}
+document.getElementById('tra').innerHTML += ' cur existe '; 
+			d.options.length=cur.length;
+			for(var i=0;i<cur.length;i++)
+			{
+				d.options[i].text=cur[i];
+				d.options[i].value=cur[i];
+			}
+		}
 
-fprintf(f,"#MODEL\n");
-fprintf(f,"18\n");
-fprintf(f,"#PARAMETERS\n");
-fprintf(f,"1 1 1.0\n");
-fprintf(f,"#STEP\n");
-fprintf(f,"0.0 0.001 7000.0\n");
-fprintf(f,"#STIMULUS\n");
-fprintf(f,"2\n");
-fprintf(f,"0.0 500.0 2.0 15.5\n");
-fprintf(f,"5000.0 600.0 2.0 15.5\n");
-fprintf(f,"#POST\n");
-fprintf(f,"0 250\n");
-fprintf(f,"#END\n");
-*/
+</script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
 echo "<input type=\"button\" value=\"Add\" onclick=\"addRowToTable();\" />";
 echo form_tokens($user->authenticator);
@@ -128,13 +135,19 @@ start_table();
 //    "<input name=model type=text size=2 >"
 //);
 row2_init(tra("#MODEL"),
-    "<select name=model>"
+    "<select name=model  onchange=\"populate(this)\">"
 );
 print_model_select();
 echo "</select></td></tr>\n";
 row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
-    "<input name=parameters type=text size=30 >"
+    "<input name=parameters type=text size=30 > "
 );
+row2_init(tra("#P1"),
+"
+<select name=\"de\" id=\"de\">
+	</select>
+");
+echo "</select></td></tr>\n";
 row2(tra("#STEP %1 Defines total simulation time and time increment %2", "<br><span class=note>", "</span>"),
     "<input name=step type=text size=30 >"
 );
@@ -154,5 +167,6 @@ row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk 
 row2("", "<input type=submit value='Go!'>");
 end_table();
 echo "</form>\n";
+echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 page_tail();
 ?>
