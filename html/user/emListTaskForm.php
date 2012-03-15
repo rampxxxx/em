@@ -64,6 +64,7 @@ foreach($user_workunits as $user_workunit) {
 	$dataDownloadName1="/data/" . $downloadName1 ;
 	echo "<tr><td>" . $user_workunitid . "</td>";
 if($user_workunit["outcome"]==1 && $user_workunit["validate_state"] == 1){
+$dataAvailable=1;
 	echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
 	echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
 //INI:Details
