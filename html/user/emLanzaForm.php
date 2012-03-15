@@ -19,6 +19,72 @@ require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 
+#############################
+### INI : DATA      SELECT
+#############################
+#  select case (t_cel)
+#  case(-1);    Vi = Vi_IZ       !.Ischemic Zone;
+#  case(0);     Vi = Vi_RMC      !.Roger y McCulloc;
+#  case(1:3);   Vi = Vi_TT       !.Ten Tusscher
+#  case(4:6);   Vi = Vi_LR       !.Luo Rudy
+#  case(7:9);   Vi = Vi_FK       !.Fenton Karma
+#  case(10);    Vi = Vi_NY       !.Nygren
+#  case(11);    Vi = Vi_PKF      !.Purkinje Stewart
+#  case(12);    Vi = Vi_GR_end   !.Grandi ENDO
+#  case(13);    Vi = Vi_GR_epi   !.Grandi EPI
+#  case(14);    Vi = Vi_CRR_end  !.Carro ENDO
+#  case(15);    Vi = Vi_CRR_epi  !.Carro EPI
+#  case(16);    Vi = Vi_GRHF_end !.Grandi Heart Failure ENDO
+#  case(17);    Vi = Vi_GRHF_epi !.Grandi Heart Failure EPI
+#  case(18);    Vi = Vi_GPV   !.GPV
+
+#############################
+### FIN : DATA      SELECT
+#############################
+
+#############################
+### INI : FUNCTIONS SELECT
+#############################
+$models = array(
+    "Isquemic Zone" => "-1",
+    "Roger y McCulloc " => "0",
+    "Ten Tusscher ENDO" => "1",
+    "Ten Tusscher MID " => "2",
+    "Ten Tusscher EPI " => "3",
+    "Leo Rudy ENDO " => "4",
+    "Leo Rudy MID " => "5",
+    "Leo Rudy EPI " => "6",
+    "Fenton Karma ENDO " => "7",
+    "Fenton Karma MID " => "8",
+    "Fenton Karma EPI " => "9",
+    "Nygren " => "10",
+    "Purkinje Stewart" => "11",
+    "Grandi ENDO" => "12",
+    "Grandi EPI" => "13",
+    "Carro ENDO" => "14",
+    "Carro EPI" => "15",
+    "Grandi Heart Failure ENDO" => "16",
+    "Grandi Heart Failure EPI" => "17",
+    "GPV " => "18"
+);
+
+function print_model_select() {
+    global $models;
+/*
+    $numModels = count($models);
+    for ($i=0; $i<$numModels; $i++) {
+        $model = $models[$i];
+        echo "<option value=\"$model\" >$model</option>\n";
+    }*/
+foreach($models as $i => $value){
+        echo "<option value=\"$value\" >$i</option>\n";
+}
+} 
+
+#############################
+### FIN : FUNCTIONS SELECT
+#############################
+
 
 db_init();
 $user = get_logged_in_user();
@@ -58,9 +124,14 @@ echo "<form method=get action=emLanzaEjecucion.php>";
 echo "<input type=\"button\" value=\"Add\" onclick=\"addRowToTable();\" />";
 echo form_tokens($user->authenticator);
 start_table();
-row2(tra("#MODEL %1 Defines the model ID %2", "<br><span class=note>", "</span>"),
-    "<input name=model type=text size=2 >"
+//row2(tra("#MODEL %1 Defines the model ID %2", "<br><span class=note>", "</span>"),
+//    "<input name=model type=text size=2 >"
+//);
+row2_init(tra("#MODEL"),
+    "<select name=model>"
 );
+print_model_select();
+echo "</select></td></tr>\n";
 row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
     "<input name=parameters type=text size=30 >"
 );
@@ -84,5 +155,4 @@ row2("", "<input type=submit value='Go!'>");
 end_table();
 echo "</form>\n";
 page_tail();
-
 ?>
