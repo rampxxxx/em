@@ -108,7 +108,7 @@ function addStim()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
-$(\"st\").append(\"<stt>Start<input name=stim_sta\" + numeroStim + \" type=text size=5 >BCL<input name=stim_bcl\" + numeroStim + \" type=text size=5 >Duration<input name=stim_dur\" + numeroStim + \" type=text size=5 >Current<input name=stim_cur\" + numeroStim + \" type=text size=5 ><br> </stt>\" ); 
+$(\"st\").append(\"<stt>Start<input name=stimStart\" + numeroStim + \" type=text size=5 >BCL<input name=stimBcl\" + numeroStim + \" type=text size=5 >Duration<input name=stimDur\" + numeroStim + \" type=text size=5 >Current<input name=stimCur\" + numeroStim + \" type=text size=5 ><br> </stt>\" ); 
 numeroStim+=1;
 }
 ////////////////////////////////////////////////////
@@ -172,7 +172,7 @@ for(var i=0;i<cur.length;i++)
 }
 
 
-$(\"sb\").append(\"<sbb> <select name=burst > \" + restoSelect + \"</select>Start<input name=burst_start type=text size=5 >End<input name=burst_end type=text size=5 >Gap<input name=burst_gap type=text size=5 ><br> </sbb> \" ); 
+$(\"sb\").append(\"<sbb> <select name=burstSelect > \" + restoSelect + \"</select>Start<input name=burstStart type=text size=5 >End<input name=burstEnd type=text size=5 >Gap<input name=burstGap type=text size=5 ><br> </sbb> \" ); 
 
 numeroBurst+=1;
 
@@ -290,7 +290,7 @@ row2(tra("BURST %1 It allows create a sort of tasks by telling star,end and gap%
     "<sb > </sb> "
 );
 row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
-    "Simulation initiation at<input name=step_ini type=text size=10 >ending at<input name=step_end type=text size=10>Increment <input name=step_inc type=text size=10>"
+    "Simulation initiation at<input name=stepStart type=text size=10 >ending at<input name=stepEnd type=text size=10>Increment <input name=stepIncrement type=text size=10>"
 );
 row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
     "<st > </st> "

@@ -6,6 +6,24 @@ require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 
+
+////////////////////////////////////////////////////
+/// Comprueba si un parametro es Float, saca msg y devuelve estado.
+////////////////////////////////////////////////////
+function compruebaFloat($name,$value)
+{
+	if(filter_var($value, FILTER_VALIDATE_FLOAT))
+	{
+	}else
+	{
+		echo "El parametro " . "(" . $name  . ") NO es FLOAT <br>";
+		$errorEnDatos=true;
+	}
+
+return $errorEnDatos;
+}
+
+
 $size = (int) count($_REQUEST);
 
 
@@ -24,36 +42,104 @@ echo $_REQUEST["stimulus10"] . "<br/>";
 echo $_REQUEST["post"] . "<br/>";
 
 $contador=1;
+$indiceParametros=1;
+$indiceStimulus=1;
+$burstSelect=0;
+$burstStart=0;
+$burstEnd=0;
+$burstGap=0;
+$stepStart=0;
+$stepEnd=0;
+$stepGap=0;
+$errorEnDatos=false;
+class stimulus{
+var $stimStart;
+var $stimBcl;
+var $stimDur;
+var $stimCur;
+}
 foreach($_REQUEST as $name => $value)
 {
 	if(stristr($name, 'parameterInput') != FALSE) 
 	{
-		if(filter_var($value, FILTER_VALIDATE_FLOAT))
-		{
-			echo $name . "es FLOAT <br>";
-		}else
-		{
-			echo $name . "NO es FLOAT <br>";
-		}
+		$errorEnDatos=compruebaFloat($indiceParametros, $value);
+		$parametros[$indiceParametros]=$value;
 	}
-	else
-		if(stristr($name, 'parameterSelect') != FALSE) 
-		{
-			$indice=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
-echo "Transformado con SANITIZE : ". $indice . " Para ". $value . "<br>";
-			$parametros[$indice]=$value;
-		}
-		else
-		{
-			if(stristr($name, 'stimulus') != FALSE) 
-			{
-				echo 'Encontrado en :' . $contador . "<br/>";
-			}	
-			echo $name;
-			echo ": " . $value;
-			echo "<br/>";
-			$contador+=1;	
-		} 
+	else if(stristr($name, 'parameterSelect') != FALSE) 
+	{
+		$indiceParametros=$value;
+		$parametros[$value]=0;
+	}
+	else if(stristr($name, 'burstSelect') != FALSE) 
+	{
+		$burstSelect=$value;
+	}
+	else if(stristr($name, 'burstStart') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$burstStart=$value;
+	}
+	else if(stristr($name, 'burstEnd') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$burstEnd=$value;
+	}
+	else if(stristr($name, 'burstGap') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$burstGap=$value;
+	}
+	else if(stristr($name, 'stepStart') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stepStart=$value;
+	}
+	else if(stristr($name, 'stepEnd') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stepEnd=$value;
+	}
+	else if(stristr($name, 'stepIncrement') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stepIncrement=$value;
+	}
+	else if(stristr($name, 'stimStart') != FALSE) 
+	{
+		$indiceStimulus=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
+		$errorEnDatos=compruebaFloat($name, $value);
+		$tmpStim=new stimulus;
+		$tmpStim->stimStart=$value;
+		$stimulusArray[$indiceStimulus]=$tmpStim;
+	}
+	else if(stristr($name, 'stimBcl') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stimulusArray[$indiceStimulus]->stimBcl=$value;
+	}
+	else if(stristr($name, 'stimDur') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stimulusArray[$indiceStimulus]->stimDur=$value;
+	}
+	else if(stristr($name, 'stimCur') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($name, $value);
+		$stimulusArray[$indiceStimulus]->stimCur=$value;
+	}
+	else if(stristr($name, 'stimulus') != FALSE) 
+	{
+		echo 'Encontrado en :' . $contador . "<br/>";
+	}	
+	echo $name;
+	echo ": " . $value;
+	echo "<br/>";
+	$contador+=1;	
+}
+echo "Muestra array de objs <br>";
+foreach($stimulusArray as $id => $stimulo)
+{
+echo " id:(" . $id . ")"  . $stimulo->stimStart . " " . $stimulo->stimBcl . " " . $stimulo->stimDur . " " . $stimulo->stimCur . "<br>";
 }
 
 if($_REQUEST["model"]=="")
