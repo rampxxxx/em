@@ -150,7 +150,7 @@ for(var i=0;i<cur.length;i++)
 }
 
 
-$(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameter\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
+$(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameterInput\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
 
 numeroParameter+=1;
 
@@ -287,7 +287,7 @@ row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note
     "<sp > </sp> "
 );
 row2(tra("BURST %1 It allows create a sort of tasks by telling star,end and gap%2", "<br><span class=note>", "</span>"),
-    "<sb > </sp> "
+    "<sb > </sb> "
 );
 row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
     "Simulation initiation at<input name=step_ini type=text size=10 >ending at<input name=step_end type=text size=10>Increment <input name=step_inc type=text size=10>"

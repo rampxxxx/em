@@ -24,19 +24,37 @@ echo $_REQUEST["stimulus10"] . "<br/>";
 echo $_REQUEST["post"] . "<br/>";
 
 $contador=1;
-foreach($_REQUEST as $key => $value)
- 	
+foreach($_REQUEST as $name => $value)
+{
+	if(stristr($name, 'parameterInput') != FALSE) 
 	{
-$cadena=$key;
-if(stristr($cadena, 'stimulus') != FALSE) {
-    echo 'Encontrado en :' . $contador . "<br/>";
-  }	
-	echo $key;
-	echo ": " . $value;
-	echo "<br/>";
-$contador+=1;	
-	} 
-
+		if(filter_var($value, FILTER_VALIDATE_FLOAT))
+		{
+			echo $name . "es FLOAT <br>";
+		}else
+		{
+			echo $name . "NO es FLOAT <br>";
+		}
+	}
+	else
+		if(stristr($name, 'parameterSelect') != FALSE) 
+		{
+			$indice=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
+echo "Transformado con SANITIZE : ". $indice . " Para ". $value . "<br>";
+			$parametros[$indice]=$value;
+		}
+		else
+		{
+			if(stristr($name, 'stimulus') != FALSE) 
+			{
+				echo 'Encontrado en :' . $contador . "<br/>";
+			}	
+			echo $name;
+			echo ": " . $value;
+			echo "<br/>";
+			$contador+=1;	
+		} 
+}
 
 if($_REQUEST["model"]=="")
 {
