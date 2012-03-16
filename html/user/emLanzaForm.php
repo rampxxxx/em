@@ -104,7 +104,7 @@ function addStim()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
-$(\"st\").append(\"<stt> <input name=stimulus\" + numeroStim + \" type=text size=30 ><br> </stt>\" ); 
+$(\"st\").append(\"<stt>Start<input name=stim_sta\" + numeroStim + \" type=text size=5 >BCL<input name=stim_bcl\" + numeroStim + \" type=text size=5 >Duration<input name=stim_dur\" + numeroStim + \" type=text size=5 >Current<input name=stim_cur\" + numeroStim + \" type=text size=5 ><br> </stt>\" ); 
 numeroStim+=1;
 }
 ////////////////////////////////////////////////////
@@ -152,6 +152,28 @@ numeroParameter+=1;
 
 }
 ////////////////////////////////////////////////////
+///   Añade select de Burst                /////
+////////////////////////////////////////////////////
+function addBurst()
+{
+document.getElementById('tra').innerHTML = 'addBurst!! '; 
+deleteBurst();
+var restoSelect='';
+var ii=0;
+for(var i=0;i<cur.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
+	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+}
+
+
+$(\"sb\").append(\"<sbb> <select name=burst > \" + restoSelect + \"</select>Start<input name=burst_start type=text size=5 >End<input name=burst_end type=text size=5 >Gap<input name=burst_gap type=text size=5 ><br> </sbb> \" ); 
+
+numeroBurst+=1;
+
+}
+////////////////////////////////////////////////////
 ///   Inicializa contador de id select Parameter ///
 ////////////////////////////////////////////////////
 function inicializaNumeroParameter()
@@ -179,6 +201,13 @@ function deleteParameterTable()
 {
 inicializaNumeroParameter();
 $(\"spp\").remove();
+}
+/////////////////////////////////
+// Delete new Burst 'select'.
+/////////////////////////////////
+function deleteBurst()
+{
+$(\"sbb\").remove();
 }
 /////////////////////////////////
 // Delete new ParSave 'select'.
@@ -237,6 +266,8 @@ function populate(o)
 echo "<form method=get action=emLanzaEjecucion.php>";
 echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable();\" />";
 echo "<input type=\"button\" value=\"Del Parameters\" onclick=\"deleteParameterTable();\" />";
+echo "<input type=\"button\" value=\"Add Burst\" onclick=\"addBurst();\" />";
+echo "<input type=\"button\" value=\"Del Burst\" onclick=\"deleteBurst();\" />";
 echo "<input type=\"button\" value=\"Add Stimulus\" onclick=\"addStim();\" />";
 echo "<input type=\"button\" value=\"Del Stimulus\" onclick=\"deleteStim();\" />";
 echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave();\" />";
@@ -251,6 +282,9 @@ echo "</select></td></tr>\n";
 row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
     "<sp > </sp> "
 );
+row2(tra("BURST %1 It allows create a sort of tasks by telling star,end and gap%2", "<br><span class=note>", "</span>"),
+    "<sb > </sp> "
+);
 row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
     "Simulation initiation at<input name=step_ini type=text size=10 >ending at<input name=step_end type=text size=10>Increment <input name=step_inc type=text size=10>"
 );
@@ -262,6 +296,10 @@ row2(tra("#POST %1 Defines the output frequency and the first iteration at which
 );
 row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
     "<ss> </ss>"
+);
+row2(tra("#FILE_CURRENTS %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
+    "         <input type=radio name=save_curr value=1> Yes<br>
+<input type=radio name=save_curr value=0 checked> No<br> "
 );
 
 row2("", "<input type=submit value='Go!'>");
