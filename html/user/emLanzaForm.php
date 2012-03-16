@@ -49,7 +49,7 @@ const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
 
 $models = array(
     "Ischemic Zone" => "-1",
-    "Roger y McCulloc " => "0",
+    "Roger & McCulloc " => "0",
     "Ten Tusscher ENDO" => "1",
     "Ten Tusscher MID " => "2",
     "Ten Tusscher EPI " => "3",
@@ -100,21 +100,23 @@ $(\"st\").append(\" <tr><td width=40% class=fieldname>#STIMULUS <br><span class=
 numeroStim+=1;
 }
 
-var numeroParameter = 0;
+var numeroParameter = 1;
 function addParameterTable()
 {
 document.getElementById('tra').innerHTML = 'addParameterTable!! '; 
 
 var restoSelect='';
+var ii=0;
 			for(var i=0;i<cur.length;i++)
 			{
+			ii=i+1;
 document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
-restoSelect+='<option value=' + i + ' >' + cur[i] + '</option>';
+restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
 			}
 
 
 //$(\"sp\").append(\"<spp> <tr> <td width=40% class=fieldname>#PARAMETERS <br><span class=fieldvalue> Extra PARAMETERS </span></td><td class=fieldvalue><select name=pxx > \" + restoSelect + \"</select></td> </tr> </spp> \" ); 
-$(\"sp\").append(\"<spp> <select name=pxx > \" + restoSelect + \"</select><input name=parameter\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
+$(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameter\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
 
 
 
@@ -136,16 +138,19 @@ $(\"spp\").remove();
 /////////////////////////////////
 function populate(o)
 {
+	deleteParameterTable();//delete previous params.
+	numeroParameter=1;
 	//d=document.getElementById('de');
 	document.getElementById('tra').innerHTML = 'dentro!! '; 
 	//if(!d){return;}			
 	document.getElementById('tra').innerHTML += 'd existe!! '; 
 	var mitems=new Array();
-	mitems['Ischemic Zone']=['Burger Meals','Breakfast','Steaks','Fish Dishes','Vegetarian Dishes'];
-	mitems['Snacks']=['Brownies','Cookies'];
-	mitems['Drinks']=['Shakes','Sodas','Cocktails','Juices'];
-	mitems['Salads']=['Tuna Salad','Cesar Salad','Green Salad','Prawn Salad'];
-	mitems['Deserts']=['Pancakes','Waffles','Ice Cream','Fresh Fruit'];
+	mitems['Ischemic Zone']=['v1','v2','G'];
+	mitems['Roger & McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
+	mitems['Ten Tusscher ENDO']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	mitems['Ten Tusscher MID']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	mitems['Ten Tusscher EPI']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	mitems['Leo Rudy ENDO']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
 	document.getElementById('tra').innerHTML += ' array de datos'; 
 	//d.options.length=0;
 	cur=mitems[o.options[o.selectedIndex].text];
