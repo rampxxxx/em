@@ -48,6 +48,7 @@ require_once("../inc/countries.inc");
 const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
 
 $models = array(
+    "None Yet " => "99",
     "Ischemic Zone" => "-1",
     "Roger & McCulloc " => "0",
     "Ten Tusscher ENDO" => "1",
@@ -73,7 +74,11 @@ $models = array(
 function print_model_select() {
     global $models;
     foreach($models as $i => $value){
-	    echo "<option value=\"$value\" >$i</option>\n";
+	    if($value==99){
+		    echo "<option value=\"$value\" selected>$i</option>\n";
+	    }else{
+		    echo "<option value=\"$value\" >$i</option>\n";
+	    }
     }
 } 
 
@@ -85,9 +90,8 @@ function print_model_select() {
 db_init();
 $user = get_logged_in_user();
 
-page_head(tra("New Task Params"));
+page_head(tra("Simulation Workunit Creation"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
-echo "<hola> Cadena </hola>";
 echo "
 <script> 
 ////////////////////////////////////////////////////
