@@ -90,8 +90,16 @@ echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "<hola> Cadena </hola>";
 echo "
 <script> 
+////////////////////////////////////////////////////
+///   Declaracion, inicializacion de variables /////
+////////////////////////////////////////////////////
 var cur;
 var numeroStim = 9;
+var numeroParameter = 1;
+var numeroParSave = 1;
+////////////////////////////////////////////////////
+///   Añade input de Stimulus                  /////
+////////////////////////////////////////////////////
 function addStim()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
@@ -99,44 +107,93 @@ document.getElementById('tra').innerHTML = 'addRowTable!! ';
 $(\"st\").append(\"<stt> <input name=stimulus\" + numeroStim + \" type=text size=30 ><br> </stt>\" ); 
 numeroStim+=1;
 }
+////////////////////////////////////////////////////
+///   Añade select de ParSave                /////
+////////////////////////////////////////////////////
+function addParSave()
+{
+document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
-var numeroParameter = 1;
+var restoSelect='';
+var ii=0;
+for(var i=0;i<cur.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
+	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+}
+
+
+$(\"ss\").append(\"<sss> <select name=parSave\" + numeroParSave + \" > \" + restoSelect + \"</select><br> </sss> \" ); 
+
+numeroParSave+=1;
+
+}
+////////////////////////////////////////////////////
+///   Añade select de Parameter                /////
+////////////////////////////////////////////////////
 function addParameterTable()
 {
 document.getElementById('tra').innerHTML = 'addParameterTable!! '; 
 
 var restoSelect='';
 var ii=0;
-			for(var i=0;i<cur.length;i++)
-			{
-			ii=i+1;
-document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
-restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
-			}
+for(var i=0;i<cur.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
+	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+}
 
 
 $(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameter\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
 
-
-
 numeroParameter+=1;
 
-
-
 }
-
+////////////////////////////////////////////////////
+///   Inicializa contador de id select Parameter ///
+////////////////////////////////////////////////////
+function inicializaNumeroParameter()
+{
+numeroParameter=1;
+}
+////////////////////////////////////////////////////
+///   Inicializa contador de id select ParSave ///
+////////////////////////////////////////////////////
+function inicializaNumeroParSave()
+{
+numeroParSave=1;
+}
+////////////////////////////////////////////////////
+///   Inicializa contador de id Stim ///
+////////////////////////////////////////////////////
+function inicializaNumeroStim()
+{
+numeroStim=9;
+}
 /////////////////////////////////
 // Delete new Parameter 'select'.
 /////////////////////////////////
 function deleteParameterTable()
 {
+inicializaNumeroParameter();
 $(\"spp\").remove();
+}
+/////////////////////////////////
+// Delete new ParSave 'select'.
+/////////////////////////////////
+function deleteParSaveTable()
+{
+inicializaNumeroParSave();
+$(\"sss\").remove();
 }
 /////////////////////////////////
 // Delete new Parameter 'select'.
 /////////////////////////////////
 function deleteStim()
 {
+inicializaNumeroStim();
 $(\"stt\").remove();
 }
 /////////////////////////////////
@@ -172,17 +229,8 @@ function populate(o)
 	mitems['Grandi Heart Failure EPI']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
 	mitems['GPV']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtof', 'Gkur', 'ACh', 'GNa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCaB', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi', 'ATPi', 'kATP', 'GKATP', 'GNaL', 'Chlor', ];
 	document.getElementById('tra').innerHTML += ' array de datos'; 
-	//d.options.length=0;
 	cur=mitems[o.options[o.selectedIndex].text];
 	document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
-	if(!cur){return;}
-	document.getElementById('tra').innerHTML += ' cur existe '; 
-	//d.options.length=cur.length;
-	for(var i=0;i<cur.length;i++)
-	{
-		//	d.options[i].text=cur[i];
-		//	d.options[i].value=i;
-	}
 }
 
 </script>";
@@ -191,47 +239,29 @@ echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable
 echo "<input type=\"button\" value=\"Del Parameters\" onclick=\"deleteParameterTable();\" />";
 echo "<input type=\"button\" value=\"Add Stimulus\" onclick=\"addStim();\" />";
 echo "<input type=\"button\" value=\"Del Stimulus\" onclick=\"deleteStim();\" />";
+echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave();\" />";
+echo "<input type=\"button\" value=\"Del Save Parameter\" onclick=\"deleteParSave();\" />";
 echo form_tokens($user->authenticator);
 start_table();
-//row2(tra("#MODEL %1 Defines the model ID %2", "<br><span class=note>", "</span>"),
-//    "<input name=model type=text size=2 >"
-//);
 row2_init(tra("#MODEL"),
     "<select name=model  onchange=\"populate(this)\">"
 );
 print_model_select();
 echo "</select></td></tr>\n";
-//row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
-//    "<input name=parameters type=text size=30 > "
-//);
-//row2_init(tra("#P1"),
-//"
-//<select name=\"de\" id=\"de\">
-//	</select>
-//    <input name=parameters1 type=text size=30 >
-//");
-//echo "</select></td></tr>\n";
-//row2_init(tra("#P2"),
-//"
-//<select name=\"de\" id=\"de\">
-//	</select>
-//    <input name=parameters2 type=text size=30 >
-//");
-//echo "</select></td></tr>\n";
 row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
     "<sp > </sp> "
 );
-row2(tra("#STEP %1 Defines total simulation time and time increment %2", "<br><span class=note>", "</span>"),
-    "<input name=step type=text size=30 >"
+row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
+    "Simulation initiation at<input name=step_ini type=text size=10 >ending at<input name=step_end type=text size=10>Increment <input name=step_inc type=text size=10>"
 );
 row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
     "<st > </st> "
 );
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
-    "<input name=post type=text size=30 >"
+    "First iteration saved is <input name=post_first type=text size=10 >Saving frecuency <input name=post_fre type=text size=10 >"
 );
 row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
-    "<input name=file_parameters type=text size=30 >"
+    "<ss> </ss>"
 );
 
 row2("", "<input type=submit value='Go!'>");
