@@ -92,11 +92,11 @@ echo "
 <script> 
 var cur;
 var numeroStim = 9;
-function addRowToTable()
+function addStim()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
-$(\"st\").append(\" <tr><td width=40% class=fieldname>#STIMULUS <br><span class=note> Extra STIMULUS parameters </span></td><td class=fieldvalue><input name=stimulus\" + numeroStim + \" type=text size=30 ></td></tr> \" ); 
+$(\"st\").append(\"<stt> <input name=stimulus\" + numeroStim + \" type=text size=30 ><br> </stt>\" ); 
 numeroStim+=1;
 }
 
@@ -115,7 +115,6 @@ restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
 			}
 
 
-//$(\"sp\").append(\"<spp> <tr> <td width=40% class=fieldname>#PARAMETERS <br><span class=fieldvalue> Extra PARAMETERS </span></td><td class=fieldvalue><select name=pxx > \" + restoSelect + \"</select></td> </tr> </spp> \" ); 
 $(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameter\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
 
 
@@ -132,6 +131,13 @@ numeroParameter+=1;
 function deleteParameterTable()
 {
 $(\"spp\").remove();
+}
+/////////////////////////////////
+// Delete new Parameter 'select'.
+/////////////////////////////////
+function deleteStim()
+{
+$(\"stt\").remove();
 }
 /////////////////////////////////
 // Get a reference to array.
@@ -162,7 +168,7 @@ function populate(o)
 	mitems['Grandi EPI']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtos', 'Gtof', 'GNa', 'GCa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCab', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi'];
 	mitems['Carro ENDO']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
 	mitems['Carro EPI']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
-	mitems['Grandi Heart Failure ENDO']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
+	mitems['Grandi Heart Failure ENDO']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauINaL', 'Gtos', 'Gtof'];
 	mitems['Grandi Heart Failure EPI']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
 	mitems['GPV']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtof', 'Gkur', 'ACh', 'GNa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCaB', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi', 'ATPi', 'kATP', 'GKATP', 'GNaL', 'Chlor', ];
 	document.getElementById('tra').innerHTML += ' array de datos'; 
@@ -181,9 +187,10 @@ function populate(o)
 
 </script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
-echo "<input type=\"button\" value=\"Add\" onclick=\"addRowToTable();\" />";
 echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable();\" />";
 echo "<input type=\"button\" value=\"Del Parameters\" onclick=\"deleteParameterTable();\" />";
+echo "<input type=\"button\" value=\"Add Stimulus\" onclick=\"addStim();\" />";
+echo "<input type=\"button\" value=\"Del Stimulus\" onclick=\"deleteStim();\" />";
 echo form_tokens($user->authenticator);
 start_table();
 //row2(tra("#MODEL %1 Defines the model ID %2", "<br><span class=note>", "</span>"),
@@ -218,10 +225,7 @@ row2(tra("#STEP %1 Defines total simulation time and time increment %2", "<br><s
     "<input name=step type=text size=30 >"
 );
 row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
-    "<input name=stimulus1 type=text size=30 > "
-);
-row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
-    "<input name=stimulus2 type=text size=30 ><st> </st>"
+    "<st > </st> "
 );
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
     "<input name=post type=text size=30 >"
