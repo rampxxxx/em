@@ -78,15 +78,15 @@ foreach($_REQUEST as $name => $value)
 	{
 		$model=$value;
 	}
-	if(stristr($name, 'parameterInput') != FALSE) 
-	{
-		$errorEnDatos=compruebaFloat($indiceParametros, $value);
-		$parametros[$indiceParametros]=$value;
-	}
 	else if(stristr($name, 'parameterSelect') != FALSE) 
 	{
 		$indiceParametros=$value;
 		$parametros[$indiceParametros]=0;
+	}
+	if(stristr($name, 'parameterInput') != FALSE) 
+	{
+		$errorEnDatos=compruebaFloat($indiceParametros, $value);
+		$parametros[$indiceParametros]=$value;
 	}
 	else if(stristr($name, 'burstSelect') != FALSE) 
 	{
@@ -191,13 +191,15 @@ else
 $salida=shell_exec('echo "desde php" > /tmp/php.out');
 echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>";
 
-
+// INI LOOP : BURST TASK GENERATION
+for($burstCnt = $burstStart; $burstCnt <= $burstEnd; $burstCnt+=$burstGap)
+{
+$parametros[$burstSelect] = $burstCnt;//Valor nuevo(o modificado) para ejecucion.
 
 $fp = fopen("/tmp/newTask.txt", "a");
 $salida=shell_exec('ls -l /tmp/newTask.txt >> /tmp/php.out');
 if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
-fwrite($fp,"Antes de truncar\n");
-    ftruncate($fp, 0); // truncate file
+    //ftruncate($fp, 0); // truncate file
 ///////////////////////////////
 ////INI   CREATE FILE  ////////
 ///////////////////////////////
@@ -262,6 +264,8 @@ $salida=shell_exec('echo ../../bin/lanza.sh ' . $user->id . '  >> /tmp/php.out  
 }
 fclose($fp);
 
+}
+// END LOOP : BURST TASK GENERATION
 
 } // END INSERT TASK
 
