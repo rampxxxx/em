@@ -199,7 +199,7 @@ $parametros[$burstSelect] = $burstCnt;//Valor nuevo(o modificado) para ejecucion
 $fp = fopen("/tmp/newTask.txt", "a");
 $salida=shell_exec('ls -l /tmp/newTask.txt >> /tmp/php.out');
 if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
-    //ftruncate($fp, 0); // truncate file
+    ftruncate($fp, 0); // truncate file
 ///////////////////////////////
 ////INI   CREATE FILE  ////////
 ///////////////////////////////
@@ -254,7 +254,7 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
 ///////////////////////////////
 $salida=shell_exec('ls -l ../../bin/lanza.sh >> /tmp/php.out 2>>/tmp/php.out ');
 $salida=shell_exec('echo ../../bin/lanza.sh ' . $user->id . '  >> /tmp/php.out  2>>/tmp/php.out');
-//$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id);
+$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id);
 ///////////////////////////////
 ////END RUN EXTERNAL PROGRAM///
 ///////////////////////////////
