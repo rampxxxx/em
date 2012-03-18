@@ -302,8 +302,8 @@ row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk 
     "<ss> </ss>"
 );
 row2(tra("#FILE_CURRENTS %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
-    "         <input type=radio name=save_curr value=1> Yes<br>
-<input type=radio name=save_curr value=0 checked> No<br> "
+    "         <input type=radio name=saveCur value=1> Yes<br>
+<input type=radio name=saveCurr value=0 checked> No<br> "
 );
 
 row2("", "<input type=submit value='Go!'>");

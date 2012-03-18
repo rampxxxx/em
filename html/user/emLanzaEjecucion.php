@@ -74,6 +74,10 @@ var $stimCur;
 }
 foreach($_REQUEST as $name => $value)
 {
+	if(stristr($name, 'model') != FALSE) 
+	{
+		$model=$value;
+	}
 	if(stristr($name, 'parameterInput') != FALSE) 
 	{
 		$errorEnDatos=compruebaFloat($indiceParametros, $value);
@@ -82,7 +86,7 @@ foreach($_REQUEST as $name => $value)
 	else if(stristr($name, 'parameterSelect') != FALSE) 
 	{
 		$indiceParametros=$value;
-		$parametros[$value]=0;
+		$parametros[$indiceParametros]=0;
 	}
 	else if(stristr($name, 'burstSelect') != FALSE) 
 	{
@@ -156,6 +160,10 @@ foreach($_REQUEST as $name => $value)
 		$indiceParSave=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
 		$paraSaveArray[$indiceParSave++]=$value;
 	}
+	else if(stristr($name, 'saveCurr') != FALSE) 
+	{
+		$saveCurr=$value;
+	}
 	else if(stristr($name, 'stimulus') != FALSE) 
 	{
 		echo 'Encontrado en :' . $contador . "<br/>";
@@ -177,29 +185,9 @@ echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 }
 
 
-if($_REQUEST["model"]=="")
+if($errorEnDatos==true)
 {
-	echo("#MODEL is empty. <br/>");
-}
-elseif($_REQUEST["parameters"]=="")
-{
-	echo("#PARAMETERS is empty. <br/>");
-}
-elseif($_REQUEST["step"]=="")
-{
-	echo("#STEP is empty. <br/>");
-}
-elseif($_REQUEST["stimulus1"]=="")
-{
-	echo("#STIMULUS1 is empty. <br/>");
-}
-elseif($_REQUEST["stimulus2"]=="")
-{
-	echo("#STIMULUS2 is empty. <br/>");
-}
-elseif($_REQUEST["post"]=="")
-{
-	echo("#POST is empty. <br/>");
+	echo("Comprobar los datos de entrada. <br/>");
 }
 else
 { // INSERT TASK
@@ -212,16 +200,30 @@ echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>"
 $fp = fopen("/tmp/newTask.txt", "a");
 $salida=shell_exec('ls -l /tmp/newTask.txt >> /tmp/php.out');
 if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
+fwrite($fp,"Antes de truncar\n");
     ftruncate($fp, 0); // truncate file
 ///////////////////////////////
 ////INI   CREATE FILE  ////////
 ///////////////////////////////
     fwrite($fp, "#MODEL\n");
-    fwrite($fp, $_REQUEST["model"] . "\n");
+    fwrite($fp, $model . "\n");
+
+
+    $parametrosAFicheroCnt=(string)count($parametros);
+    $parametrosAFicheroNum="";
+    $parametrosAFicheroVal="";
+    foreach($parametros as $id => $val)
+    {
+	$parametrosAFicheroNum=$parametrosAFicheroNum . " " . $id  ;
+	$parametrosAFicheroVal=$parametrosAFicheroVal . " " . $val ;
+    }
     fwrite($fp, "#PARAMETERS\n");
-    fwrite($fp, $_REQUEST["parameters"] . "\n");
+    fwrite($fp, $parametrosAFicheroCnt . $parametrosAFicheroNum . $parametrosAFicheroVal . "\n");
+
+
+
     fwrite($fp, "#STEP\n");
-    fwrite($fp, $_REQUEST["step"] . "\n");
+    fwrite($fp, $stepStart . " " . $stepEnd . " " . $stepIncrement .  "\n");
     fwrite($fp, "#STIMULUS\n");
     fwrite($fp, "2\n");
     fwrite($fp, $_REQUEST["stimulus1"] . "\n");
@@ -239,7 +241,7 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
 ///////////////////////////////
 $salida=shell_exec('ls -l ../../bin/lanza.sh >> /tmp/php.out 2>>/tmp/php.out ');
 $salida=shell_exec('echo ../../bin/lanza.sh ' . $user->id . '  >> /tmp/php.out  2>>/tmp/php.out');
-$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id);
+//$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id);
 ///////////////////////////////
 ////END RUN EXTERNAL PROGRAM///
 ///////////////////////////////
