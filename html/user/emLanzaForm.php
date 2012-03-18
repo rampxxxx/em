@@ -296,7 +296,7 @@ row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=no
     "<st > </st> "
 );
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
-    "First iteration saved is <input name=post_first type=text size=10 >Saving frecuency <input name=post_fre type=text size=10 >"
+    "First iteration saved is <input name=postFist type=text size=10 >Saving frecuency <input name=postFrec type=text size=10 >"
 );
 row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
     "<ss> </ss>"

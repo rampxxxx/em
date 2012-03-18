@@ -22,6 +22,19 @@ function compruebaFloat($name,$value)
 
 return $errorEnDatos;
 }
+function compruebaInt($name,$value)
+{
+	if(filter_var($value, FILTER_VALIDATE_INT))
+	{
+	}else
+	{
+		echo "El parametro " . "(" . $name  . ") NO es INT <br>";
+		$errorEnDatos=true;
+	}
+
+return $errorEnDatos;
+}
+
 
 
 $size = (int) count($_REQUEST);
@@ -43,6 +56,7 @@ echo $_REQUEST["post"] . "<br/>";
 
 $contador=1;
 $indiceParametros=1;
+$indiceParSave=1;
 $indiceStimulus=1;
 $burstSelect=0;
 $burstStart=0;
@@ -127,6 +141,21 @@ foreach($_REQUEST as $name => $value)
 		$errorEnDatos=compruebaFloat($name, $value);
 		$stimulusArray[$indiceStimulus]->stimCur=$value;
 	}
+	else if(stristr($name, 'postFirst') != FALSE) 
+	{
+		$errorEnDatos=compruebaInt($name, $value);
+		$postFirst=$value;
+	}
+	else if(stristr($name, 'postFrec') != FALSE) 
+	{
+		$errorEnDatos=compruebaInt($name, $value);
+		$postFrec=$value;
+	}
+	else if(stristr($name, 'parSave') != FALSE) 
+	{
+		$indiceParSave=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
+		$paraSaveArray[$indiceParSave++]=$value;
+	}
 	else if(stristr($name, 'stimulus') != FALSE) 
 	{
 		echo 'Encontrado en :' . $contador . "<br/>";
@@ -141,6 +170,12 @@ foreach($stimulusArray as $id => $stimulo)
 {
 echo " id:(" . $id . ")"  . $stimulo->stimStart . " " . $stimulo->stimBcl . " " . $stimulo->stimDur . " " . $stimulo->stimCur . "<br>";
 }
+echo "Muestra array de parame save <br>";
+foreach($paraSaveArray as $id => $par)
+{
+echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
+}
+
 
 if($_REQUEST["model"]=="")
 {
