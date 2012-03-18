@@ -164,13 +164,9 @@ foreach($_REQUEST as $name => $value)
 	{
 		$saveCurr=$value;
 	}
-	else if(stristr($name, 'stimulus') != FALSE) 
-	{
-		echo 'Encontrado en :' . $contador . "<br/>";
-	}	
-	echo $name;
-	echo ": " . $value;
-	echo "<br/>";
+	//echo $name;
+	//echo ": " . $value;
+	//echo "<br/>";
 	$contador+=1;	
 }
 echo "Muestra array de objs <br>";
@@ -224,14 +220,29 @@ fwrite($fp,"Antes de truncar\n");
 
     fwrite($fp, "#STEP\n");
     fwrite($fp, $stepStart . " " . $stepEnd . " " . $stepIncrement .  "\n");
+
+
     fwrite($fp, "#STIMULUS\n");
-    fwrite($fp, "2\n");
-    fwrite($fp, $_REQUEST["stimulus1"] . "\n");
-    fwrite($fp, $_REQUEST["stimulus2"] . "\n");
+    fwrite($fp, (string)count($stimulusArray) . "\n");
+    foreach($stimulusArray as $id => $objStim)
+    {
+	    fwrite($fp, $objStim->stimStart . " " . $objStim->stimBcl . " " . $objStim->stimDur . " " . $objStim->stimCur . "\n");
+    }
+
     fwrite($fp, "#POST\n");
-    fwrite($fp, $_REQUEST["post"] . "\n");
+    fwrite($fp, $postFirst . " " . $postFrec . "\n");
+
     fwrite($fp, "#FILE_PARAMETERS\n");
-    fwrite($fp, $_REQUEST["file_parameters"] . "\n");
+    fwrite($fp, (string)count($paraSaveArray));
+    foreach($paraSaveArray as $id => $value)
+    {
+	    $paramForSave = $paramForSave . " " . $value;
+    }
+    fwrite($fp, $paramForSave . "\n");
+
+    fwrite($fp, "#FILE_CURRENTS\n");
+    fwrite($fp, $saveCurr . "\n");
+
     fwrite($fp, "#END\n");
 ///////////////////////////////
 ////END   CREATE FILE  ////////
