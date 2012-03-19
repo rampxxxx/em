@@ -58,6 +58,7 @@ $user_workunits = get_mysql_user_workunit("SELECT workunit_id, w.name,r.outcome,
 foreach($user_workunits as $user_workunit) {
 	$user_workunitid = $user_workunit["workunit_id"];
 	$name = $user_workunit["name"];
+	$alias = $user_workunit["alias"];
 	echo "<form action=\"emListTaskFormAction.php\" method=\"POST\">\n";
 	$downloadName0=$name . "_0.gz";
 	$downloadName1=$name . "_1.gz";
