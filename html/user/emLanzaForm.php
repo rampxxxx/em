@@ -278,6 +278,9 @@ echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave()
 echo "<input type=\"button\" value=\"Del Save Parameter\" onclick=\"deleteParSave();\" />";
 echo form_tokens($user->authenticator);
 start_table();
+row2(tra("ALIAS %1 Friendly name %2", "<br><span class=note>", "</span>"),
+    "<input name=friendlyName type=text size=40 >"
+);
 row2_init(tra("#MODEL"),
     "<select name=model  onchange=\"populate(this)\">"
 );

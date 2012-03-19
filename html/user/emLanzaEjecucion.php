@@ -6,6 +6,7 @@ require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 
+page_head(tra("Simulation Workunit Creation"));
 
 ////////////////////////////////////////////////////
 /// Comprueba si un parametro es Float, saca msg y devuelve estado.
@@ -58,6 +59,7 @@ $contador=1;
 $indiceParametros=1;
 $indiceParSave=1;
 $indiceStimulus=1;
+$burstCnt=0;
 $burstSelect=0;
 $burstStart=0;
 $burstEnd=0;
@@ -180,8 +182,9 @@ foreach($paraSaveArray as $id => $par)
 echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 }
 
-
-if(count($parametros) || $saveCurr == 0){
+echo "$saveCurr :" . $saveCurr . "<br>";
+echo "count($parametros) :" . count($parametros) . "<br>";
+if(count($parametros)==0 && $saveCurr == 0){
 	$errorEnDatos=true;
 	echo "Sin seleccion de parametros a disto o corrientes a disco <br>";
 	echo "NO SE VAN A GENERAR DATOS :-)<br>";
@@ -201,8 +204,16 @@ $salida=shell_exec('echo "desde php" > /tmp/php.out');
 echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>";
 
 // INI LOOP : BURST TASK GENERATION
+echo "$burstCnt" . $burstCnt . "<br>";
+echo "$burstStart" . $burstStart . "<br>";
+echo "$burstEnd" . $burstEnd . "<br>";
+echo "$burstGap" . $burstGap . "<br>";
+if($burstGap==0){
+$burstGap=1;//Sino hay burst que entre solo una vez.
+}
 for($burstCnt = $burstStart; $burstCnt <= $burstEnd; $burstCnt+=$burstGap)
 {
+$salida=shell_exec('echo  ' . ' burstStart ' . $burstStart . ' burstEnd ' . $burstEnd . ' burstGap ' . $burstGap . ' burstCnt ' . $burstCnt .  '  >> /tmp/php.out  2>>/tmp/php.out');
 $parametros[$burstSelect] = $burstCnt;//Valor nuevo(o modificado) para ejecucion.
 
 $fp = fopen("/tmp/newTask.txt", "a");
@@ -263,11 +274,15 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
 ///////////////////////////////
 $salida=shell_exec('ls -l ../../bin/lanza.sh >> /tmp/php.out 2>>/tmp/php.out ');
 $salida=shell_exec('echo ../../bin/lanza.sh ' . $user->id . '  >> /tmp/php.out  2>>/tmp/php.out');
-$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id);
+$salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id . "\"" . $_REQUEST["friendlyName"] . "\"");
 ///////////////////////////////
 ////END RUN EXTERNAL PROGRAM///
 ///////////////////////////////
     flock($fp, LOCK_UN); // release the lock
+echo "<td>
+<a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
+</td>
+";
 } else {
     echo "Server Busy. Try it again in some minutes" . "<BR/>";
 }
@@ -278,6 +293,7 @@ fclose($fp);
 
 } // END INSERT TASK
 
+page_tail();
 ?>
 
 </body>
