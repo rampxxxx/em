@@ -64,41 +64,51 @@ foreach($user_workunits as $user_workunit) {
 	$downloadName1=$name . "_1.gz";
 	$dataDownloadName0="/data/" . $downloadName0 ;
 	$dataDownloadName1="/data/" . $downloadName1 ;
-if($user_workunit["outcome"]==1 && $user_workunit["validate_state"] == 1){
-	echo "<tr><td>" . $user_workunitid . "</td>";
-	echo "<td>" . $alias . "</td>";
-$dataAvailable=1;
-	echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
-	echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
-//INI:Details
-echo "<td>
-<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">".$user_workunitid."</a>
-</td>
-";
-//END:Details
-	echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n";
-	echo " </tr>"
-		;
-}else{
-if($user_workunit["outcome"]==0 && $user_workunit["validate_state"] == 0){
-// No error , just waiting.
-	echo "<tr><td>" . $user_workunitid . "</td>";
-	echo "<td>" . $alias . "</td>";
-	echo "<td>" . $downloadName0 . " STILL NOT READY" . "</td>";
-	echo "<td>" . $downloadName1 . " STILL NOT READY" . "</td>";
-}
-}
+	if($user_workunit["outcome"]==1 && $user_workunit["validate_state"] == 1){
+		echo "<tr><td>" . $user_workunitid . "</td>";
+		echo "<td>" . $alias . "</td>";
+		$dataAvailable=1;
+		echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
+		echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
+		//INI:Details
+		echo "<td>
+			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">List</a>
+			</td>
+			";
+		//END:Details
+		echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n";
+		echo " </tr>"
+			;
+	}else{
+		if($user_workunit["outcome"]==0 && $user_workunit["validate_state"] == 0){
+			// No error , just waiting.
+			echo "<tr><td>" . $user_workunitid . "</td>";
+			echo "<td>" . $alias . "</td>";
+			echo "<td>" . $downloadName0 . " STILL NOT READY" . "</td>";
+			echo "<td>" . $downloadName1 . " STILL NOT READY" . "</td>";
+			//INI:Details
+			echo "<td>
+				<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">List</a>
+				</td>
+				";
+			//END:Details
+		}
+	}
 }
 
 if($dataAvailable==1){
-    echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
+	echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
 }
-    echo "</tr>\n";
+echo "</tr>\n";
 
 
 
 end_table();
 echo "</form>\n";
+echo "<td>
+<a href=\"home.php\">". "Back Home " ."</a>
+</td>
+";
 page_tail();
 
 ?>
