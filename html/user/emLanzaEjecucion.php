@@ -279,7 +279,14 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
     fwrite($fp, $paramForSave . "\n");
 
     fwrite($fp, "#FILE_CURRENTS\n");
-    fwrite($fp, $saveCurr . "\n");
+if($saveCurr == 0)
+{
+    fwrite($fp, "0" . "\n");//Fichero vacio
+}
+else
+{
+    fwrite($fp, "1 0" . "\n");//Fichero campleto
+}
 
     fwrite($fp, "#END\n");
 ///////////////////////////////
