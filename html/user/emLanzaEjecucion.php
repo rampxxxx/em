@@ -181,6 +181,15 @@ echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 }
 
 
+if(count($parametros) || $saveCurr == 0){
+	$errorEnDatos=true;
+	echo "Sin seleccion de parametros a disto o corrientes a disco <br>";
+	echo "NO SE VAN A GENERAR DATOS :-)<br>";
+	echo "Estas seguro?                <br>";
+	echo "Vuelve a intentarlo          <br>";
+}
+
+
 if($errorEnDatos==true)
 {
 	echo("Comprobar los datos de entrada. <br/>");
