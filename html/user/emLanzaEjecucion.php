@@ -307,6 +307,7 @@ fclose($fp);
 
 echo "<td>
 <a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
+<a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
 page_tail();
