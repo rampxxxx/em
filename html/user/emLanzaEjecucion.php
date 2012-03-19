@@ -217,13 +217,14 @@ echo "burstGap " . $burstGap . "<br>";
 echo "burstSelect " . $burstSelect . "<br>";
 $haveBurst=false;
 if($burstStart == $burstEnd || $burstGap==0){
+	$burstGap=1;
 	$haveBurst=false;
 }
 else
 {
 	$haveBurst=true;
 }
-for($burstCnt = $burstStart; $burstCnt <= $burstEnd && $haveBurst; $burstCnt+=$burstGap)
+for($burstCnt = $burstStart; $burstCnt <= $burstEnd ; $burstCnt+=$burstGap)
 {
 $salida=shell_exec('echo  ' . ' burstStart ' . $burstStart . ' burstEnd ' . $burstEnd . ' burstGap ' . $burstGap . ' burstCnt ' . $burstCnt .  '  >> /tmp/php.out  2>>/tmp/php.out');
 if($haveBurst)
