@@ -62,8 +62,8 @@ foreach($user_workunits as $user_workunit) {
 	$downloadName1=$name . "_1.gz";
 	$dataDownloadName0="/data/" . $downloadName0 ;
 	$dataDownloadName1="/data/" . $downloadName1 ;
-	echo "<tr><td>" . $user_workunitid . "</td>";
 if($user_workunit["outcome"]==1 && $user_workunit["validate_state"] == 1){
+	echo "<tr><td>" . $user_workunitid . "</td>";
 $dataAvailable=1;
 	echo "<td><a href=" . $dataDownloadName0 . ">" . $downloadName0 . "</a>" . "</td>";
 	echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
@@ -77,8 +77,12 @@ echo "<td>
 	echo " </tr>"
 		;
 }else{
+if($user_workunit["outcome"]==0 && $user_workunit["validate_state"] == 0){
+// No error , just waiting.
+	echo "<tr><td>" . $user_workunitid . "</td>";
 	echo "<td>" . $downloadName0 . " STILL NOT READY" . "</td>";
 	echo "<td>" . $downloadName1 . " STILL NOT READY" . "</td>";
+}
 }
 }
 
