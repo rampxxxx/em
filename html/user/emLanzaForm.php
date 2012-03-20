@@ -50,7 +50,7 @@ const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
 $models = array(
     "None Yet " => "99",
     "Ischemic Zone" => "-1",
-    "Roger & McCulloc " => "0",
+    "Roger  McCulloc " => "0",
     "Ten Tusscher ENDO" => "1",
     "Ten Tusscher MID " => "2",
     "Ten Tusscher EPI " => "3",
@@ -97,7 +97,8 @@ echo "
 ////////////////////////////////////////////////////
 ///   Declaracion, inicializacion de variables /////
 ////////////////////////////////////////////////////
-var cur;
+var params;
+var currents;
 var numeroStim = 9;
 var numeroParameter = 1;
 var numeroParSave = 1;
@@ -120,11 +121,11 @@ document.getElementById('tra').innerHTML = 'addParSaveTable!! ';
 
 var restoSelect='';
 var ii=0;
-for(var i=0;i<cur.length;i++)
+for(var i=0;i<params.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
-	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
 
@@ -138,15 +139,16 @@ numeroParSave+=1;
 ////////////////////////////////////////////////////
 function addParameterTable()
 {
-document.getElementById('tra').innerHTML = 'addParameterTable!! '; 
+document.getElementById('tra').innerHTML = 'addParameterTable!!=> '; 
+document.getElementById('tra').innerHTML = params.length; 
 
 var restoSelect='';
 var ii=0;
-for(var i=0;i<cur.length;i++)
+for(var i=0;i<params.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
-	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
 
@@ -164,11 +166,11 @@ document.getElementById('tra').innerHTML = 'addBurst!! ';
 deleteBurst();
 var restoSelect='';
 var ii=0;
-for(var i=0;i<cur.length;i++)
+for(var i=0;i<params.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' cur text !! ' + cur[i]; 
-	restoSelect+='<option value=' + ii + ' >' + cur[i] + '</option>';
+	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
 
@@ -240,30 +242,57 @@ function populate(o)
 	document.getElementById('tra').innerHTML = 'dentro!! '; 
 	//if(!d){return;}			
 	document.getElementById('tra').innerHTML += 'd existe!! '; 
-	var mitems=new Array();
-	mitems['Ischemic Zone']=['v1','v2','G'];
-	mitems['Roger & McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
-	mitems['Ten Tusscher ENDO']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
-	mitems['Ten Tusscher MID']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
-	mitems['Ten Tusscher EPI']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
-	mitems['Leo Rudy ENDO']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
-	mitems['Leo Rudy MID']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
-	mitems['Leo Rudy EPI']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
-	mitems['Fenton Karma ENDO']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
-	mitems['Fenton Karma MID']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
-	mitems['Fenton Karma EPI']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
-	mitems['Nygren']=['pna', 'gcal', 'gt', 'gsus', 'gkfast', 'gkslow', 'gk1', 'gbna', 'gbca', 'taufl1', 'Vhm', 'Vrm', 'Ddof' ];
-	mitems['Purkinje Stewart']=['pKNa', 'GKr', 'GK1', 'GKs', 'Gto', 'GNa', 'GCaL', 'GbNa', 'GbCa', 'GpCa', 'GpK', 'PNaK', 'kNaCa', 'Ko', 'Nao', 'Cao', 'Gsus', 'GfK', 'GfNa'];
-	mitems['Grandi ENDO']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtos', 'Gtof', 'GNa', 'GCa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCab', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi'];
-	mitems['Grandi EPI']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtos', 'Gtof', 'GNa', 'GCa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCab', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi'];
-	mitems['Carro ENDO']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
-	mitems['Carro EPI']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
-	mitems['Grandi Heart Failure ENDO']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauINaL', 'Gtos', 'Gtof'];
-	mitems['Grandi Heart Failure EPI']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
-	mitems['GPV']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtof', 'Gkur', 'ACh', 'GNa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCaB', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi', 'ATPi', 'kATP', 'GKATP', 'GNaL', 'Chlor', ];
-	document.getElementById('tra').innerHTML += ' array de datos'; 
-	cur=mitems[o.options[o.selectedIndex].text];
+	var parData=new Array();
+	parData['Ischemic Zone']=['v1','v2','G'];
+	parData['Roger  McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
+	parData['Ten Tusscher ENDO']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	parData['Ten Tusscher MID']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	parData['Ten Tusscher EPI']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
+	parData['Leo Rudy ENDO']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
+	parData['Leo Rudy MID']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
+	parData['Leo Rudy EPI']=['Max. Conductance of the Na Channel (mS/uF)','ICaL channel conduction reduction factor','Max. Conductance of T Ca Channel (nS/uF)','Max. Conductance of IKr (nS/uF)', 'Max. Conductance of IKs (nS/uF)', 'Max. Conductance of IK1 (nS/uF)', 'Max. Conductance of IKp (nS/uF)', 'Maximum conductance of IKNa (mS/uF)', 'Channel density, channels/cm^2, IKATP', 'Nominal Conductance, IKATP', 'Intracellular ATP concentration, IKATP', 'Intracellular ADP concentration, IKATP', 'Max conductance of Ito', 'Scaling factor for inaca (uA/uF)', 'Max. current through Na-K pump (uA/uF)', 'Max. Ca current through sarcolemmal Ca pump (uA/uF)', 'Max conductance of Ca background current', 'Max conductance of Na background current (In the paper is 0.00141)', 'Max. current through iup channel (mM/ms)', 'Extracellular Na Concentration (mM)', 'Extracellular K Concentration (mM)', 'Extracellular Ca Concentration (mM)'];
+	parData['Fenton Karma ENDO']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
+	parData['Fenton Karma MID']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
+	parData['Fenton Karma EPI']=['Vscl', 'Voff', 'uo', 'tetv', 'tetw', 'invtvp', 'ts1', 'ks', 'us', 'uu', 'tetvm', 'teto', 'tv1m', 'tv2m', 'tw1m', 'tw2m', 'kwm', 'uwm', 'invtwp', 'invtfi', 'to1', 'to2', 'tso1', 'tso2', 'kso', 'uso', 'ts2', 'invtsi', 'invtwinf', 'twinfst' ];
+	parData['Nygren']=['pna', 'gcal', 'gt', 'gsus', 'gkfast', 'gkslow', 'gk1', 'gbna', 'gbca', 'taufl1', 'Vhm', 'Vrm', 'Ddof' ];
+	parData['Purkinje Stewart']=['pKNa', 'GKr', 'GK1', 'GKs', 'Gto', 'GNa', 'GCaL', 'GbNa', 'GbCa', 'GpCa', 'GpK', 'PNaK', 'kNaCa', 'Ko', 'Nao', 'Cao', 'Gsus', 'GfK', 'GfNa'];
+	parData['Grandi ENDO']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtos', 'Gtof', 'GNa', 'GCa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCab', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi'];
+	parData['Grandi EPI']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtos', 'Gtof', 'GNa', 'GCa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCab', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi'];
+	parData['Carro ENDO']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
+	parData['Carro EPI']=['GCal', 'tauf', 'tauf2', 'GKr', 'GKs', 'tauxs', 'GK1', 'GNaK', 'Gncx', 'Gto', 'GNa', 'Ko', 'Gtos', 'Gtof'];
+	parData['Grandi Heart Failure ENDO']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauINaL', 'Gtos', 'Gtof'];
+	parData['Grandi Heart Failure EPI']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
+	parData['GPV']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtof', 'Gkur', 'ACh', 'GNa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCaB', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi', 'ATPi', 'kATP', 'GKATP', 'GNaL', 'Chlor'];
+	document.getElementById('tra').innerHTML += ' array de datos '; 
+
+
+	var parCurr=new Array();
+	parCurr['Ischemic Zone']=[];
+	parCurr['Roger  McCulloc']=[];
+	parCurr['Ten Tusscher ENDO']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
+	parCurr['Ten Tusscher MID']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
+	parCurr['Ten Tusscher EPI']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
+	parCurr['Leo Rudy ENDO']=['Fast Na Current (uA/uF)','Ca current through L-type Ca channel (uA/uF)','Na current through L-type Ca channel (uA/uF)','K current through L-type Ca channel (uA/uF)','Ca current through T-type Ca channel (uA/uF)','Rapidly Activating K Current (uA/uF)','Slowly Activating K Current (uA/uF)','Time-independant K current (uA/uF)','Plateau K current (uA/uF)','Na activated K channel','ATP-sensitive K current (uA/uF)','Transient outward current','NaCa exchanger current (uA/uF)','NaK pump current (uA/uF)','Non-specific Na current (uA/uF)','Non-specific K current (uA/uF)','Sarcolemmal Ca pump current (uA/uF)','Ca background current (uA/uF)','Na background current (uA/uF)','Total Na Ion Flow (uA/uF)','Total K Ion Flow (uA/uF)','Total Ca Ion Flow (uA/uF)','New rate of change of Ca entry','Total Current'];
+	parCurr['Leo Rudy MID']=['Fast Na Current (uA/uF)','Ca current through L-type Ca channel (uA/uF)','Na current through L-type Ca channel (uA/uF)','K current through L-type Ca channel (uA/uF)','Ca current through T-type Ca channel (uA/uF)','Rapidly Activating K Current (uA/uF)','Slowly Activating K Current (uA/uF)','Time-independant K current (uA/uF)','Plateau K current (uA/uF)','Na activated K channel','ATP-sensitive K current (uA/uF)','Transient outward current','NaCa exchanger current (uA/uF)','NaK pump current (uA/uF)','Non-specific Na current (uA/uF)','Non-specific K current (uA/uF)','Sarcolemmal Ca pump current (uA/uF)','Ca background current (uA/uF)','Na background current (uA/uF)','Total Na Ion Flow (uA/uF)','Total K Ion Flow (uA/uF)','Total Ca Ion Flow (uA/uF)','New rate of change of Ca entry','Total Current'];
+	parCurr['Leo Rudy EPI']=['Fast Na Current (uA/uF)','Ca current through L-type Ca channel (uA/uF)','Na current through L-type Ca channel (uA/uF)','K current through L-type Ca channel (uA/uF)','Ca current through T-type Ca channel (uA/uF)','Rapidly Activating K Current (uA/uF)','Slowly Activating K Current (uA/uF)','Time-independant K current (uA/uF)','Plateau K current (uA/uF)','Na activated K channel','ATP-sensitive K current (uA/uF)','Transient outward current','NaCa exchanger current (uA/uF)','NaK pump current (uA/uF)','Non-specific Na current (uA/uF)','Non-specific K current (uA/uF)','Sarcolemmal Ca pump current (uA/uF)','Ca background current (uA/uF)','Na background current (uA/uF)','Total Na Ion Flow (uA/uF)','Total K Ion Flow (uA/uF)','Total Ca Ion Flow (uA/uF)','New rate of change of Ca entry','Total Current'];
+	parCurr['Fenton Karma ENDO']=['Ifi','Iso','Isi'];
+	parCurr['Fenton Karma MID']=['Ifi','Iso','Isi'];
+	parCurr['Fenton Karma EPI']=['Ifi','Iso','Isi'];
+	parCurr['Nygren']=['INA','ICAL','ek','It','Isus','IKr','IKs','IK','IK1','ena','IBNA','IBCA','IB','ICAP','INAK','IUP','IREL','Iion'];
+	parCurr['Purkinje Stewart']=['IK1','Ito','Isus','INa','ICaL','IKs','IKr','INaCa','INaK','IpCa','IpK','IbNa','IbCa','IfNa','IfK'];
+	parCurr['Grandi ENDO']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSrLl','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['Grandi EPI']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSrLl','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['Carro ENDO']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','Ikp','Itos','Itof','Ito','IK1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['CarroEPI']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','Ikp','Itos','Itof','Ito','IK1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['Grandi Heart Failure ENDO']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['Grandi Heart Failure EPI']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['GPV']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','I_kur','I_KACh','I_KATP','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+
+params=parData[o.options[o.selectedIndex].text];
+currents=parCurr[o.options[o.selectedIndex].text];
 	document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
+	document.getElementById('tra').innerHTML += ' Current size=>' + currents.length;
+	document.getElementById('tra').innerHTML += ' Params size=>' + params.length;
 }
 
 </script>";
