@@ -102,6 +102,7 @@ var currents;
 var numeroStim = 9;
 var numeroParameter = 1;
 var numeroParSave = 1;
+var numeroCurSave = 1;
 ////////////////////////////////////////////////////
 ///   Añade input de Stimulus                  /////
 ////////////////////////////////////////////////////
@@ -132,6 +133,36 @@ for(var i=0;i<params.length;i++)
 $(\"ss\").append(\"<sss> <select name=parSave\" + numeroParSave + \" > \" + restoSelect + \"</select><br> </sss> \" ); 
 
 numeroParSave+=1;
+
+}
+////////////////////////////////////////////////////
+///   Añade select de CurSave                /////
+////////////////////////////////////////////////////
+function addCurSave()
+{
+document.getElementById('tra').innerHTML = 'addCurSaveTable!! '; 
+
+var restoSelect='';
+var ii=0;
+if(currents.length!=0){
+	for(var i=0;i<currents.length;i++)
+	{
+		ii=i+1;
+		document.getElementById('tra').innerHTML += ' currents text !! ' + currents[i]; 
+		restoSelect+='<option value=' + ii + ' >' + currents[i] + '</option>';
+	}
+}
+else
+{
+	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
+}
+
+document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
+
+$(\"sc\").append(\"<scc> <select name=curSave\" + numeroCurSave + \" > \" + restoSelect + \"</select><br> </scc> \" ); 
+
+document.getElementById('tra').innerHTML += 'Despues de append'; 
+numeroCurSave+=1;
 
 }
 ////////////////////////////////////////////////////
@@ -194,6 +225,13 @@ function inicializaNumeroParSave()
 numeroParSave=1;
 }
 ////////////////////////////////////////////////////
+///   Inicializa contador de id select CurSave ///
+////////////////////////////////////////////////////
+function inicializaNumeroCurSave()
+{
+numeroCurSave=1;
+}
+////////////////////////////////////////////////////
 ///   Inicializa contador de id Stim ///
 ////////////////////////////////////////////////////
 function inicializaNumeroStim()
@@ -218,10 +256,18 @@ $(\"sbb\").remove();
 /////////////////////////////////
 // Delete new ParSave 'select'.
 /////////////////////////////////
-function deleteParSaveTable()
+function deleteParSave()
 {
 inicializaNumeroParSave();
 $(\"sss\").remove();
+}
+/////////////////////////////////
+// Delete new CurSave 'select'.
+/////////////////////////////////
+function deleteCurSave()
+{
+inicializaNumeroCurSave();
+$(\"scc\").remove();
 }
 /////////////////////////////////
 // Delete new Parameter 'select'.
@@ -305,6 +351,8 @@ echo "<input type=\"button\" value=\"Add Stimulus\" onclick=\"addStim();\" />";
 echo "<input type=\"button\" value=\"Del Stimulus\" onclick=\"deleteStim();\" />";
 echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave();\" />";
 echo "<input type=\"button\" value=\"Del Save Parameter\" onclick=\"deleteParSave();\" />";
+echo "<input type=\"button\" value=\"Add Save Currents\" onclick=\"addCurSave();\" />";
+echo "<input type=\"button\" value=\"Del Save Currents\" onclick=\"deleteCurSave();\" />";
 echo form_tokens($user->authenticator);
 start_table();
 row2(tra("ALIAS %1 Friendly name %2", "<br><span class=note>", "</span>"),
@@ -334,8 +382,7 @@ row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk 
     "<ss> </ss>"
 );
 row2(tra("#FILE_CURRENTS %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
-    "         <input type=radio name=saveCurr value=1> Yes<br>
-<input type=radio name=saveCurr value=0 checked> No<br> "
+    "<sc> </sc>"
 );
 
 row2("", "<input type=submit value='Go!'>");

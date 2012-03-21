@@ -58,6 +58,7 @@ echo $_REQUEST["post"] . "<br/>";
 $contador=1;
 $indiceParametros=1;
 $indiceParSave=1;
+$indiceCurSave=1;
 $indiceStimulus=1;
 $burstCnt=0;
 $burstSelect=0;
@@ -162,6 +163,11 @@ foreach($_REQUEST as $name => $value)
 		$indiceParSave=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
 		$paraSaveArray[$indiceParSave++]=$value;
 	}
+	else if(stristr($name, 'curSave') != FALSE) 
+	{
+		$indiceCurSave=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
+		$curSaveArray[$indiceCurSave++]=$value;
+	}
 	else if(stristr($name, 'saveCurr') != FALSE) 
 	{
 		$saveCurr=$value;
@@ -181,6 +187,11 @@ foreach($paraSaveArray as $id => $par)
 {
 echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 }
+echo "Muestra array de cur save <br>";
+foreach($curSaveArray as $id => $par)
+{
+echo " id:(" . $id . ")"  . " Cur : (" . $par . ")<br>";
+}
 echo "Muestra array de PARAMETROS <br>";
 foreach($parametros as $id => $par)
 {
@@ -188,9 +199,9 @@ echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 }
 
 
-echo "saveCurr :" . $saveCurr . "<br>";
 echo "count(paraSaveArray) :" . count($paraSaveArray) . "<br>";
-if(count($paraSaveArray)==0 && $saveCurr == 0){
+echo "count(curSaveArray) :" . count($curSaveArray) . "<br>";
+if(count($paraSaveArray)==0 && count($curSaveArray)== 0){
 	$errorEnDatos=true;
 	echo "Sin seleccion de parametros a disto o corrientes a disco <br>";
 	echo "NO SE VAN A GENERAR DATOS :-)<br>";
@@ -272,6 +283,7 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
 
     fwrite($fp, "#FILE_PARAMETERS\n");
     fwrite($fp, (string)count($paraSaveArray));
+    //$paramForSave='';
     foreach($paraSaveArray as $id => $value)
     {
 	    $paramForSave = $paramForSave . " " . $value;
@@ -279,14 +291,21 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
     fwrite($fp, $paramForSave . "\n");
 
     fwrite($fp, "#FILE_CURRENTS\n");
-if($saveCurr == 0)
-{
-    fwrite($fp, "0" . "\n");//Fichero vacio
-}
-else
-{
-    fwrite($fp, "1 0" . "\n");//Fichero campleto
-}
+    if(count($curSaveArray) == 0)
+    {
+	    fwrite($fp, "0" . "\n");//Fichero vacio
+    }
+    else
+    {
+	    fwrite($fp, (string)count($curSaveArray));
+	    //$curForSave='';
+	    foreach($curSaveArray as $id => $value)
+	    {
+		    $curForSave = $curForSave . " " . $value;
+	    }
+	    fwrite($fp, $curForSave . "\n");
+    }
+
 
     fwrite($fp, "#END\n");
 ///////////////////////////////
