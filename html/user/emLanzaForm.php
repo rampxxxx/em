@@ -50,7 +50,7 @@ const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
 $models = array(
     "None Yet " => "99",
     "Ischemic Zone" => "-1",
-    "Roger  McCulloc " => "0",
+    "Roger McCulloc" => "0",
     "Ten Tusscher ENDO" => "1",
     "Ten Tusscher MID " => "2",
     "Ten Tusscher EPI " => "3",
@@ -290,7 +290,7 @@ function populate(o)
 	document.getElementById('tra').innerHTML += 'd existe!! '; 
 	var parData=new Array();
 	parData['Ischemic Zone']=['v1','v2','G'];
-	parData['Roger  McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
+	parData['Roger McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
 	parData['Ten Tusscher ENDO']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
 	parData['Ten Tusscher MID']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
 	parData['Ten Tusscher EPI']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
@@ -314,7 +314,7 @@ function populate(o)
 
 	var parCurr=new Array();
 	parCurr['Ischemic Zone']=[];
-	parCurr['Roger  McCulloc']=[];
+	parCurr['Roger McCulloc']=[];
 	parCurr['Ten Tusscher ENDO']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
 	parCurr['Ten Tusscher MID']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
 	parCurr['Ten Tusscher EPI']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
