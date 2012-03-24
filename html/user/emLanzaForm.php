@@ -282,17 +282,17 @@ var restoSelect='';
 var ii=0;
 if(currents.length!=0){
 	restoSelect=montaSelCurSave();
+document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
+
+montaAppendCurSave(restoSelect, numeroCurSave);
+document.getElementById('tra').innerHTML += 'Despues de append'; 
+numeroCurSave+=1;
 }
 else
 {
 	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
 }
 
-document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
-
-montaAppendCurSave(restoSelect, numeroCurSave);
-document.getElementById('tra').innerHTML += 'Despues de append'; 
-numeroCurSave+=1;
 
 }
 ////////////////////////////////////////////////////
@@ -303,6 +303,7 @@ function addAllCurSave()
 document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
 var restoSelect='';
+if(currents.length!=0){
 for(var i=0;i<currents.length;i++)
 {
 document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllParSave; 
@@ -310,7 +311,11 @@ document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllPa
 	montaAppendCurSave(restoSelect, numeroAllCurSave);
 	numeroAllCurSave+=1;
 }
-
+}
+else
+{
+	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
+}
 }
 ////////////////////////////////////////////////////
 ///   Añade select de Parameter                /////
@@ -399,31 +404,51 @@ numeroStim=9;
 /////////////////////////////////
 function deleteParameterTable()
 {
+	document.getElementById('tra').innerHTML = ' Borrando campos. numeroParameter ' + numeroParameter; 
+
+for(var i = 1; i<= numeroParameter;i++)
+{
+	document.getElementById('tra').innerHTML += ' xs' + i ; 
+$('xs'+i).remove();
+}
+
 inicializaNumeroParameter();
-$(\"spp\").remove();
 }
 /////////////////////////////////
 // Delete new Burst 'select'.
 /////////////////////////////////
 function deleteBurst()
 {
-$(\"sbb\").remove();
+
+$('ys').remove();
+
 }
 /////////////////////////////////
 // Delete new ParSave 'select'.
 /////////////////////////////////
 function deleteParSave()
 {
+
+for(var i = 1; i<= numeroParSave;i++)
+{
+$('vs'+i).remove();
+}
+
 inicializaNumeroParSave();
-$(\"sss\").remove();
 }
 /////////////////////////////////
 // Delete new CurSave 'select'.
 /////////////////////////////////
 function deleteCurSave()
 {
-inicializaNumeroCurSave();
 $(\"scc\").remove();
+
+for(var i = 1; i<= numeroCurSave;i++)
+{
+$('ws'+i).remove();
+}
+
+inicializaNumeroCurSave();
 }
 /////////////////////////////////
 // Delete new Parameter 'select'.
@@ -439,9 +464,12 @@ $(\"stt\").remove();
 function populate(o)
 {
 	deleteParameterTable();//delete previous params.
+	deleteBurst();
+	deleteParSave();
+	deleteCurSave();
 	numeroParameter=1;
 	//d=document.getElementById('de');
-	document.getElementById('tra').innerHTML = 'dentro!! '; 
+	document.getElementById('tra').innerHTML += 'dentro!! '; 
 	//if(!d){return;}			
 	document.getElementById('tra').innerHTML += 'd existe!! '; 
 	var parData=new Array();
