@@ -127,7 +127,7 @@ var elementoSimple = 'z'+numeroStim;
 var elementoComplejo = 'zs'+numeroStim;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"st\").append('<' + elementoComplejo + '>' + code +  'Start<input name=stimStart' + numeroStim + ' type=text size=5 >BCL<input name=stimBcl' + numeroStim + ' type=text size=5 >Duration<input name=stimDur' + numeroStim + ' type=text size=5 >Current<input name=stimCur' + numeroStim + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '<'+elementoComplejo+'/>' ); 
+$(\"st\").append('<' + elementoComplejo + '>' + code +  'Start<input name=stimStart' + numeroStim + ' type=text size=5 >BCL<input name=stimBcl' + numeroStim + ' type=text size=5 >Duration<input name=stimDur' + numeroStim + ' type=text size=5 >Current<input name=stimCur' + numeroStim + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroStim+=1;
 }
 ////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elem
 
 
 
-$(\"ss\").append('<'+ elementoComplejo + '>' + ' <select name=parSave' + numeroParSave + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
+$(\"ss\").append('<'+ elementoComplejo + '>' + code +  ' <select name=parSave' + numeroParSave + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
 
 numeroParSave+=1;
 
@@ -180,7 +180,10 @@ else
 
 document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
 
-$(\"sc\").append(\"<scc> <select name=curSave\" + numeroCurSave + \" > \" + restoSelect + \"</select><br> </scc> \" ); 
+var elementoSimple = 'w'+numeroCurSave;
+var elementoComplejo = 'ws'+numeroCurSave;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+$(\"sc\").append('<'+ elementoComplejo + '>' + code + ' <select name=curSave' + numeroCurSave + ' > ' + restoSelect + '</select> ' + '<' + elementoSimple + '>X</'+ elementoSimple + '>' + '<br>' +  '</' + elementoComplejo + '>' ); 
 
 document.getElementById('tra').innerHTML += 'Despues de append'; 
 numeroCurSave+=1;
@@ -374,10 +377,6 @@ currents=parCurr[o.options[o.selectedIndex].text];
 
 </script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
-echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave();\" />";
-echo "<input type=\"button\" value=\"Del Save Parameter\" onclick=\"deleteParSave();\" />";
-echo "<input type=\"button\" value=\"Add Save Currents\" onclick=\"addCurSave();\" />";
-echo "<input type=\"button\" value=\"Del Save Currents\" onclick=\"deleteCurSave();\" />";
 echo form_tokens($user->authenticator);
 start_table();
 row2(tra("ALIAS %1 Friendly name %2", "<br><span class=note>", "</span>"),
