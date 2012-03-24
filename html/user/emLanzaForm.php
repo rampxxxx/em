@@ -106,6 +106,8 @@ echo "
   allFileParameters:hover { background:green; }
   fileCurrents { color:blue; margin:5px; cursor:pointer; }
   fileCurrents:hover { background:green; }
+  allFileCurrents { color:blue; margin:5px; cursor:pointer; }
+  allFileCurrents:hover { background:green; }
   </style>
 
 <script> 
@@ -118,6 +120,7 @@ var numeroStim = 9;
 var numeroParameter = 1;
 var numeroParSave = 1;
 var numeroAllParSave = 1;
+var numeroAllCurSave = 1;
 var numeroCurSave = 1;
 ////////////////////////////////////////////////////
 ///   Añade input de Stimulus                  /////
@@ -217,6 +220,58 @@ document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllPa
 
 }
 ////////////////////////////////////////////////////
+///   Monta append Corrientes a Disco        /////
+////////////////////////////////////////////////////
+function montaAppendCurSave(restoSelect, numero)
+{
+var elementoSimple = 'w'+numero;
+var elementoComplejo = 'ws'+numero;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+
+
+$(\"sc\").append('<'+ elementoComplejo + '>' + code +  ' <select name=parSave' + numero + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
+}
+////////////////////////////////////////////////////
+///   Monta select Corrientes a Disco        /////
+////////////////////////////////////////////////////
+function montaAppendSelCurSave(index)
+{
+var sel='';
+var ii=0;
+for(var i=0;i<currents.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
+	if(i==index)
+	{
+	document.getElementById('tra').innerHTML += ' BINGO!';
+		sel+='<option value=' + ii + ' selected >' + currents[i] + '</option>';
+	}
+	else
+	{
+	document.getElementById('tra').innerHTML += ' OPS!';
+		sel+='<option value=' + ii + ' >' + currents[i] + '</option>';
+	}
+}
+return sel;
+}
+////////////////////////////////////////////////////
+///   Monta select Parametros a Disco        /////
+////////////////////////////////////////////////////
+function montaSelCurSave()
+{
+var sel='';
+var ii=0;
+for(var i=0;i<params.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+	sel+='<option value=' + ii + ' >' + params[i] + '</option>';
+}
+return sel;
+}
+////////////////////////////////////////////////////
 ///   Añade select de CurSave                /////
 ////////////////////////////////////////////////////
 function addCurSave()
@@ -226,12 +281,7 @@ document.getElementById('tra').innerHTML = 'addCurSaveTable!! ';
 var restoSelect='';
 var ii=0;
 if(currents.length!=0){
-	for(var i=0;i<currents.length;i++)
-	{
-		ii=i+1;
-		document.getElementById('tra').innerHTML += ' currents text !! ' + currents[i]; 
-		restoSelect+='<option value=' + ii + ' >' + currents[i] + '</option>';
-	}
+	restoSelect=montaSelCurSave();
 }
 else
 {
@@ -240,13 +290,26 @@ else
 
 document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
 
-var elementoSimple = 'w'+numeroCurSave;
-var elementoComplejo = 'ws'+numeroCurSave;
-var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
-$(\"sc\").append('<'+ elementoComplejo + '>' + code + ' <select name=curSave' + numeroCurSave + ' > ' + restoSelect + '</select> ' + '<' + elementoSimple + '>X</'+ elementoSimple + '>' + '<br>' +  '</' + elementoComplejo + '>' ); 
-
+montaAppendCurSave(restoSelect, numeroCurSave);
 document.getElementById('tra').innerHTML += 'Despues de append'; 
 numeroCurSave+=1;
+
+}
+////////////////////////////////////////////////////
+///   Añade todas las corrientes             /////
+////////////////////////////////////////////////////
+function addAllCurSave()
+{
+document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
+
+var restoSelect='';
+for(var i=0;i<currents.length;i++)
+{
+document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllParSave; 
+	restoSelect=montaAppendSelCurSave(i);
+	montaAppendCurSave(restoSelect, numeroAllCurSave);
+	numeroAllCurSave+=1;
+}
 
 }
 ////////////////////////////////////////////////////
@@ -495,11 +558,14 @@ addAllParSave();
     </script>"
 
 );
-row2(tra("<fileCurrents>#FILE_CURRENTS</fileCurrents> %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
+row2(tra("<fileCurrents>#FILE_CURRENTS</fileCurrents> %1 <allFileCurrents>ADD ALL CURRENTS</allFileCurrents> %2", "<br><span class=note>", "</span>"),
     "<sc> </sc>
     <script>
     $(\"fileCurrents\").click(function () {
 addCurSave();
+});
+    $(\"allFileCurrents\").click(function () {
+addAllCurSave();
 });
     </script>"
 
