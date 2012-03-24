@@ -93,6 +93,13 @@ $user = get_logged_in_user();
 page_head(tra("Simulation Workunit Creation"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "
+  <style>
+  parametro { color:blue; margin:5px; cursor:pointer; }
+  parametro:hover { background:green; }
+  dparametro { color:blue; margin:5px; cursor:pointer; }
+  dparametro:hover { background:red; }
+  </style>
+
 <script> 
 ////////////////////////////////////////////////////
 ///   Declaracion, inicializacion de variables /////
@@ -183,7 +190,9 @@ for(var i=0;i<params.length;i++)
 }
 
 
-$(\"sp\").append(\"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameterInput\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
+var code = '<script>$(\"x1\").click(function(){alert(\"Hi!\");});</scr'+'ipt>';
+
+$(\"sp\").append(\"<x\" + numeroParameter + \">X  </x\" + numeroParameter + \">\" + code +  \"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameterInput\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
 
 numeroParameter+=1;
 
@@ -341,6 +350,7 @@ currents=parCurr[o.options[o.selectedIndex].text];
 	document.getElementById('tra').innerHTML += ' Params size=>' + params.length;
 }
 
+
 </script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
 echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable();\" />";
@@ -363,8 +373,19 @@ row2_init(tra("#MODEL"),
 );
 print_model_select();
 echo "</select></td></tr>\n";
-row2(tra("#PARAMETERS %1 It is defining a mask values %2", "<br><span class=note>", "</span>"),
-    "<sp > </sp> "
+row2(tra("<parametro> ADD PARAMETERS </parametro> %1 <dparametro> DEL PARAMETERS</dparametro> %2 ", "<br><span class=note>", "</span>"),
+    "<sp > </sp> 
+<script>
+
+    $(\"parametro\").click(function () {
+  addParameterTable();
+});
+    $(\"dparametro\").click(function () {
+  deleteParameterTable();
+});
+
+
+</script>"
 );
 row2(tra("BURST %1 It allows create a sort of tasks by telling star,end and gap%2", "<br><span class=note>", "</span>"),
     "<sb > </sb> "
