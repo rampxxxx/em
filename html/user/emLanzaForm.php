@@ -96,8 +96,14 @@ echo "
   <style>
   parametro { color:blue; margin:5px; cursor:pointer; }
   parametro:hover { background:green; }
-  dparametro { color:blue; margin:5px; cursor:pointer; }
-  dparametro:hover { background:red; }
+  burst { color:blue; margin:5px; cursor:pointer; }
+  burst:hover { background:green; }
+  stimulus { color:blue; margin:5px; cursor:pointer; }
+  stimulus:hover { background:green; }
+  fileParameters { color:blue; margin:5px; cursor:pointer; }
+  fileParameters:hover { background:green; }
+  fileCurrents { color:blue; margin:5px; cursor:pointer; }
+  fileCurrents:hover { background:green; }
   </style>
 
 <script> 
@@ -117,7 +123,11 @@ function addStim()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
-$(\"st\").append(\"<stt>Start<input name=stimStart\" + numeroStim + \" type=text size=5 >BCL<input name=stimBcl\" + numeroStim + \" type=text size=5 >Duration<input name=stimDur\" + numeroStim + \" type=text size=5 >Current<input name=stimCur\" + numeroStim + \" type=text size=5 ><br> </stt>\" ); 
+var elementoSimple = 'z'+numeroStim;
+var elementoComplejo = 'zs'+numeroStim;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+$(\"st\").append('<' + elementoComplejo + '>' + code +  'Start<input name=stimStart' + numeroStim + ' type=text size=5 >BCL<input name=stimBcl' + numeroStim + ' type=text size=5 >Duration<input name=stimDur' + numeroStim + ' type=text size=5 >Current<input name=stimCur' + numeroStim + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '<'+elementoComplejo+'/>' ); 
 numeroStim+=1;
 }
 ////////////////////////////////////////////////////
@@ -135,9 +145,13 @@ for(var i=0;i<params.length;i++)
 	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
 	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
+var elementoSimple = 'v'+numeroParSave;
+var elementoComplejo = 'vs'+numeroParSave;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
 
-$(\"ss\").append(\"<sss> <select name=parSave\" + numeroParSave + \" > \" + restoSelect + \"</select><br> </sss> \" ); 
+
+$(\"ss\").append('<'+ elementoComplejo + '>' + ' <select name=parSave' + numeroParSave + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
 
 numeroParSave+=1;
 
@@ -190,7 +204,7 @@ for(var i=0;i<params.length;i++)
 }
 
 
-var code = '<script>$(\"x' + numeroParameter + '\").click(function(){\$(\"' + 'xs' + numeroParameter + '\").remove();});</scr'+'ipt>' + '<style>' + 'x' + numeroParameter + ':hover { background:red; } ' + '</style>';
+var code = '<script>$(\"x' + numeroParameter + '\").click(function(){\$(\"' + 'xs' + numeroParameter + '\").remove();});</scr'+'ipt>' + '<style>' + 'x' + numeroParameter + ':hover { background:red; } ' + 'x' + numeroParameter + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
 $(\"sp\").append( '<xs' + numeroParameter + '>' +  code + '<select name=parameterSelect' + numeroParameter + '>' + restoSelect + '</select><input name=parameterInput' + numeroParameter + ' type=text size=30 >' +  '<x' + numeroParameter + '>X  </x' + numeroParameter + '>'       + '<br>' +  '</xs' + numeroParameter + '>'  ); 
 
@@ -213,9 +227,16 @@ for(var i=0;i<params.length;i++)
 	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
+	document.getElementById('tra').innerHTML += ' continuo ...';
 
-$(\"sb\").append(\"<sbb> <select name=burstSelect > \" + restoSelect + \"</select>Start<input name=burstStart type=text size=5 >End<input name=burstEnd type=text size=5 >Gap<input name=burstGap type=text size=5 ><br> </sbb> \" ); 
+var elemento = 'y' ;
+var code = '<script>$(\"' + elemento + '\").click(function(){\$(\"' + 'ys' + '\").remove();});</scr'+'ipt>' + '<style>' + elemento + ':hover { background:red; } ' + elemento + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
+	document.getElementById('tra').innerHTML += ' mas ...';
+$(\"sb\").append('<ys' + '>' + code + ' <select name=burstSelect > ' + restoSelect + '</select>Start<input name=burstStart type=text size=5 >End<input name=burstEnd type=text size=5 >Gap<input name=burstGap type=text size=5 > ' +  '<' + elemento + '>X  </' + elemento + '>    <br> </ys' + '>' ); 
+//$(\"sb\").append('mierda');
+
+	document.getElementById('tra').innerHTML += ' fin ...';
 numeroBurst+=1;
 
 }
@@ -353,12 +374,6 @@ currents=parCurr[o.options[o.selectedIndex].text];
 
 </script>";
 echo "<form method=get action=emLanzaEjecucion.php>";
-echo "<input type=\"button\" value=\"Add Parameter\" onclick=\"addParameterTable();\" />";
-echo "<input type=\"button\" value=\"Del Parameters\" onclick=\"deleteParameterTable();\" />";
-echo "<input type=\"button\" value=\"Add Burst\" onclick=\"addBurst();\" />";
-echo "<input type=\"button\" value=\"Del Burst\" onclick=\"deleteBurst();\" />";
-echo "<input type=\"button\" value=\"Add Stimulus\" onclick=\"addStim();\" />";
-echo "<input type=\"button\" value=\"Del Stimulus\" onclick=\"deleteStim();\" />";
 echo "<input type=\"button\" value=\"Add Save Parameter\" onclick=\"addParSave();\" />";
 echo "<input type=\"button\" value=\"Del Save Parameter\" onclick=\"deleteParSave();\" />";
 echo "<input type=\"button\" value=\"Add Save Currents\" onclick=\"addCurSave();\" />";
@@ -373,37 +388,59 @@ row2_init(tra("#MODEL"),
 );
 print_model_select();
 echo "</select></td></tr>\n";
-row2(tra("<parametro> ADD PARAMETERS </parametro> %1 <dparametro> DEL PARAMETERS</dparametro> %2 ", "<br><span class=note>", "</span>"),
+row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding value to selected params  %2 ", "<br><span class=note>", "</span>"),
     "<sp > </sp> 
-<script>
 
+    <script>
     $(\"parametro\").click(function () {
-  addParameterTable();
+addParameterTable();
 });
-    $(\"dparametro\").click(function () {
-  deleteParameterTable();
-});
+    </script>"
 
-
-</script>"
 );
-row2(tra("BURST %1 It allows create a sort of tasks by telling star,end and gap%2", "<br><span class=note>", "</span>"),
-    "<sb > </sb> "
+row2(tra("<burst>BURST</burst> %1 It allows create a sort of tasks by telling star,end and gap%2", "<br><span class=note>", "</span>"),
+    "<sb > </sb> 
+
+    <script>
+    $(\"burst\").click(function () {
+addBurst();
+});
+    </script>"
+
 );
 row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
     "Simulation initiation at<input name=stepStart type=text size=10 >ending at<input name=stepEnd type=text size=10>Increment <input name=stepIncrement type=text size=10>"
 );
-row2(tra("#STIMULUS %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
-    "<st > </st> "
+row2(tra("<stimulus>#STIMULUS</stimulus> %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
+    "<st > </st> 
+
+    <script>
+    $(\"stimulus\").click(function () {
+addStim();
+});
+    </script>"
+
 );
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
     "First iteration saved is <input name=postFirst type=text size=10 >Saving frecuency <input name=postFrec type=text size=10 >"
 );
-row2(tra("#FILE_PARAMETERS %1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
-    "<ss> </ss>"
+row2(tra("<fileParameters>#FILE_PARAMETERS</fileParameters>%1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
+    "<ss> </ss>
+    <script>
+    $(\"fileParameters\").click(function () {
+addParSave();
+});
+    </script>"
+
 );
-row2(tra("#FILE_CURRENTS %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
-    "<sc> </sc>"
+row2(tra("<fileCurrents>#FILE_CURRENTS</fileCurrents> %1 Defines if the current are going to be saved to disk %2", "<br><span class=note>", "</span>"),
+    "<sc> </sc>
+    <script>
+    $(\"fileCurrents\").click(function () {
+addCurSave();
+});
+    </script>"
+
 );
 
 row2("", "<input type=submit value='Go!'>");
