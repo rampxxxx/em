@@ -190,9 +190,9 @@ for(var i=0;i<params.length;i++)
 }
 
 
-var code = '<script>$(\"x1\").click(function(){alert(\"Hi!\");});</scr'+'ipt>';
+var code = '<script>$(\"x' + numeroParameter + '\").click(function(){\$(\"' + 'xs' + numeroParameter + '\").remove();});</scr'+'ipt>' + '<style>' + 'x' + numeroParameter + ':hover { background:red; } ' + '</style>';
 
-$(\"sp\").append(\"<x\" + numeroParameter + \">X  </x\" + numeroParameter + \">\" + code +  \"<spp> <select name=parameterSelect\" + numeroParameter + \" > \" + restoSelect + \"</select><input name=parameterInput\" + numeroParameter + \" type=text size=30 ><br> </spp> \" ); 
+$(\"sp\").append( '<xs' + numeroParameter + '>' +  code + '<select name=parameterSelect' + numeroParameter + '>' + restoSelect + '</select><input name=parameterInput' + numeroParameter + ' type=text size=30 >' +  '<x' + numeroParameter + '>X  </x' + numeroParameter + '>'       + '<br>' +  '</xs' + numeroParameter + '>'  ); 
 
 numeroParameter+=1;
 
