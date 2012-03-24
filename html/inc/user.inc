@@ -315,6 +315,7 @@ if($user->prefs->special_user[6]==1)
 
     row2(tra("New Task!"), "<a href=\"emLanzaForm.php\">".tra("Create ")."</a>");
     row2(tra("Running Tasks"), "<a href=\"emListTaskForm.php\">".tra("List")."</a>");
+    row2(tra("Model Create/Delete "), "<a href=\"emQueryModelo.php\">".tra("Model")."</a>");
 }
 return;
     if ($user->has_profile) {

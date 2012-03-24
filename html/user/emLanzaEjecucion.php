@@ -5,36 +5,9 @@
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
+require_once("../inc/utilidades.inc");
 
 page_head(tra("Simulation Workunit Creation"));
-
-////////////////////////////////////////////////////
-/// Comprueba si un parametro es Float, saca msg y devuelve estado.
-////////////////////////////////////////////////////
-function compruebaFloat($name,$value)
-{
-	if(filter_var($value, FILTER_VALIDATE_FLOAT))
-	{
-	}else
-	{
-		echo "El parametro " . "(" . $name  . ") NO es FLOAT <br>";
-		$errorEnDatos=true;
-	}
-
-return $errorEnDatos;
-}
-function compruebaInt($name,$value)
-{
-	if(filter_var($value, FILTER_VALIDATE_INT))
-	{
-	}else
-	{
-		echo "El parametro " . "(" . $name  . ") NO es INT <br>";
-		$errorEnDatos=true;
-	}
-
-return $errorEnDatos;
-}
 
 
 

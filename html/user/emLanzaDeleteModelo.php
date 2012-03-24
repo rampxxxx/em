@@ -26,29 +26,17 @@ $user = get_logged_in_user();
 
 foreach($_REQUEST as $name => $value)
 {
-        if(stristr($name, 'modelNumber') != FALSE)
-        {
-                $errorEnDatos=compruebaInt($name, $value);
-                $modelNumber=$value;
-}
-
-}
-
-if($errorEnDatos==false){
-
-$models = get_mysql_model("SELECT modelo_id, nombre FROM modelo  WHERE modelo_id=" . $modelNumber . " order by modelo_id asc ");
-foreach($models as $modelo) 
-{
-        $modelo_id = $modelo["modelo_id"];
-        $nombre = $modelo["nombre"];
+	$modelo_id=$value;
+	$nombre=$name;
 }
 
 
-if($modelo_id==$modelNumber)
-{ // Borrar el modelo existente.
+$result_ok = mysql_query("delete from modelo where modelo_id=".$modelo_id);
 
 
-page_head(tra("Simulation Model Creation/Deletion"));
+
+
+page_head(tra("Simulation Model Deletion"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "
   <style>
@@ -62,10 +50,16 @@ echo "
 ////////////////////////////////////////////////////
 
 </script>";
-echo "<form method=get action=emLanzaDeleteModelo.php>";
 echo form_tokens($user->authenticator);
 start_table();
-row1("Model EXISTS! ", '9');
+if($result_ok)
+{
+row1("Model DELETED! ", '9');
+}
+else
+{
+row1("ERROR deleting model!!! ", '9');
+}
 echo "<tr><td width=\"15\">Model ID</td>";
 echo "<td width=\"15\">" . "Name          " . "</td>\n";
 echo "</tr>";
@@ -78,18 +72,11 @@ echo "<td>";
 echo $nombre;
 echo "</td>";
 echo "</tr>";
-echo "<input type=\"hidden\"  name=". $nombre . " value=" . $modelo_id . " />";
-echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
 end_table();
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 
-}
-else
-{ //Crear un nuevo modelo
-}
-}
 echo "<td>
-<a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
+<a href=\"emQueryModelo.php\">". "Create/Delete Model" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
