@@ -102,6 +102,8 @@ echo "
   stimulus:hover { background:green; }
   fileParameters { color:blue; margin:5px; cursor:pointer; }
   fileParameters:hover { background:green; }
+  allFileParameters { color:blue; margin:5px; cursor:pointer; }
+  allFileParameters:hover { background:green; }
   fileCurrents { color:blue; margin:5px; cursor:pointer; }
   fileCurrents:hover { background:green; }
   </style>
@@ -115,6 +117,7 @@ var currents;
 var numeroStim = 9;
 var numeroParameter = 1;
 var numeroParSave = 1;
+var numeroAllParSave = 1;
 var numeroCurSave = 1;
 ////////////////////////////////////////////////////
 ///   Añade input de Stimulus                  /////
@@ -131,6 +134,58 @@ $(\"st\").append('<' + elementoComplejo + '>' + code +  'Start<input name=stimSt
 numeroStim+=1;
 }
 ////////////////////////////////////////////////////
+///   Monta append Parametros a Disco        /////
+////////////////////////////////////////////////////
+function montaAppendParSave(restoSelect, numero)
+{
+var elementoSimple = 'v'+numero;
+var elementoComplejo = 'vs'+numero;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+
+
+$(\"ss\").append('<'+ elementoComplejo + '>' + code +  ' <select name=parSave' + numero + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
+}
+////////////////////////////////////////////////////
+///   Monta select Parametros a Disco        /////
+////////////////////////////////////////////////////
+function montaAppendSelParSave(index)
+{
+var sel='';
+var ii=0;
+for(var i=0;i<params.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
+	if(i==index)
+	{
+	document.getElementById('tra').innerHTML += ' BINGO!';
+		sel+='<option value=' + ii + ' selected >' + params[i] + '</option>';
+	}
+	else
+	{
+	document.getElementById('tra').innerHTML += ' OPS!';
+		sel+='<option value=' + ii + ' >' + params[i] + '</option>';
+	}
+}
+return sel;
+}
+////////////////////////////////////////////////////
+///   Monta select Parametros a Disco        /////
+////////////////////////////////////////////////////
+function montaSelParSave()
+{
+var sel='';
+var ii=0;
+for(var i=0;i<params.length;i++)
+{
+	ii=i+1;
+	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+	sel+='<option value=' + ii + ' >' + params[i] + '</option>';
+}
+return sel;
+}
+////////////////////////////////////////////////////
 ///   Añade select de ParSave                /////
 ////////////////////////////////////////////////////
 function addParSave()
@@ -138,22 +193,27 @@ function addParSave()
 document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
 var restoSelect='';
-var ii=0;
+restoSelect=montaSelParSave();
+
+montaAppendParSave(restoSelect, numeroParSave);
+numeroParSave+=1;
+
+}
+////////////////////////////////////////////////////
+///   Añade select de ParSave                /////
+////////////////////////////////////////////////////
+function addAllParSave()
+{
+document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
+
+var restoSelect='';
 for(var i=0;i<params.length;i++)
 {
-	ii=i+1;
-	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
-	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
+document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllParSave; 
+	restoSelect=montaAppendSelParSave(i);
+	montaAppendParSave(restoSelect, numeroAllParSave);
+	numeroAllParSave+=1;
 }
-var elementoSimple = 'v'+numeroParSave;
-var elementoComplejo = 'vs'+numeroParSave;
-var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
-
-
-
-$(\"ss\").append('<'+ elementoComplejo + '>' + code +  ' <select name=parSave' + numeroParSave + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
-
-numeroParSave+=1;
 
 }
 ////////////////////////////////////////////////////
@@ -423,11 +483,14 @@ addStim();
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
     "First iteration saved is <input name=postFirst type=text size=10 >Saving frecuency <input name=postFrec type=text size=10 >"
 );
-row2(tra("<fileParameters>#FILE_PARAMETERS</fileParameters>%1 Defines the parameters that will be saved to disk %2", "<br><span class=note>", "</span>"),
+row2(tra("<fileParameters>#FILE_PARAMETERS</fileParameters>%1 <allFileParameters>ADD ALL PARAMETERS TO DISK</allFileParameters>%2", "<br><span class=note>", "</span>"),
     "<ss> </ss>
     <script>
     $(\"fileParameters\").click(function () {
 addParSave();
+});
+    $(\"allFileParameters\").click(function () {
+addAllParSave();
 });
     </script>"
 
