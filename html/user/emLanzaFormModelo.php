@@ -48,20 +48,8 @@ if($modelo_id==$modelNumber)
 { // Borrar el modelo existente.
 
 
-page_head(tra("Simulation Model Creation/Deletion"));
-echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
-echo "
-  <style>
-  parametro { color:blue; margin:5px; cursor:pointer; }
-  parametro:hover { background:green; }
-  </style>
+page_head(tra("Simulation Model Deletion"));
 
-<script> 
-////////////////////////////////////////////////////
-///   Declaracion, inicializacion de variables /////
-////////////////////////////////////////////////////
-
-</script>";
 echo "<form method=get action=emLanzaDeleteModelo.php>";
 echo form_tokens($user->authenticator);
 start_table();
@@ -86,6 +74,53 @@ echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 }
 else
 { //Crear un nuevo modelo
+page_head(tra("Simulation Model Creation"));
+echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
+echo "
+  <style>
+  parametro { color:blue; margin:5px; cursor:pointer; }
+  parametro:hover { background:green; }
+  </style>
+
+<script> 
+////////////////////////////////////////////////////
+///   Declaracion, inicializacion de variables /////
+////////////////////////////////////////////////////
+numeroParameter=1;
+////////////////////////////////////////////////////
+///   Añade Model Modificable Parameter        /////
+////////////////////////////////////////////////////
+function addModificableTable()
+{
+document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+var elementoSimple = 'x'+numeroParameter;
+var elementoComplejo = 'xs'+numeroParameter;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+$(\"sp\").append('<' + elementoComplejo + '>' + code +  '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+numeroParameter+=1;
+}
+
+
+</script>";
+start_table();
+row2(tra(" MODEL ID %1 Unique ID as used in simulation program(fortran)  %2 ", "<br><span class=note>", "</span>"),
+$modelNumber);
+row2(tra("MODEL NAME %1 Friendly name %2", "<br><span class=note>", "</span>"),
+    "<input name=modelName type=text size=40 >"
+);  
+row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding modificable parameters to the model %2 ", "<br><span class=note>", "</span>"),
+    "<sp > </sp> 
+
+    <script>
+    $(\"parametro\").click(function () {
+addModificableTable();
+});
+    </script>"
+
+);
+end_table();
+echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 }
 }
 echo "<td>
