@@ -80,6 +80,8 @@ echo "
   <style>
   parametro { color:blue; margin:5px; cursor:pointer; }
   parametro:hover { background:green; }
+  corriente { color:blue; margin:5px; cursor:pointer; }
+  corriente:hover { background:green; }
   </style>
 
 <script> 
@@ -90,7 +92,7 @@ numeroParameter=1;
 ////////////////////////////////////////////////////
 ///   Añade Model Modificable Parameter        /////
 ////////////////////////////////////////////////////
-function addModificableTable()
+function addModificableParameter()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 var elementoSimple = 'x'+numeroParameter;
@@ -101,8 +103,24 @@ $(\"sp\").append('<' + elementoComplejo + '>' + code +  '<input name=parameter' 
 numeroParameter+=1;
 }
 
+////////////////////////////////////////////////////
+///   Añade Model Currents                     /////
+////////////////////////////////////////////////////
+function addCurrents()
+{
+document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+var elementoSimple = 'y'+numeroParameter;
+var elementoComplejo = 'ys'+numeroParameter;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+$(\"sc\").append('<' + elementoComplejo + '>' + code +  '<input name=current' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+numeroParameter+=1;
+}
+
 
 </script>";
+echo form_tokens($user->authenticator);
+echo "<form method=get action=emLanzaInsertModelo.php>";
 start_table();
 row2(tra(" MODEL ID %1 Unique ID as used in simulation program(fortran)  %2 ", "<br><span class=note>", "</span>"),
 $modelNumber);
@@ -114,12 +132,24 @@ row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding modificable pa
 
     <script>
     $(\"parametro\").click(function () {
-addModificableTable();
+addModificableParameter();
+});
+    </script>"
+
+);
+row2(tra("<corriente> ADD CURRENTS </corriente> %1 Allow adding file saving currents to the model %2 ", "<br><span class=note>", "</span>"),
+    "<sc > </sc> 
+
+    <script>
+    $(\"corriente\").click(function () {
+addCurrents();
 });
     </script>"
 
 );
 end_table();
+echo "<input type=\"hidden\"  name=modelNumber value=" . $modelNumber . " />";
+echo "<td><input type=\"submit\" value=\"Insert!\"></form></td>";
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 }
 }
