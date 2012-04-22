@@ -58,6 +58,25 @@ echo "<tr><td width=\"15\">Model ID</td>";
 echo "<td width=\"15\">" . "Name          " . "</td>\n";
 echo "</tr>";
 
+if($modelo_id=="")
+{
+	$models = get_mysql_model("SELECT modelo_id, nombre FROM modelo  order by modelo_id asc ");
+	foreach($models as $modelo) 
+	{
+		$nombre = $modelo["nombre"];
+		echo "<tr>";
+		echo "<td>";
+		echo $modelo["modelo_id"];
+		echo "</td>";
+		echo "<td>";
+		echo $modelo["nombre"];
+		echo "</td>";
+		echo "</tr>";
+	}
+
+}
+else
+{
 echo "<tr>";
 echo "<td>";
 echo $modelo_id ;
@@ -68,6 +87,7 @@ echo "</td>";
 echo "</tr>";
 echo "<input type=\"hidden\"  name=". $nombre . " value=" . $modelo_id . " />";
 echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
+}
 end_table();
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 
