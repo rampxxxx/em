@@ -18,6 +18,8 @@
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
+require_once("../inc/utilidades.inc");
+
 
 #############################
 ### INI : DATA      SELECT
@@ -46,7 +48,7 @@ require_once("../inc/countries.inc");
 ### INI : FUNCTIONS SELECT
 #############################
 const DEFINE_ISQUEMIC_ZONE = 'Isquemic Zone';
-
+/*
 $models = array(
     "None Yet " => "99",
     "Ischemic Zone" => "-1",
@@ -70,16 +72,17 @@ $models = array(
     "Grandi Heart Failure EPI" => "17",
     "GPV " => "18"
 );
-
+*/
 function print_model_select() {
-    global $models;
-    foreach($models as $i => $value){
-	    if($value==99){
-		    echo "<option value=\"$value\" selected>$i</option>\n";
-	    }else{
-		    echo "<option value=\"$value\" >$i</option>\n";
-	    }
-    }
+	$modelos = get_mysql_model("SELECT modelo_id, nombre FROM modelo  order by modelo_id asc ");
+	foreach($modelos as $modelo)
+	{
+		$modelo_id = $modelo["modelo_id"];
+		$nombre = $modelo["nombre"];
+		echo "<option value=\"$modelo_id\" >$nombre</option>\n";
+	}
+	echo "<option value=\"99\" selected>None Yet</option>\n";
+
 } 
 
 #############################
@@ -263,11 +266,11 @@ function montaSelCurSave()
 {
 var sel='';
 var ii=0;
-for(var i=0;i<params.length;i++)
+for(var i=0;i<currents.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
-	sel+='<option value=' + ii + ' >' + params[i] + '</option>';
+	document.getElementById('tra').innerHTML += ' params text !! ' + currents[i]; 
+	sel+='<option value=' + ii + ' >' + currents[i] + '</option>';
 }
 return sel;
 }
@@ -458,6 +461,8 @@ function deleteStim()
 inicializaNumeroStim();
 $(\"stt\").remove();
 }
+";
+echo "
 /////////////////////////////////
 // Get a reference to array.
 /////////////////////////////////
@@ -473,6 +478,34 @@ function populate(o)
 	//if(!d){return;}			
 	document.getElementById('tra').innerHTML += 'd existe!! '; 
 	var parData=new Array();
+";
+
+$modelos = get_mysql_model("SELECT modelo_id , nombre FROM modelo  order by modelo_id asc ");
+foreach($modelos as $modelo)
+{// Array .
+	$modelo_id=$modelo["modelo_id"];
+	$modelo_nombre=$modelo["nombre"];
+	echo "parData['".$modelo_nombre."']=[";
+	$modelo_parametro = get_mysql_model_param("SELECT p.nombre FROM modelo m, modelo_parametro p  WHERE m.modelo_id=".$modelo_id." order by p.parametro_id asc ");
+	$haySiguiente=false;
+	foreach($modelo_parametro as $param)
+	{ // Array data.
+		if($haySiguiente==true){
+			echo ",";
+		}
+		else
+		{
+			$haySiguiente=true;
+		}
+		$parametro_nombre = $param["nombre"];
+		echo "'".$parametro_nombre."'";
+		//parData['Ischemic Zone']=['v1','v2','G'];
+
+	}
+	echo "];";
+}
+
+/*
 	parData['Ischemic Zone']=['v1','v2','G'];
 	parData['Roger McCulloc']=['vp','eta1', 'eta2', 'eta3', 'G', 'vth'];
 	parData['Ten Tusscher ENDO']=['Cai','CaSR','CaSS','Nai', 'Ki', 'm', 'h', 'j', 'xs', 'r', 's', 'd', 'f', 'f2', 'fcass', 'rr', 'oo', 'xr1', 'xr2'];
@@ -493,10 +526,46 @@ function populate(o)
 	parData['Grandi Heart Failure ENDO']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauINaL', 'Gtos', 'Gtof'];
 	parData['Grandi Heart Failure EPI']=['INaL', 'Ikr', 'Iks', 'ICaL', 'JSRleak', 'Incx', 'ICab', 'IK1', 'Ito', 'INaK', 'Jserca', 'tauNaL', 'Gtos', 'Gtof'];
 	parData['GPV']=['pNaK', 'GKp', 'GKsJunc', 'GKsSL', 'Gtof', 'Gkur', 'ACh', 'GNa', 'GNaB', 'pNa', 'pCa', 'pK', 'GCaB', 'GClCa', 'GClB', 'Cli', 'Clo', 'Ko', 'Nao', 'Cao', 'Mgi', 'ATPi', 'kATP', 'GKATP', 'GNaL', 'Chlor'];
+*/
+
+echo"
 	document.getElementById('tra').innerHTML += ' array de datos '; 
 
 
 	var parCurr=new Array();
+";
+
+$modelos = get_mysql_model("SELECT modelo_id , nombre FROM modelo  order by modelo_id asc ");
+foreach($modelos as $modelo)
+{// Array .
+	$modelo_id=$modelo["modelo_id"];
+	$modelo_nombre=$modelo["nombre"];
+	echo "parCurr['".$modelo_nombre."']=[";
+	$modelo_corriente = get_mysql_model_current("SELECT p.nombre FROM modelo m, modelo_corriente p  WHERE m.modelo_id=".$modelo_id." order by p.corriente_id asc ");
+	$haySiguiente=false;
+	foreach($modelo_corriente as $current)
+	{ // Array data.
+		if($haySiguiente==true){
+			echo ",";
+		}
+		else
+		{
+			$haySiguiente=true;
+		}
+		$corriente_nombre = $current["nombre"];
+		echo "'".$corriente_nombre."'";
+		//parData['Ischemic Zone']=['v1','v2','G'];
+
+	}
+	echo "];";
+}
+
+
+
+
+
+
+/*
 	parCurr['Ischemic Zone']=[];
 	parCurr['Roger McCulloc']=[];
 	parCurr['Ten Tusscher ENDO']=['IKr','IKs','IK1','IpK','IKATP','Ito','INa','IbNa','INaK','INaCa','ICaL','IbCa','IpCa'];
@@ -517,7 +586,9 @@ function populate(o)
 	parCurr['Grandi Heart Failure ENDO']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['Grandi Heart Failure EPI']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['GPV']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','I_kur','I_KACh','I_KATP','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+*/
 
+echo"
 params=parData[o.options[o.selectedIndex].text];
 currents=parCurr[o.options[o.selectedIndex].text];
 	document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 

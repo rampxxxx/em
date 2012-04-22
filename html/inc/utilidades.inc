@@ -66,5 +66,32 @@ function get_mysql_model($query) {
     return $user_workunits;
 }
 
+////////////////////////////////////////////////////
+/// Prepara un query sql //////////////////////////
+////////////////////////////////////////////////////
+function get_mysql_model_param($query) {
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result)) {
+            $user_workunits[] = $row;
+        }
+        mysql_free_result($result);
+        set_cached_data(3600, serialize($user_workunits), "get_mysql_model_param".$query);
+    return $user_workunits;
+}
+////////////////////////////////////////////////////
+/// Prepara un query sql //////////////////////////
+////////////////////////////////////////////////////
+function get_mysql_model_current($query) {
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result)) {
+            $user_workunits[] = $row;
+        }
+        mysql_free_result($result);
+        set_cached_data(3600, serialize($user_workunits), "get_mysql_model_current".$query);
+    return $user_workunits;
+}
+
+
+
 
 ?>
