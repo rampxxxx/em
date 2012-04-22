@@ -27,7 +27,7 @@ $indiceParametros=1;
 $indiceCorrientes=1;
 foreach($_REQUEST as $name => $value)
 {
-//echo " REQUEST : " . $name . " " . $value . "<br>";
+echo " REQUEST : " . $name . " " . $value . "<br>";
 	if(stristr($name, 'current') != FALSE) 
 	{
 		$corrientes[$indiceCorrientes]=$value;
@@ -49,7 +49,37 @@ foreach($_REQUEST as $name => $value)
 }
 
 $result_ok=false;
-//$result_ok = mysql_query("delete from modelo where modelo_id=".$modelo_id);
+$elInsert="insert into modelo values (".$modeloId.",'".$modeloName."')";
+echo "SQL (" . $elInsert . ")<br>";
+$result_ok = mysql_query($elInsert);
+if($result_ok){
+
+	foreach($parametros as $parId => $parName)
+	{
+		$elInsert="insert into modelo_parametro values (".$parId.",".$modeloId.",'".$parName . "')";
+		echo $elInsert . "<br>";
+		$result_ok = mysql_query($elInsert);
+		if($result_ok==false)
+		{
+			break;
+		}
+	}
+	foreach($corrientes as $curId => $curName)
+	{
+		$elInsert="insert into modelo_corriente values (".$curId.",".$modeloId.",'".$curName."')";
+		echo $elInsert . "<br>";
+		$result_ok = mysql_query($elInsert);
+		if($result_ok==false)
+		{
+			break;
+		}
+	}
+	if($result_ok==false)
+	{ //Borrado en cascada.
+		echo "Error inserting in Database (modelo_parametro OR modelo_corriente)<br>";
+		echo "Cleaning model data <br>";
+		mysql_query("delete from modelo where modelo_id=".$modeloId);
+	}
 
 
 
@@ -71,11 +101,6 @@ echo form_tokens($user->authenticator);
 if($result_ok)
 {
 row1("Model INSERTED! ", '9');
-}
-else
-{
-row1("ERROR insertion model!!! ", '9');
-}
 start_table();
 row1( "Model Data", '9');
 row2( "Model ID", $modeloId);
@@ -90,7 +115,17 @@ row2( "Current Nº : ".$id , $par);
 }
 end_table();
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
+}
+else
+{
+row1("ERROR insertion model!!! ", '9');
+}
 
+} //check error insert modelo table.
+else
+{
+echo "Error Inserting in Data Base (modelo table)!!!! <br>";
+}
 echo "<td>
 <a href=\"emQueryModelo.php\">". "Create/Delete Model" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>
