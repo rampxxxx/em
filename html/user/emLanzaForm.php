@@ -122,8 +122,6 @@ var currents;
 var numeroStim = 9;
 var numeroParameter = 1;
 var numeroParSave = 1;
-var numeroAllParSave = 1;
-var numeroAllCurSave = 1;
 var numeroCurSave = 1;
 ////////////////////////////////////////////////////
 ///   Añade input de Stimulus                  /////
@@ -215,10 +213,10 @@ document.getElementById('tra').innerHTML = 'addParSaveTable!! ';
 var restoSelect='';
 for(var i=0;i<params.length;i++)
 {
-document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllParSave; 
+document.getElementById('tra').innerHTML = 'numeroParSave ==  ' + numeroParSave; 
 	restoSelect=montaAppendSelParSave(i);
-	montaAppendParSave(restoSelect, numeroAllParSave);
-	numeroAllParSave+=1;
+	montaAppendParSave(restoSelect, numeroParSave);
+	numeroParSave+=1;
 }
 
 }
@@ -309,10 +307,10 @@ var restoSelect='';
 if(currents.length!=0){
 for(var i=0;i<currents.length;i++)
 {
-document.getElementById('tra').innerHTML = 'numeroAllParSave ==  ' + numeroAllParSave; 
+document.getElementById('tra').innerHTML = 'numeroCurSave ==  ' + numeroCurSave; 
 	restoSelect=montaAppendSelCurSave(i);
-	montaAppendCurSave(restoSelect, numeroAllCurSave);
-	numeroAllCurSave+=1;
+	montaAppendCurSave(restoSelect, numeroCurSave);
+	numeroCurSave+=1;
 }
 }
 else
@@ -541,7 +539,7 @@ foreach($modelos as $modelo)
 	$modelo_id=$modelo["modelo_id"];
 	$modelo_nombre=$modelo["nombre"];
 	echo "parCurr['".$modelo_nombre."']=[";
-	$modelo_corriente = get_mysql_model_current("SELECT p.nombre FROM modelo m, modelo_corriente p  WHERE m.modelo_id=".$modelo_id." order by p.corriente_id asc ");
+	$modelo_corriente = get_mysql_model_current("SELECT p.nombre FROM modelo m, modelo_corriente p  WHERE m.modelo_id=".$modelo_id." AND m.modelo_id=p.modelo_id order by p.corriente_id asc ");
 	$haySiguiente=false;
 	foreach($modelo_corriente as $current)
 	{ // Array data.
@@ -582,7 +580,7 @@ foreach($modelos as $modelo)
 	parCurr['Grandi ENDO']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSrLl','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['Grandi EPI']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSrLl','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['Carro ENDO']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','Ikp','Itos','Itof','Ito','IK1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
-	parCurr['CarroEPI']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','Ikp','Itos','Itof','Ito','IK1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
+	parCurr['Carro EPI']=['INaJunc','INaSL','INa','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','Ikp','Itos','Itof','Ito','IK1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['Grandi Heart Failure ENDO']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['Grandi Heart Failure EPI']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
 	parCurr['GPV']=['INaJunc','INaSL','INa','INaLJunc','INaLSL','INaL','INaBkJunc','INaBkSL','INaBk','INaKJunc','INaKSL','INaK','Ikr','IksJunc','IksSL','Iks','IkpJunc','IkpSL','Ikp','Itos','Itof','Ito','I_kur','I_KACh','I_KATP','Ik1','IClCaJunc','IClCaSL','IclCa','IClBk','ICaJunc','ICaSL','ICa','ICaK','ICaNaJunc','ICaNaSL','ICaNa','ICaL','IncxJunc','IncxSL','Incx','IpCaJunc','IpCaSL','IpCa','ICaBkJunc','ICaBkSL','ICaBk','INatotJunc','INatotSL','IKtot','ICatotJunc','ICatotSL','INatot','ICltot','ICatot','Itot'];
