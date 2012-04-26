@@ -2,10 +2,22 @@
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
-
+require_once("../inc/utilidades.inc");
 
 db_init();
 $user = get_logged_in_user();
+
+
+function print_plataformas() {
+        $plataformas = get_mysql_model("SELECT name FROM platform   ");
+        foreach($plataformas as $plataforma)
+        {
+                $nombre = $plataforma["name"];
+		echo "<option value=\"$nombre\" >$nombre</option>\n";
+        }
+
+} 
+
 
 page_head(tra("Upload New App Version"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
@@ -23,7 +35,11 @@ start_table();
 row2(tra("NEW APPLICATION BINARY %1 Browse to select. %2", "<br><span class=note>", "</span>"),
     "<label for=\"file\">Filename:</label>"
 );
-
+row2_init(tra("PLATFORM %1 For which Operating System. %2", "<br><span class=note>", "</span>"),
+"<select name=platform  >"
+);
+print_plataformas();
+echo "</select></td></tr>\n";
 row2("", "<input type=\"file\" name=\"file\" id=\"file\" /> ");
 row2("", "<input type=\"submit\" name=\"submit\" value=\"Submit\" />");
 end_table();

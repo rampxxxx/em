@@ -1,4 +1,14 @@
 <?php
+require_once("../inc/db.inc");
+require_once("../inc/util.inc");
+require_once("../inc/countries.inc");
+require_once("../inc/utilidades.inc");
+
+
+db_init();
+$user = get_logged_in_user();
+
+
   if ($_FILES["file"]["error"] > 0)
     {
     echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
@@ -12,19 +22,23 @@
 
 $dataDir="../../backupEm/";
 $programName="emProgramName";
-    //if (file_exists("upload/" . $_FILES["file"]["name"]))
-    if (file_exists($dataDir . $_FILES["file"]["name"]))
-      {
-      echo $_FILES["file"]["name"] . " already exists. ";
-      }
-    else
-      {
       move_uploaded_file($_FILES["file"]["tmp_name"],
       $dataDir . $programName);
       echo "Stored in: " . $dataDir . $programName;
-$salida=shell_exec('../../bin/creaNuevaVersion.sh '. $version . ' ' . $plataforma );
-
+      $versiones=get_mysql_lastVersion("select max(version_num) from app_version,platform where platform.id=app_version.platformid");
+      foreach($versiones as $version)
+      {
+	      $lastVersion=$version["max(version_num)"];
       }
+echo "lastVersion : " . $lastVersion . "<br>";
+      $cien=100;
+      $mayor=floor($lastVersion/$cien);
+      $minor=$lastVersion%$cien;
+      $minor+=1;
+      $nextVersion=$mayor.".".$minor;
+echo "mayor : " . $mayor . " minor:" . $minor . " nextVersion : " . $nextVersion . "<br>";
+      $salida=shell_exec('../../bin/creaNuevaVersion.sh '. $nextVersion . ' ' . $_REQUEST["platform"] );
+
     }
 
 ?> 

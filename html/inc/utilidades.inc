@@ -96,6 +96,32 @@ function get_mysql_model_current($query) {
     return $user_workunits;
 }
 
+////////////////////////////////////////////////////
+/// Prepara un query sql //////////////////////////
+////////////////////////////////////////////////////
+function get_mysql_plataformas($query) {
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result)) {
+            $user_workunits[] = $row;
+        }
+        mysql_free_result($result);
+        set_cached_data(3600, serialize($user_workunits), "get_mysql_plataformas".$query);
+    return $user_workunits;
+}
+////////////////////////////////////////////////////
+/// Prepara un query sql //////////////////////////
+////////////////////////////////////////////////////
+function get_mysql_lastVersion($query) {
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result)) {
+            $user_workunits[] = $row;
+        }
+        mysql_free_result($result);
+        set_cached_data(3600, serialize($user_workunits), "get_mysql_lastVersion".$query);
+    return $user_workunits;
+}
+
+
 
 
 
