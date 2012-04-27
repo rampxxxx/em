@@ -107,6 +107,7 @@ DELIM
 ##########################################
 
 cp $WRAPPER_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_WRAPPER >> $SCRIPT_LOG 2>&1
+chmod +x  $DIR_VERSION/$NOMBRE_WRAPPER >> $SCRIPT_LOG 2>&1
 #echo "cp $WRAPPER_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_WRAPPER" >>  $SCRIPT_LOG 2>&1
 
 ##########################################
@@ -114,6 +115,7 @@ cp $WRAPPER_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_WRAPPER >> $SCRIPT_LOG 2>&1
 ##########################################
 
 cp $APP_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_APP >> $SCRIPT_LOG 2>&1
+chmod +x $DIR_VERSION/$NOMBRE_APP >> $SCRIPT_LOG 2>&1
 #echo "cp $APP_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_APP" >>  $SCRIPT_LOG 2>&1
 
 
