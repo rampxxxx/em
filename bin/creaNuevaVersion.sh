@@ -121,7 +121,8 @@ cp $APP_BIN_COMPLETE  $DIR_VERSION/$NOMBRE_APP >> $SCRIPT_LOG 2>&1
 ##########################################
 ## Comandos boinc para nueva version.    #
 ##########################################
-
+# Como bin/update_version pero sin interaccion.
+bin/em_update_versions >> $SCRIPT_LOG 2>&1
 
 
 

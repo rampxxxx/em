@@ -231,7 +231,7 @@ var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elem
 
 
 
-$(\"sc\").append('<'+ elementoComplejo + '>' + code +  ' <select name=parSave' + numero + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
+$(\"sc\").append('<'+ elementoComplejo + '>' + code +  ' <select name=curSave' + numero + ' > ' + restoSelect + '</select> '+ '<' + elementoSimple + '>X</'+ elementoSimple + '>' + ' <br> ' + '</' + elementoComplejo + '>' ); 
 }
 ////////////////////////////////////////////////////
 ///   Monta select Corrientes a Disco        /////

@@ -35,6 +35,10 @@ echo "lastVersion : " . $lastVersion . "<br>";
       $mayor=floor($lastVersion/$cien);
       $minor=$lastVersion%$cien;
       $minor+=1;
+      if($minor>99){
+	      $minor=0;
+	      $mayor+=1;
+      }
       $nextVersion=$mayor.".".$minor;
 echo "mayor : " . $mayor . " minor:" . $minor . " nextVersion : " . $nextVersion . "<br>";
       $salida=shell_exec('../../bin/creaNuevaVersion.sh '. $nextVersion . ' ' . $_REQUEST["platform"] );
