@@ -53,6 +53,18 @@ echo "<br>";
 return $errorEnDatos;
 }
 
+////////////////////////////////////////////////////
+/// Transforma numero de version de bbdd a filesystem ////
+////////////////////////////////////////////////////
+function convierteNumeroVersion($versionBBDD) {
+      $cien=100;           
+      $mayor=floor($versionBBDD/$cien);
+      $minor=$versionBBDD%$cien;
+
+    return array($mayor, $minor);
+}
+
+
 
 ////////////////////////////////////////////////////
 /// Prepara un query sql //////////////////////////
@@ -120,6 +132,19 @@ function get_mysql_lastVersion($query) {
         set_cached_data(3600, serialize($user_workunits), "get_mysql_lastVersion".$query);
     return $user_workunits;
 }
+////////////////////////////////////////////////////
+/// Prepara un query sql //////////////////////////
+////////////////////////////////////////////////////
+function get_mysql_myVersion($query) {
+        $result = mysql_query($query);
+        while($row = mysql_fetch_assoc($result)) {
+            $user_workunits[] = $row;
+        }
+        mysql_free_result($result);
+        set_cached_data(3600, serialize($user_workunits), "get_mysql_myVersion".$query);
+    return $user_workunits;
+}
+
 
 
 
