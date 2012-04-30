@@ -63,6 +63,26 @@ function convierteNumeroVersion($versionBBDD) {
 
     return array($mayor, $minor);
 }
+////////////////////////////////////////////////////
+/// Obtiene el nombre de un parametro /////////////
+////////////////////////////////////////////////////
+function dameNombreParametro($modelo_id, $parametro_id) {
+	$result=mysql_query("select p.nombre from modelo m,modelo_parametro p where m.modelo_id=p.modelo_id and m.modelo_id=".$modelo_id . " and p.parametro_id=".$parametro_id);
+	$row=mysql_fetch_array($result);
+	$nombre=$row["nombre"];
+
+    return $nombre;
+}
+////////////////////////////////////////////////////
+/// Obtiene el nombre de una corriente/////////////
+////////////////////////////////////////////////////
+function dameNombreCorriente($modelo_id, $corriente_id) {
+	$result=mysql_query("select p.nombre from modelo m,modelo_corriente p where m.modelo_id=p.modelo_id and m.modelo_id=".$modelo_id . " and p.corriente_id=".$corriente_id);
+	$row=mysql_fetch_array($result);
+	$nombre=$row["nombre"];
+
+    return $nombre;
+}
 
 
 

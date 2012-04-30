@@ -19,14 +19,32 @@ $contador=1;
 foreach($_REQUEST as $key => $value)
 {
 
-	$result=mysql_query("select parameters from user_workunit where workunit_id = " . $value );
+	if(stristr($key, 'workunit_id') != FALSE) 
+	{
+		$workunit_id=$value;
+	}
+	else if(stristr($key, 'debug') != FALSE) 
+	{
+		$debug=$value;
+	}
+	$contador+=1;	
+} 
+if($debug==1)
+{
+	$result=mysql_query("select parameters from user_workunit where workunit_id = " . $workunit_id );
 	while($row=mysql_fetch_array($result))
 	{
 		echo "<tr><td> " . nl2br($row['parameters']) . "</td>";
 	}
-
-	$contador+=1;	
-} 
+}
+else
+{
+	$result=mysql_query("select parametersE from user_workunit where workunit_id = " . $workunit_id );
+	while($row=mysql_fetch_array($result))
+	{
+		echo "<tr><td> " . nl2br($row['parametersE']) . "</td>";
+	}
+}
 
 
 end_table();

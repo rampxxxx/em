@@ -1,20 +1,4 @@
 <?php
-// This file is part of BOINC.
-// http://boinc.berkeley.edu
-// Copyright (C) 2008 University of California
-//
-// BOINC is free software; you can redistribute it and/or modify it
-// under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation,
-// either version 3 of the License, or (at your option) any later version.
-//
-// BOINC is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// See the GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
@@ -49,6 +33,7 @@ echo "<td width=\"15\">" . "Alias          " . "</td>\n";
 echo "<td width=\"15\">" . "First Data File" . "</td>\n";
 echo "<td width=\"15\">" . "Second Data File" . "</td>\n";
 echo "<td width=\"15\">" . "Work Parameters " . "</td>\n";
+echo "<td width=\"15\">" . "Work Parameters Debug " . "</td>\n";
 echo "<td width=\"15\">" . "Delete Data Files From SERVER!!" . "</td>\n";
 echo "</tr>";
 
@@ -72,7 +57,11 @@ foreach($user_workunits as $user_workunit) {
 		echo "<td><a href=" . $dataDownloadName1 . ">" . $downloadName1 . "</a>" . "</td>";
 		//INI:Details
 		echo "<td>
-			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">List</a>
+			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=0\">List</a>
+			</td>
+			";
+		echo "<td>
+			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=1\">List Debug</a>
 			</td>
 			";
 		//END:Details
@@ -88,7 +77,11 @@ foreach($user_workunits as $user_workunit) {
 			echo "<td>" . $downloadName1 . " STILL NOT READY" . "</td>";
 			//INI:Details
 			echo "<td>
-				<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."\">List</a>
+				<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=0\">List</a>
+				</td>
+				";
+			echo "<td>
+				<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=1\">List Debug</a>
 				</td>
 				";
 			//END:Details

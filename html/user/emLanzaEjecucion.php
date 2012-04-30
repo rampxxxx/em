@@ -216,67 +216,114 @@ if($haveBurst)
 	$parametros[$burstSelect] = $burstCnt;//Valor nuevo(o modificado) para ejecucion.
 }
 
-$fp = fopen("/tmp/newTask.txt", "a");
+$fp = fopen("/tmp/newTask.txt", "a"); // Data File for workunit creation.
+$fpe= fopen("/tmp/newTaskExplain.txt", "a"); // Data File friendly for user check.
 $salida=shell_exec('ls -l /tmp/newTask.txt >> /tmp/php.out');
+$salida=shell_exec('ls -l /tmp/newTaskExplain.txt >> /tmp/php.out');
 if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
     ftruncate($fp, 0); // truncate file
+    ftruncate($fpe, 0); // truncate file
 ///////////////////////////////
 ////INI   CREATE FILE  ////////
 ///////////////////////////////
-    fwrite($fp, "#MODEL\n");
-    fwrite($fp, $model . "\n");
+    $linea="#MODEL\n";
+    fwrite($fp, $linea);
+    fwrite($fpe, $linea);
+    $linea=$model . "\n";
+    fwrite($fp, $linea);
+    $result=get_mysql_model("select nombre from modelo where modelo_id=".$model);
+    foreach($result as $res)
+    {
+	    $linea=$res["nombre"];
+    }
+    fwrite($fpe, $linea . "\n");
 
 
+    $linea="#PARAMETERS\n";
+    fwrite($fp, $linea);
+    fwrite($fpe, $linea);
     $parametrosAFicheroCnt=(string)count($parametros);
     $parametrosAFicheroNum="";
     $parametrosAFicheroVal="";
+    $linea=" ";
     foreach($parametros as $id => $val)
     {
 	$parametrosAFicheroNum=$parametrosAFicheroNum . " " . $id  ;
 	$parametrosAFicheroVal=$parametrosAFicheroVal . " " . $val ;
+	$linea=$linea . " " . dameNombreParametro($model, $id);
     }
-    fwrite($fp, "#PARAMETERS\n");
     fwrite($fp, $parametrosAFicheroCnt . $parametrosAFicheroNum . $parametrosAFicheroVal . "\n");
+    fwrite($fpe,$parametrosAFicheroCnt . $linea                 . $parametrosAFicheroVal . "\n");
 
 
 
-    fwrite($fp, "#STEP\n");
+    $linea="#STEP\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
     fwrite($fp, $stepStart . " " . $stepEnd . " " . $stepIncrement .  "\n");
+    fwrite($fpe,$stepStart . " " . $stepEnd . " " . $stepIncrement .  "\n");
 
 
-    fwrite($fp, "#STIMULUS\n");
-    fwrite($fp, (string)count($stimulusArray) . "\n");
+    $linea="#STIMULUS\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
+    $linea=(string)count($stimulusArray) . "\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
     foreach($stimulusArray as $id => $objStim)
     {
-	    fwrite($fp, $objStim->stimStart . " " . $objStim->stimBcl . " " . $objStim->stimDur . " " . $objStim->stimCur . "\n");
+	    $linea=$objStim->stimStart . " " . $objStim->stimBcl . " " . $objStim->stimDur . " " . $objStim->stimCur . "\n";
+	    fwrite($fp, $linea);
+	    fwrite($fpe,$linea);
     }
 
-    fwrite($fp, "#POST\n");
-    fwrite($fp, $postFirst . " " . $postFrec . "\n");
+    $linea="#POST\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
+    $linea=$postFirst . " " . $postFrec . "\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
 
-    fwrite($fp, "#FILE_PARAMETERS\n");
-    fwrite($fp, (string)count($paraSaveArray));
+    $linea="#FILE_PARAMETERS\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
+    $linea=(string)count($paraSaveArray);
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
     //$paramForSave='';
+    $linea="";
     foreach($paraSaveArray as $id => $value)
     {
 	    $paramForSave = $paramForSave . " " . $value;
+	    $linea=$linea . " " . dameNombreParametro($model, $id);
     }
     fwrite($fp, $paramForSave . "\n");
+    fwrite($fpe,$linea        . "\n");
 
-    fwrite($fp, "#FILE_CURRENTS\n");
+    $linea="#FILE_CURRENTS\n";
+    fwrite($fp, $linea);
+    fwrite($fpe,$linea);
     if(count($curSaveArray) == 0)
     {
-	    fwrite($fp, "0" . "\n");//Fichero vacio
+	    $linea="0" . "\n";
+	    fwrite($fp, $linea);//Fichero vacio
+	    $linea="NO CURRENTS" . "\n";
+	    fwrite($fpe,$linea);//Fichero vacio
     }
     else
     {
-	    fwrite($fp, (string)count($curSaveArray));
+	    $linea=(string)count($curSaveArray);
+	    fwrite($fp, $linea);
+	    fwrite($fpe,$linea);
 	    //$curForSave='';
+	    $linea="";
 	    foreach($curSaveArray as $id => $value)
 	    {
 		    $curForSave = $curForSave . " " . $value;
+		    $linea=$linea . " " . dameNombreCorriente($model, $id);
 	    }
 	    fwrite($fp, $curForSave . "\n");
+	    fwrite($fpe,$linea      . "\n");
     }
 
 
