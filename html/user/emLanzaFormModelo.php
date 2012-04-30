@@ -109,17 +109,22 @@ echo "
 ///   Declaracion, inicializacion de variables /////
 ////////////////////////////////////////////////////
 numeroParameter=1;
+numeroCorriente=1;
+var restoSelect='<option value=1 >Modificable</option>';
+    restoSelect+='<option value=2 >Salvable</option>';
+    restoSelect+='<option value=3 >Ambos</option>';
 ////////////////////////////////////////////////////
 ///   Añade Model Modificable Parameter        /////
 ////////////////////////////////////////////////////
 function addModificableParameter()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+var sel=' <select name=parTipo' + numeroParameter + ' > ' + restoSelect + '</select> ';
 var elementoSimple = 'x'+numeroParameter;
 var elementoComplejo = 'xs'+numeroParameter;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sp\").append('<' + elementoComplejo + '>' + code +  '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+$(\"sp\").append('<' + elementoComplejo + '>' + code + sel +  '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroParameter+=1;
 }
 
@@ -129,12 +134,12 @@ numeroParameter+=1;
 function addCurrents()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
-var elementoSimple = 'y'+numeroParameter;
-var elementoComplejo = 'ys'+numeroParameter;
+var elementoSimple = 'y'+numeroCorriente;
+var elementoComplejo = 'ys'+numeroCorriente;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sc\").append('<' + elementoComplejo + '>' + code +  '<input name=current' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
-numeroParameter+=1;
+$(\"sc\").append('<' + elementoComplejo + '>' + code + '<input name=current' + numeroCorriente + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+numeroCorriente+=1;
 }
 
 

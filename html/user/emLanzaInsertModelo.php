@@ -30,13 +30,17 @@ foreach($_REQUEST as $name => $value)
 echo " REQUEST : " . $name . " " . $value . "<br>";
 	if(stristr($name, 'current') != FALSE) 
 	{
-		$corrientes[$indiceCorrientes]=$value;
-		$indiceCorrientes+=1;
+		if($value!=""){
+			$corrientes[$indiceCorrientes]=$value;
+			$indiceCorrientes+=1;
+		}
 	}
 	else if(stristr($name, 'parameter') != FALSE) 
 	{
-		$parametros[$indiceParametros]=$value;
-		$indiceParametros+=1;
+		if($value!=""){
+			$parametros[$indiceParametros]=$value;
+			$indiceParametros+=1;
+		}
 	}
 	else if(stristr($name, 'modelNumber') != FALSE) 
 	{
@@ -46,6 +50,10 @@ echo " REQUEST : " . $name . " " . $value . "<br>";
 	{
 		$modeloName=$value;
 	}
+	else if(stristr($name, 'parTipo') != FALSE) 
+	{
+		$parTipo[$indiceParametros]=$value;
+	}
 }
 
 $result_ok=false;
@@ -54,9 +62,10 @@ echo "SQL (" . $elInsert . ")<br>";
 $result_ok = mysql_query($elInsert);
 if($result_ok){
 
+	$parTipoCnt=1;
 	foreach($parametros as $parId => $parName)
 	{
-		$elInsert="insert into modelo_parametro values (".$parId.",".$modeloId.",'".$parName . "')";
+		$elInsert="insert into modelo_parametro values (".$parId.",".$modeloId.",'".$parName . "'," . $parTipo[$parTipoCnt++] . ")";
 		echo $elInsert . "<br>";
 		$result_ok = mysql_query($elInsert);
 		if($result_ok==false)
@@ -66,7 +75,7 @@ if($result_ok){
 	}
 	foreach($corrientes as $curId => $curName)
 	{
-		$elInsert="insert into modelo_corriente values (".$curId.",".$modeloId.",'".$curName."')";
+		$elInsert="insert into modelo_corriente values (".$curId.",".$modeloId.",'".$curName."'" . ")";
 		echo $elInsert . "<br>";
 		$result_ok = mysql_query($elInsert);
 		if($result_ok==false)
