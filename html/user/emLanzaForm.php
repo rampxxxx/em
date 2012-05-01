@@ -426,7 +426,7 @@ foreach($modelos as $modelo)
 	$modelo_id=$modelo["modelo_id"];
 	$modelo_nombre=$modelo["nombre"];
 	echo "parData['".$modelo_nombre."']=[";
-	$modelo_parametro = get_mysql_model_param("SELECT p.nombre FROM modelo m, modelo_parametro p  WHERE m.modelo_id=".$modelo_id."  AND p.modelo_id=m.modelo_id AND p.tipo IN (1,3)  ORDER BY p.parametro_id asc ");
+	$modelo_parametro = get_mysql_model_param("SELECT p.nombre FROM modelo m, modelo_parametro p  WHERE m.modelo_id=".$modelo_id."  AND p.modelo_id=m.modelo_id ORDER BY p.parametro_id asc ");
 	$haySiguiente=false;
 	foreach($modelo_parametro as $param)
 	{ // Array data.
@@ -451,7 +451,7 @@ foreach($modelos as $modelo)
 	$modelo_id=$modelo["modelo_id"];
 	$modelo_nombre=$modelo["nombre"];
 	echo "parSave['".$modelo_nombre."']=[";
-	$modelo_parametro = get_mysql_model_param("SELECT p.nombre FROM modelo m, modelo_parametro p  WHERE m.modelo_id=".$modelo_id."  AND p.modelo_id=m.modelo_id AND p.tipo IN (2,3)  ORDER BY p.parametro_id asc ");
+	$modelo_parametro = get_mysql_model_param("SELECT p.nombre FROM modelo m, modelo_variable p  WHERE m.modelo_id=".$modelo_id."  AND p.modelo_id=m.modelo_id ORDER BY p.variable_id asc ");
 	$haySiguiente=false;
 	foreach($modelo_parametro as $param)
 	{ // Array data.

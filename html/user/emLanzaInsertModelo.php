@@ -24,6 +24,7 @@ page_head(tra("Simulation Model Insertion"));
 db_init();
 $user = get_logged_in_user();
 $indiceParametros=1;
+$indiceVariables=1;
 $indiceCorrientes=1;
 foreach($_REQUEST as $name => $value)
 {
@@ -42,6 +43,13 @@ echo " REQUEST : " . $name . " " . $value . "<br>";
 			$indiceParametros+=1;
 		}
 	}
+	else if(stristr($name, 'variable') != FALSE) 
+	{
+		if($value!=""){
+			$variables[$indiceVariables]=$value;
+			$indiceVariables+=1;
+		}
+	}
 	else if(stristr($name, 'modelNumber') != FALSE) 
 	{
 		$modeloId=$value;
@@ -49,10 +57,6 @@ echo " REQUEST : " . $name . " " . $value . "<br>";
 	else if(stristr($name, 'modelName') != FALSE) 
 	{
 		$modeloName=$value;
-	}
-	else if(stristr($name, 'parTipo') != FALSE) 
-	{
-		$parTipo[$indiceParametros]=$value;
 	}
 }
 
@@ -62,10 +66,19 @@ echo "SQL (" . $elInsert . ")<br>";
 $result_ok = mysql_query($elInsert);
 if($result_ok){
 
-	$parTipoCnt=1;
 	foreach($parametros as $parId => $parName)
 	{
-		$elInsert="insert into modelo_parametro values (".$parId.",".$modeloId.",'".$parName . "'," . $parTipo[$parTipoCnt++] . ")";
+		$elInsert="insert into modelo_parametro values (".$parId.",".$modeloId.",'".$parName . "'" . ")";
+		echo $elInsert . "<br>";
+		$result_ok = mysql_query($elInsert);
+		if($result_ok==false)
+		{
+			break;
+		}
+	}
+	foreach($variables as $varId => $varName)
+	{
+		$elInsert="insert into modelo_variable values (".$varId.",".$modeloId.",'".$varName . "'" . ")";
 		echo $elInsert . "<br>";
 		$result_ok = mysql_query($elInsert);
 		if($result_ok==false)
@@ -117,6 +130,10 @@ row2( "Model Name", $modeloName);
 foreach($parametros as $id => $par)
 {
 row2( "Paramenter Nº : ".$id , $par);
+}
+foreach($variables as $id => $par)
+{
+row2( "Variable Nº : ".$id , $par);
 }
 foreach($corrientes as $id => $par)
 {

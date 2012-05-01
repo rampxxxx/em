@@ -102,6 +102,8 @@ echo "
   parametro:hover { background:green; }
   corriente { color:blue; margin:5px; cursor:pointer; }
   corriente:hover { background:green; }
+  variable { color:blue; margin:5px; cursor:pointer; }
+  variable:hover { background:green; }
   </style>
 
 <script> 
@@ -110,23 +112,34 @@ echo "
 ////////////////////////////////////////////////////
 numeroParameter=1;
 numeroCorriente=1;
-var restoSelect='<option value=1 >Modificable</option>';
-    restoSelect+='<option value=2 >Salvable</option>';
-    restoSelect+='<option value=3 >Ambos</option>';
+numeroVariable=1;
 ////////////////////////////////////////////////////
 ///   Añade Model Modificable Parameter        /////
 ////////////////////////////////////////////////////
 function addModificableParameter()
 {
 document.getElementById('tra').innerHTML = 'addRowTable!! '; 
-var sel=' <select name=parTipo' + numeroParameter + ' > ' + restoSelect + '</select> ';
 var elementoSimple = 'x'+numeroParameter;
 var elementoComplejo = 'xs'+numeroParameter;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sp\").append('<' + elementoComplejo + '>' + code + sel +  '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+$(\"sp\").append('<' + elementoComplejo + '>' + code + '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroParameter+=1;
 }
+////////////////////////////////////////////////////
+///   Añade Model Modificable Variable        /////
+////////////////////////////////////////////////////
+function addVariable()
+{
+document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+var elementoSimple = 'z'+numeroVariable;
+var elementoComplejo = 'zs'+numeroVariable;
+var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
+
+$(\"sv\").append('<' + elementoComplejo + '>' + code +  '<input name=variable' + numeroVariable + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+numeroVariable+=1;
+}
+
 
 ////////////////////////////////////////////////////
 ///   Añade Model Currents                     /////
@@ -158,6 +171,16 @@ row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding modificable pa
     <script>
     $(\"parametro\").click(function () {
 addModificableParameter();
+});
+    </script>"
+
+);
+row2(tra("<variable> ADD VARIABLES </variable> %1 Allow adding variables to the model %2 ", "<br><span class=note>", "</span>"),
+    "<sv > </sv> 
+
+    <script>
+    $(\"variable\").click(function () {
+addVariable();
 });
     </script>"
 
