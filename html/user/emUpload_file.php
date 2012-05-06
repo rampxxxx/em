@@ -12,6 +12,11 @@ $user = get_logged_in_user();
   if ($_FILES["file"]["error"] > 0)
     {
     echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+$file=$_FILES["file"];
+echo " size : " . $file['size'] . " error : " . $file['error'] . "<br>";
+echo " name : " . $file['name']  . "<br>";
+echo " type : " . $file['type']  . "<br>";
+echo " tmp_name : " . $file['tmp_name']  . "<br>";
     }
   else
     {
