@@ -21,6 +21,12 @@ echo "
 echo "<form method=get action=emLanzaFormModelo.php>";
 echo form_tokens($user->authenticator);
 start_table();
+row1("CREATE / DELETE", '9');
+row2(tra("MODEL NUMBER %1 to Create OR Delete %2", "<br><span class=note>", "</span>"),
+    "<input name=modelNumber type=text size=10 >"
+);
+
+row2("", "<input type=submit value='Go!'>");
 row1("List of Actual Models ", '9');
 echo "<tr><td>Model ID</td>";
 echo "<td width=\"15\">" . "Model Name     " . "</td>\n";
@@ -35,11 +41,6 @@ foreach($models as $model) {
 		echo "<td>" . $model_name . "</td>";
 		echo " </tr>";
 }
-row2(tra("MODEL NUMBER %1 to Create OR Delete %2", "<br><span class=note>", "</span>"),
-    "<input name=modelNumber type=text size=10 >"
-);
-
-row2("", "<input type=submit value='Go!'>");
 end_table();
 echo "</form>\n";
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
