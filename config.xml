@@ -3,20 +3,20 @@
   <config>
     <upload_dir>/home/boincadm/em/upload</upload_dir>
     <send_result_abort>1</send_result_abort>
-    <long_name>em</long_name>
-    <cgi_url>http://192.168.1.33/em_cgi/</cgi_url>
+    <long_name>em@home</long_name>
+    <cgi_url>http://10.1.1.186/em_cgi/</cgi_url>
     <sched_debug_level>3</sched_debug_level>
-    <upload_url>http://192.168.1.33/em_cgi/file_upload_handler</upload_url>
+    <upload_url>http://10.1.1.186/em_cgi/file_upload_handler</upload_url>
     <disable_account_creation>0</disable_account_creation>
     <uldl_dir_fanout>1024</uldl_dir_fanout>
-    <download_url>http://192.168.1.33/em/download</download_url>
+    <download_url>http://10.1.1.186/em/download</download_url>
     <db_user>boincadm</db_user>
-    <log_dir>/home/boincadm/em/log_debian-wheezy</log_dir>
+    <log_dir>/home/boincadm/em/log_alu12055</log_dir>
     <app_dir>/home/boincadm/em/apps</app_dir>
     <download_dir>/home/boincadm/em/download</download_dir>
     <fuh_debug_level>3</fuh_debug_level>
-    <master_url>http://192.168.1.33/em/</master_url>
-    <host>debian-wheezy</host>
+    <master_url>http://10.1.1.186/em/</master_url>
+    <host>alu12055</host>
     <db_name>em</db_name>
     <shmem_key>0x11119472</shmem_key>
     <show_results>1</show_results>

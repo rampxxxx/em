@@ -38,7 +38,10 @@ foreach($models as $model) {
 	$model_id = $model["modelo_id"];
 	$model_name = $model["nombre"];
 		echo "<tr><td>" . $model_id . "</td>";
-		echo "<td>" . $model_name . "</td>";
+		echo "<td>
+			<a href=\"emListModeloDetail.php?model=" .$model_id."\">" . $model_name."</a>
+			</td>
+			";
 		echo " </tr>";
 }
 end_table();

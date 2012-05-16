@@ -100,10 +100,16 @@ echo "
   <style>
   parametro { color:blue; margin:5px; cursor:pointer; }
   parametro:hover { background:green; }
+  parametroDel { color:blue; margin:5px; cursor:pointer; }
+  parametroDel:hover { background:red; }
   corriente { color:blue; margin:5px; cursor:pointer; }
   corriente:hover { background:green; }
+  corrienteDel { color:blue; margin:5px; cursor:pointer; }
+  corrienteDel:hover { background:red; }
   variable { color:blue; margin:5px; cursor:pointer; }
   variable:hover { background:green; }
+  variableDel { color:blue; margin:5px; cursor:pointer; }
+  variableDel:hover { background:red; }
   </style>
 
 <script> 
@@ -123,8 +129,22 @@ var elementoSimple = 'x'+numeroParameter;
 var elementoComplejo = 'xs'+numeroParameter;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sp\").append('<' + elementoComplejo + '>' + code + '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+$(\"sp\").append('<' + elementoComplejo + '>' + ' ' + numeroParameter +  '<input name=parameter' + numeroParameter + ' type=text size=5 >' + '<' + elementoSimple + '>'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroParameter+=1;
+}
+////////////////////////////////////////////////////
+///   Borra Model Modificable Parameter        /////
+////////////////////////////////////////////////////
+function delModificableParameter()
+{
+document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+for(var i = 1; i<= numeroParameter;i++)
+{
+	$('xs'+i).remove();
+}
+
+
+numeroParameter=1;
 }
 ////////////////////////////////////////////////////
 ///   Añade Model Modificable Variable        /////
@@ -136,10 +156,22 @@ var elementoSimple = 'z'+numeroVariable;
 var elementoComplejo = 'zs'+numeroVariable;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sv\").append('<' + elementoComplejo + '>' + code +  '<input name=variable' + numeroVariable + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+$(\"sv\").append('<' + elementoComplejo + '>' + ' ' + numeroVariable +  '<input name=variable' + numeroVariable + ' type=text size=5 >' + '<' + elementoSimple + '>'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroVariable+=1;
 }
+////////////////////////////////////////////////////
+///   Borra Model Modificable Variable        /////
+////////////////////////////////////////////////////
+function delVariable()
+{
+for(var i = 1; i<= numeroVariable;i++)
+{
+	$('zs'+i).remove();
+}
 
+
+numeroVariable=1;
+}
 
 ////////////////////////////////////////////////////
 ///   Añade Model Currents                     /////
@@ -151,9 +183,23 @@ var elementoSimple = 'y'+numeroCorriente;
 var elementoComplejo = 'ys'+numeroCorriente;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-$(\"sc\").append('<' + elementoComplejo + '>' + code + '<input name=current' + numeroCorriente + ' type=text size=5 >' + '<' + elementoSimple + '>X'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
+$(\"sc\").append('<' + elementoComplejo + '>' + ' ' + numeroCorriente + '<input name=current' + numeroCorriente + ' type=text size=5 >' + '<' + elementoSimple + '>'+ '</' + elementoSimple+'>' + '<br> ' + '</'+elementoComplejo+'>' ); 
 numeroCorriente+=1;
 }
+////////////////////////////////////////////////////
+///   Borra Model Modificable Corriente        /////
+////////////////////////////////////////////////////
+function delCurrents()
+{
+for(var i = 1; i<= numeroCorriente;i++)
+{
+	$('ys'+i).remove();
+}
+
+
+numeroCorriente=1;
+}
+
 
 
 </script>";
@@ -165,32 +211,41 @@ $modelNumber);
 row2(tra("MODEL NAME %1 Friendly name %2", "<br><span class=note>", "</span>"),
     "<input name=modelName type=text size=40 >"
 );  
-row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding modificable parameters to the model %2 ", "<br><span class=note>", "</span>"),
+row2(tra("<parametro> ADD PARAMETERS </parametro> %1 Allow adding modificable parameters to the model %2 <br> <parametroDel> DELETE ALL PARAMETERS </parametroDel> ", "<br><span class=note>", "</span>"),
     "<sp > </sp> 
 
     <script>
     $(\"parametro\").click(function () {
 addModificableParameter();
 });
+    $(\"parametroDel\").click(function () {
+delModificableParameter();
+});
     </script>"
 
 );
-row2(tra("<variable> ADD VARIABLES </variable> %1 Allow adding variables to the model %2 ", "<br><span class=note>", "</span>"),
+row2(tra("<variable> ADD VARIABLES </variable> %1 Allow adding variables to the model %2 <br>  <variableDel> DELETE ALL VARIABLES </variableDel> ", "<br><span class=note>", "</span>"),
     "<sv > </sv> 
 
     <script>
     $(\"variable\").click(function () {
 addVariable();
 });
+    $(\"variableDel\").click(function () {
+delVariable();
+});
     </script>"
 
 );
-row2(tra("<corriente> ADD CURRENTS </corriente> %1 Allow adding file saving currents to the model %2 ", "<br><span class=note>", "</span>"),
+row2(tra("<corriente> ADD CURRENTS </corriente> %1 Allow adding file saving currents to the model %2  <br>  <corrienteDel> DELETE ALL CURRENTS </corrienteDel>", "<br><span class=note>", "</span>"),
     "<sc > </sc> 
 
     <script>
     $(\"corriente\").click(function () {
 addCurrents();
+});
+    $(\"corrienteDel\").click(function () {
+delCurrents();
 });
     </script>"
 
