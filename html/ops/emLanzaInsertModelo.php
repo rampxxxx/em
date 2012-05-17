@@ -1,6 +1,6 @@
 <?php
-require_once("../inc/db.inc");
-require_once("../inc/util.inc");
+require_once("../inc/db_ops.inc");
+require_once("../inc/util_ops.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/utilidades.inc");
 
@@ -20,9 +20,8 @@ require_once("../inc/utilidades.inc");
 ### FIN : FUNCTIONS SELECT
 #############################
 
-page_head(tra("Simulation Model Insertion"));
+admin_page_head(tra("Simulation Model Insertion"));
 db_init();
-$user = get_logged_in_user();
 $indiceParametros=1;
 $indiceVariables=1;
 $indiceCorrientes=1;
@@ -119,7 +118,6 @@ echo "
 ////////////////////////////////////////////////////
 
 </script>";
-echo form_tokens($user->authenticator);
 if($result_ok)
 {
 row1("Model INSERTED! ", '9');
@@ -157,5 +155,5 @@ echo "<td>
 <a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
-page_tail();
+admin_page_tail();
 ?>

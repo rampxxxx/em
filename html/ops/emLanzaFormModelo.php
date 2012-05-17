@@ -1,8 +1,8 @@
 <?php
-require_once("../inc/db.inc");
-require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/utilidades.inc");
+require_once("../inc/util_ops.inc");
+require_once("../inc/db_ops.inc");
 
 #############################
 ### INI : DATA      SELECT
@@ -22,10 +22,10 @@ require_once("../inc/utilidades.inc");
 
 
 db_init();
-$user = get_logged_in_user();
 
 foreach($_REQUEST as $name => $value)
 {
+	$errorEnDatos=0;
         if(stristr($name, 'modelNumber') != FALSE)
         {
                 $errorEnDatos=compruebaInt($name, $value);
@@ -37,6 +37,7 @@ foreach($_REQUEST as $name => $value)
 if($errorEnDatos==false){
 
 $models = get_mysql_model("SELECT modelo_id, nombre FROM modelo  WHERE modelo_id=" . $modelNumber . " order by modelo_id asc ");
+$modelo_id="";
 foreach($models as $modelo) 
 {
         $modelo_id = $modelo["modelo_id"];
@@ -48,10 +49,9 @@ if($modelo_id==$modelNumber)
 { // Borrar el modelo existente.
 
 
-page_head(tra("Simulation Model Deletion"));
+admin_page_head(tra("Simulation Model Deletion"));
 
 echo "<form method=get action=emLanzaDeleteModelo.php>";
-echo form_tokens($user->authenticator);
 start_table();
 row1("Model EXISTS! ", '9');
 echo "<tr><td width=\"15\">Model ID</td>";
@@ -94,7 +94,7 @@ echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 }
 else
 { //Crear un nuevo modelo
-page_head(tra("Simulation Model Creation"));
+admin_page_head(tra("Simulation Model Creation"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "
   <style>
@@ -203,7 +203,6 @@ numeroCorriente=1;
 
 
 </script>";
-echo form_tokens($user->authenticator);
 echo "<form method=get action=emLanzaInsertModelo.php>";
 start_table();
 row2(tra(" MODEL ID %1 Unique ID as used in simulation program(fortran)  %2 ", "<br><span class=note>", "</span>"),
@@ -261,5 +260,5 @@ echo "<td>
 <a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
-page_tail();
+admin_page_tail();
 ?>

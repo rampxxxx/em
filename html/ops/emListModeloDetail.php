@@ -2,18 +2,17 @@
 <body>
 
 <?php
-require_once("../inc/db.inc");
-require_once("../inc/util.inc");
+require_once("../inc/db_ops.inc");
+require_once("../inc/util_ops.inc");
 require_once("../inc/countries.inc");
 
 $size = (int) count($_REQUEST);
 
 
 db_init();
-$user = get_logged_in_user();
 
 
-page_head(tra("Model Detail "));
+admin_page_head(tra("Model Detail "));
 //start_table("align=\"center\"");
 start_table();
 $contador=1;
@@ -88,7 +87,7 @@ echo "</tr>";
 }
 
 end_table();
-page_tail();
+admin_page_tail();
 
 ?>
 </body>

@@ -114,7 +114,7 @@ echo "
     <table border=\"0\"><tr valign=\"top\">
     <td><b>EM Administration:</b>
     <ul> 
-        <li><a href=\"db_form.php?table=result&amp;detail=low\">Model Creation(Parameters, ...)</a></li>
+        <li><a href=\"emQueryModelo.php\">Model Creation(Parameters, ...)</a></li>
         <li><a href=\"db_form.php?table=workunit\">New Application Version(Binary upload,...)</a></li>
     </ul>
     

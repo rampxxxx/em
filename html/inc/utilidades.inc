@@ -25,6 +25,7 @@ if (!defined('SECURE_URL_BASE')) {
 ////////////////////////////////////////////////////
 function compruebaFloat($name,$value)
 {
+	$errorEnDatos=false;
         if(filter_var($value, FILTER_VALIDATE_FLOAT))
         {
         }else
@@ -37,6 +38,7 @@ return $errorEnDatos;
 }
 function compruebaInt($name,$value)
 {
+	$errorEnDatos=false;
 echo "<br>";
 var_dump (filter_var($value, FILTER_VALIDATE_INT) );
 var_dump (filter_var($value, FILTER_VALIDATE_BOOLEAN) );
@@ -90,16 +92,13 @@ function dameNombreCorriente($modelo_id, $corriente_id) {
 /// Prepara un query sql //////////////////////////
 ////////////////////////////////////////////////////
 function get_mysql_model($query) {
-    //$user_workunits = unserialize(get_cached_data(3600, "get_mysql_user_workunit".$query));
-    //if ($user_workunits == false) {
         $result = mysql_query($query);
+	$user_workunits=array();
         while($row = mysql_fetch_assoc($result)) {
             $user_workunits[] = $row;
         }
         mysql_free_result($result);
         set_cached_data(3600, serialize($user_workunits), "get_mysql_model".$query);
-    //}else{
-//}
     return $user_workunits;
 }
 
