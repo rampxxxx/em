@@ -30,10 +30,10 @@ row1("Current finish works ", '9');
 
 echo "<tr><td>Work ID</td>";
 echo "<td width=\"15\">" . "Alias          " . "</td>\n";
-echo "<td width=\"15\">" . "First Data File" . "</td>\n";
-echo "<td width=\"15\">" . "Second Data File" . "</td>\n";
+echo "<td width=\"15\">" . "Param Data File" . "</td>\n";
+echo "<td width=\"15\">" . "Current Data File" . "</td>\n";
 echo "<td width=\"15\">" . "Work Parameters " . "</td>\n";
-echo "<td width=\"15\">" . "Work Parameters Debug " . "</td>\n";
+echo "<td width=\"15\">" . "Work Parameters File " . "</td>\n";
 echo "<td width=\"15\">" . "Delete Data Files From SERVER!!" . "</td>\n";
 echo "</tr>";
 
@@ -61,7 +61,7 @@ foreach($user_workunits as $user_workunit) {
 			</td>
 			";
 		echo "<td>
-			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=1\">List Debug</a>
+			<a href=\"emListTaskDetailAction.php?workunit_id=".$user_workunitid."&debug=1\">List File</a>
 			</td>
 			";
 		//END:Details
