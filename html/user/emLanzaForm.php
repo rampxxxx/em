@@ -562,7 +562,7 @@ addStim();
 row2(tra("#POST %1 Defines the output frequency and the first iteration at which data is saved %2", "<br><span class=note>", "</span>"),
     "First iteration saved is <input name=postFirst type=text size=10 >Saving frecuency <input name=postFrec type=text size=10 >"
 );
-row2(tra("<fileParameters>#FILE_PARAMETERS</fileParameters>%1 <allFileParameters>ADD ALL PARAMETERS TO DISK</allFileParameters>%2", "<br><span class=note>", "</span>"),
+row2(tra("<fileParameters>#FILE_PARAMETERS</fileParameters>%1 <allFileParameters>ADD ALL PARAMETERS TO DISK</allFileParameters> <br> Parameter that will be saved to file results.%2", "<br><span class=note>", "</span>"),
     "<ss> </ss>
     <script>
     $(\"fileParameters\").click(function () {
@@ -574,7 +574,7 @@ addAllParSave();
     </script>"
 
 );
-row2(tra("<fileCurrents>#FILE_CURRENTS</fileCurrents> %1 <allFileCurrents>ADD ALL CURRENTS</allFileCurrents> %2", "<br><span class=note>", "</span>"),
+row2(tra("<fileCurrents>#FILE_CURRENTS</fileCurrents> %1 <allFileCurrents>ADD ALL CURRENTS</allFileCurrents> <br> Currents that will be saved to file results.%2", "<br><span class=note>", "</span>"),
     "<sc> </sc>
     <script>
     $(\"fileCurrents\").click(function () {
