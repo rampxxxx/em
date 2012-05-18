@@ -69,7 +69,7 @@ var numeroCurSave = 1;
 ////////////////////////////////////////////////////
 function addStim()
 {
-document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+//document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 
 var elementoSimple = 'z'+numeroStim;
 var elementoComplejo = 'zs'+numeroStim;
@@ -101,15 +101,15 @@ var ii=0;
 for(var i=0;i<paramsSave.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
+//	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
 	if(i==index)
 	{
-	document.getElementById('tra').innerHTML += ' BINGO!';
+	//document.getElementById('tra').innerHTML += ' BINGO!';
 		sel+='<option value=' + ii + ' selected >' + paramsSave[i] + '</option>';
 	}
 	else
 	{
-	document.getElementById('tra').innerHTML += ' OPS!';
+//	document.getElementById('tra').innerHTML += ' OPS!';
 		sel+='<option value=' + ii + ' >' + paramsSave[i] + '</option>';
 	}
 }
@@ -125,7 +125,7 @@ var ii=0;
 for(var i=0;i<paramsSave.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' params text !! ' + paramsSave[i]; 
+//	document.getElementById('tra').innerHTML += ' params text !! ' + paramsSave[i]; 
 	sel+='<option value=' + ii + ' >' + paramsSave[i] + '</option>';
 }
 return sel;
@@ -135,7 +135,7 @@ return sel;
 ////////////////////////////////////////////////////
 function addParSave()
 {
-document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
+//document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
 var restoSelect='';
 restoSelect=montaSelParSave();
@@ -149,12 +149,12 @@ numeroParSave+=1;
 ////////////////////////////////////////////////////
 function addAllParSave()
 {
-document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
+//document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
 var restoSelect='';
 for(var i=0;i<paramsSave.length;i++)
 {
-document.getElementById('tra').innerHTML = 'numeroParSave ==  ' + numeroParSave; 
+//document.getElementById('tra').innerHTML = 'numeroParSave ==  ' + numeroParSave; 
 	restoSelect=montaAppendSelParSave(i);
 	montaAppendParSave(restoSelect, numeroParSave);
 	numeroParSave+=1;
@@ -184,15 +184,15 @@ var ii=0;
 for(var i=0;i<currents.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
+//	document.getElementById('tra').innerHTML += ' selected  ' + index + ' i ' + i + ' ii ' + ii;
 	if(i==index)
 	{
-	document.getElementById('tra').innerHTML += ' BINGO!';
+//	document.getElementById('tra').innerHTML += ' BINGO!';
 		sel+='<option value=' + ii + ' selected >' + currents[i] + '</option>';
 	}
 	else
 	{
-	document.getElementById('tra').innerHTML += ' OPS!';
+//	document.getElementById('tra').innerHTML += ' OPS!';
 		sel+='<option value=' + ii + ' >' + currents[i] + '</option>';
 	}
 }
@@ -208,7 +208,7 @@ var ii=0;
 for(var i=0;i<currents.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' current text !! ' + currents[i]; 
+//	document.getElementById('tra').innerHTML += ' current text !! ' + currents[i]; 
 	sel+='<option value=' + ii + ' >' + currents[i] + '</option>';
 }
 return sel;
@@ -218,21 +218,21 @@ return sel;
 ////////////////////////////////////////////////////
 function addCurSave()
 {
-document.getElementById('tra').innerHTML = 'addCurSaveTable!! '; 
+//document.getElementById('tra').innerHTML = 'addCurSaveTable!! '; 
 
 var restoSelect='';
 var ii=0;
 if(currents.length!=0){
 	restoSelect=montaSelCurSave();
-document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
+//document.getElementById('tra').innerHTML += 'Tras el for , antes de append del select'; 
 
 montaAppendCurSave(restoSelect, numeroCurSave);
-document.getElementById('tra').innerHTML += 'Despues de append'; 
+//document.getElementById('tra').innerHTML += 'Despues de append'; 
 numeroCurSave+=1;
 }
 else
 {
-	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
+//	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
 }
 
 
@@ -242,13 +242,13 @@ else
 ////////////////////////////////////////////////////
 function addAllCurSave()
 {
-document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
+//document.getElementById('tra').innerHTML = 'addParSaveTable!! '; 
 
 var restoSelect='';
 if(currents.length!=0){
 for(var i=0;i<currents.length;i++)
 {
-document.getElementById('tra').innerHTML = 'numeroCurSave ==  ' + numeroCurSave; 
+//document.getElementById('tra').innerHTML = 'numeroCurSave ==  ' + numeroCurSave; 
 	restoSelect=montaAppendSelCurSave(i);
 	montaAppendCurSave(restoSelect, numeroCurSave);
 	numeroCurSave+=1;
@@ -256,7 +256,7 @@ document.getElementById('tra').innerHTML = 'numeroCurSave ==  ' + numeroCurSave;
 }
 else
 {
-	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
+//	document.getElementById('tra').innerHTML = '!!NO TIENE CORRIENTES QUE GUARDAR!!! '; 
 }
 }
 ////////////////////////////////////////////////////
@@ -264,15 +264,15 @@ else
 ////////////////////////////////////////////////////
 function addParameterTable()
 {
-document.getElementById('tra').innerHTML = 'addParameterTable!!=> '; 
-document.getElementById('tra').innerHTML = params.length; 
+//document.getElementById('tra').innerHTML = 'addParameterTable!!=> '; 
+//document.getElementById('tra').innerHTML = params.length; 
 
 var restoSelect='';
 var ii=0;
 for(var i=0;i<params.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+//	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
 	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
@@ -289,27 +289,26 @@ numeroParameter+=1;
 ////////////////////////////////////////////////////
 function addBurst()
 {
-document.getElementById('tra').innerHTML = 'addBurst!! '; 
+//document.getElementById('tra').innerHTML = 'addBurst!! '; 
 deleteBurst();
 var restoSelect='';
 var ii=0;
 for(var i=0;i<params.length;i++)
 {
 	ii=i+1;
-	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
+//	document.getElementById('tra').innerHTML += ' params text !! ' + params[i]; 
 	restoSelect+='<option value=' + ii + ' >' + params[i] + '</option>';
 }
 
-	document.getElementById('tra').innerHTML += ' continuo ...';
+//	document.getElementById('tra').innerHTML += ' continuo ...';
 
 var elemento = 'y' ;
 var code = '<script>$(\"' + elemento + '\").click(function(){\$(\"' + 'ys' + '\").remove();});</scr'+'ipt>' + '<style>' + elemento + ':hover { background:red; } ' + elemento + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
 
-	document.getElementById('tra').innerHTML += ' mas ...';
+//	document.getElementById('tra').innerHTML += ' mas ...';
 $(\"sb\").append('<ys' + '>' + code + ' <select name=burstSelect > ' + restoSelect + '</select>Start<input name=burstStart type=text size=5 >End<input name=burstEnd type=text size=5 >Gap<input name=burstGap type=text size=5 > ' +  '<' + elemento + '>X  </' + elemento + '>    <br> </ys' + '>' ); 
-//$(\"sb\").append('mierda');
 
-	document.getElementById('tra').innerHTML += ' fin ...';
+//	document.getElementById('tra').innerHTML += ' fin ...';
 numeroBurst+=1;
 
 }
@@ -346,11 +345,11 @@ numeroStim=9;
 /////////////////////////////////
 function deleteParameterTable()
 {
-	document.getElementById('tra').innerHTML = ' Borrando campos. numeroParameter ' + numeroParameter; 
+//	document.getElementById('tra').innerHTML = ' Borrando campos. numeroParameter ' + numeroParameter; 
 
 for(var i = 1; i<= numeroParameter;i++)
 {
-	document.getElementById('tra').innerHTML += ' xs' + i ; 
+//	document.getElementById('tra').innerHTML += ' xs' + i ; 
 $('xs'+i).remove();
 }
 
@@ -413,9 +412,9 @@ function populate(o)
 	deleteCurSave();
 	numeroParameter=1;
 	//d=document.getElementById('de');
-	document.getElementById('tra').innerHTML += 'dentro!! '; 
+//	document.getElementById('tra').innerHTML += 'dentro!! '; 
 	//if(!d){return;}			
-	document.getElementById('tra').innerHTML += 'd existe!! '; 
+//	document.getElementById('tra').innerHTML += 'd existe!! '; 
 	var parSave=new Array();
 	var parData=new Array();
 ";
@@ -470,7 +469,7 @@ foreach($modelos as $modelo)
 	echo "];";
 }
 echo"
-	document.getElementById('tra').innerHTML += ' array de datos '; 
+//	document.getElementById('tra').innerHTML += ' array de datos '; 
 
 
 	var parCurr=new Array();
@@ -509,9 +508,9 @@ echo"
 params=parData[o.options[o.selectedIndex].text];
 paramsSave=parSave[o.options[o.selectedIndex].text];
 currents=parCurr[o.options[o.selectedIndex].text];
-	document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
-	document.getElementById('tra').innerHTML += ' Current size=>' + currents.length;
-	document.getElementById('tra').innerHTML += ' Params size=>' + params.length;
+//	document.getElementById('tra').innerHTML += ' indice ' + o.selectedIndex + ' valor ' + o.options[o.selectedIndex].value + ' text ' + o.options[o.selectedIndex].text ; 
+//	document.getElementById('tra').innerHTML += ' Current size=>' + currents.length;
+//	document.getElementById('tra').innerHTML += ' Params size=>' + params.length;
 }
 
 
@@ -591,7 +590,7 @@ addAllCurSave();
 row2("", "<input type=submit value='Go!'>");
 end_table();
 echo "</form>\n";
-echo "<label for=\"tra\" id=\"tra\">Traza</label>";
+echo "<label for=\"tra\" id=\"tra\"></label>";
 echo "<td>
 <a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>

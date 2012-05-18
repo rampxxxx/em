@@ -8,7 +8,7 @@ require_once("../inc/countries.inc");
 require_once("../inc/utilidades.inc");
 
 page_head(tra("Simulation Workunit Creation"));
-
+start_table();
 
 
 $size = (int) count($_REQUEST);
@@ -16,7 +16,7 @@ $size = (int) count($_REQUEST);
 
 db_init();
 $user = get_logged_in_user();
-
+/*
 echo "User ID :(" . $user->id . ") User NAME (" . $user->name;
 echo "Tamano parametros  :(" . $size . ")";
 echo $_REQUEST["model"] . "<br/>";
@@ -27,7 +27,7 @@ echo $_REQUEST["stimulus2"] . "<br/>";
 echo $_REQUEST["stimulus9"] . "<br/>";
 echo $_REQUEST["stimulus10"] . "<br/>";
 echo $_REQUEST["post"] . "<br/>";
-
+*/
 $contador=1;
 $indiceParametros=1;
 $indiceParSave=1;
@@ -150,6 +150,7 @@ foreach($_REQUEST as $name => $value)
 	//echo "<br/>";
 	$contador+=1;	
 }
+/*
 echo "Muestra array de objs <br>";
 foreach($stimulusArray as $id => $stimulo)
 {
@@ -174,31 +175,35 @@ echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 
 echo "count(paraSaveArray) :" . count($paraSaveArray) . "<br>";
 echo "count(curSaveArray) :" . count($curSaveArray) . "<br>";
+*/
 if(count($paraSaveArray)==0 && count($curSaveArray)== 0){
 	$errorEnDatos=true;
-	echo "Sin seleccion de parametros a disto o corrientes a disco <br>";
-	echo "NO SE VAN A GENERAR DATOS :-)<br>";
-	echo "Estas seguro?                <br>";
-	echo "Vuelve a intentarlo          <br>";
+	row1("Work Creation ERROR!",'9');
+	row2("", "No parameters and currents to save.");
+	row2("", "No data is going to be generated as result :-) .");
+	row2("", "Are you sure?");
+	row2("", "Try again.");
 }
 
 
 if($errorEnDatos==true)
 {
-	echo("Comprobar los datos de entrada. <br/>");
+	row2("","Check input data .");
 }
 else
 { // INSERT TASK
 
 $salida=shell_exec('echo "desde php" > /tmp/php.out');
-echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>";
+//echo "Resultado de ejecucion de shell : ". "<pre>" . $salida . "<pre>" . "<BR/>";
 
 // INI LOOP : BURST TASK GENERATION
+/*
 echo "burstCnt " . $burstCnt . "<br>";
 echo "burstStart "  . $burstStart . "<br>";
 echo "burstEnd " . $burstEnd . "<br>";
 echo "burstGap " . $burstGap . "<br>";
 echo "burstSelect " . $burstSelect . "<br>";
+*/
 $haveBurst=false;
 if($burstStart == $burstEnd || $burstGap==0){
 	$burstGap=1;
@@ -295,7 +300,7 @@ if (flock($fp, LOCK_SH|LOCK_NB)) { // do an exclusive lock
     foreach($paraSaveArray as $id => $value)
     {
 	    $paramForSave = $paramForSave . " " . $value;
-	    $linea=$linea . " " . dameNombreParametro($model, $id);
+	    $linea=$linea . " " . dameNombreVariable($model, $value);
     }
     fwrite($fp, $paramForSave . "\n");
     fwrite($fpe,$linea        . "\n");
@@ -342,15 +347,19 @@ $salida=shell_exec('../../bin/lanza.sh' . " " .  $user->id . " \"" . $_REQUEST["
 ///////////////////////////////
     flock($fp, LOCK_UN); // release the lock
 } else {
-    echo "Server Busy. Try it again in some minutes" . "<BR/>";
+    row2("", "Server Busy. Try it again in some minutes" );
+    row2("", "Lock file  /tmp/newTask.txt in use!!! :-?  " ); 
 }
 fclose($fp);
 
 }
 // END LOOP : BURST TASK GENERATION
-
+row1("TASK CREATION OK",'9');
+row2("", " New task creation ok.");
+row2("", " Please check <a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>"." and refesh if needed to see active ones. ");
 } // END INSERT TASK
 
+end_table();
 echo "<td>
 <a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>

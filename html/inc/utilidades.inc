@@ -78,6 +78,15 @@ function dameNombreParametro($modelo_id, $parametro_id) {
     return $nombre;
 }
 ////////////////////////////////////////////////////
+/// Obtiene el nombre de un variable /////////////
+////////////////////////////////////////////////////
+function dameNombreVariable($modelo_id, $variable_id) {
+	$result=mysql_query("select v.nombre from modelo m,modelo_variable v where m.modelo_id=v.modelo_id and m.modelo_id=".$modelo_id . " and v.variable_id=".$variable_id);
+	$row=mysql_fetch_array($result);
+	$nombre=$row["nombre"];
+
+    return $nombre;
+}////////////////////////////////////////////////////
 /// Obtiene el nombre de una corriente/////////////
 ////////////////////////////////////////////////////
 function dameNombreCorriente($modelo_id, $corriente_id) {

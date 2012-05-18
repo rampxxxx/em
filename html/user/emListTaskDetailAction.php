@@ -137,7 +137,7 @@ else
 				if(strcmp($seccion,$tok)==0)
 				{
 					foreach($parametros as $key => $value){
-						$elParametro=" ".$key.".: ".$value."=".$valParametros[$key];
+						$elParametro=" ".$key.".- ".$value."(".$valParametros[$key].")";
 						row2(tra("#PARAMETERS %1  %2", "<br><span class=note>", "</span>"),$elParametro);
 					}
 					$cntSeccion=1;
@@ -151,11 +151,11 @@ else
 				{
 					foreach($step as $key => $value){
 						if($key==1){
-						$elStep="INI :".$value;
+						$elStep="INI :(".$value.")";
 						}else if($key==2){
-						$elStep=$elStep." END :".$value;
+						$elStep=$elStep." END :(".$value.")";
 						}else if($key==3){
-						$elStep=$elStep." INC :".$value;
+						$elStep=$elStep." INC :(".$value.")";
 						}
 					}
 					row2(tra("#STEP %1 msec  %2", "<br><span class=note>", "</span>"),$elStep);
@@ -167,13 +167,13 @@ else
 						$cntSeccion=1;
 					}else{
 					if($cntSeccion==1){
-						$estimulo="START ".$tok;
+						$estimulo="START :(".$tok.")";
 					}else if($cntSeccion==2){
-						$estimulo=$estimulo." BCL ".$tok;
+						$estimulo=$estimulo." BCL :(".$tok.")";
 					}else if($cntSeccion==3){
-						$estimulo=$estimulo." DURA ".$tok;
+						$estimulo=$estimulo." DURA :(".$tok.")";
 					}else if($cntSeccion==4){
-						$estimulo=$estimulo." CURRNT ".$tok;
+						$estimulo=$estimulo." CURRNT :(".$tok.")";
 						$estimulos[$cntEstimulo++]=$estimulo;
 						$cntSeccion=0;
 					}
@@ -190,7 +190,12 @@ else
 					}
 					$cntSeccion=1;
 				} else{
-					$elPost=$elPost." ".$tok;
+					if($cntSeccion==1){
+					$elPost=$elPost." START:(".$tok.")";
+					$cntSeccion++;
+					}else{
+					$elPost=$elPost." NUM. INCRE.:(".$tok.")";
+					}
 				}
 			}
 			else if(strcmp(($seccion=seccion($tok,$seccion)),"#FILE_PARAMETERS")==0)
@@ -208,7 +213,11 @@ else
 				if(strcmp($seccion,$tok)==0)
 				{
 					foreach($fileParameters as $key => $value){
+						if($key==1){
+						row2(tra("Number of #FILE_PARAMETERS %1       %2", "<br><span class=note>", "</span>"),$value);
+						}else{
 						row2(tra("#FILE_PARAMETERS %1       %2", "<br><span class=note>", "</span>"),$value);
+						}
 					}
 					$cntSeccion=1;
 				} else{
@@ -220,7 +229,11 @@ else
 		}
 
 		foreach($fileCurrents as $key => $value){
-			row2(tra("#FILE_CURRENTS %1       %2", "<br><span class=note>", "</span>"),$value);
+			if($key==1){
+				row2(tra("Number of #FILE_CURRENTS %1       %2", "<br><span class=note>", "</span>"),$value);
+			}else{
+				row2(tra("#FILE_CURRENTS %1       %2", "<br><span class=note>", "</span>"),$value);
+			}
 		}
 		}	
 }
