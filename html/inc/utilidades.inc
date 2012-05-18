@@ -39,10 +39,12 @@ return $errorEnDatos;
 function compruebaInt($name,$value)
 {
 	$errorEnDatos=false;
+/*
 echo "<br>";
 var_dump (filter_var($value, FILTER_VALIDATE_INT) );
 var_dump (filter_var($value, FILTER_VALIDATE_BOOLEAN) );
 echo "<br>";
+*/
 	//tratamiento especial para '0' con FILTER_VALIDATE_BOOLEAN
         if(filter_var($value, FILTER_VALIDATE_INT) || !filter_var($value, FILTER_VALIDATE_BOOLEAN))
         {

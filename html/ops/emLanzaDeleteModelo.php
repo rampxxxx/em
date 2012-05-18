@@ -1,6 +1,6 @@
 <?php
-require_once("../inc/db.inc");
-require_once("../inc/util.inc");
+require_once("../inc/db_ops.inc");
+require_once("../inc/util_ops.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/utilidades.inc");
 
@@ -22,7 +22,6 @@ require_once("../inc/utilidades.inc");
 
 
 db_init();
-$user = get_logged_in_user();
 
 foreach($_REQUEST as $name => $value)
 {
@@ -36,7 +35,7 @@ $result_ok = mysql_query("delete from modelo where modelo_id=".$modelo_id);
 
 
 
-page_head(tra("Simulation Model Deletion"));
+admin_page_head(tra("Simulation Model Deletion"));
 echo " <script src=\"http://code.jquery.com/jquery-latest.js\"></script> " ;
 echo "
   <style>
@@ -50,7 +49,6 @@ echo "
 ////////////////////////////////////////////////////
 
 </script>";
-echo form_tokens($user->authenticator);
 start_table();
 if($result_ok)
 {
@@ -73,12 +71,13 @@ echo $nombre;
 echo "</td>";
 echo "</tr>";
 end_table();
+/*
 echo "<label for=\"tra\" id=\"tra\">Traza</label>";
-
 echo "<td>
 <a href=\"emQueryModelo.php\">". "Create/Delete Model" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
-page_tail();
+*/
+admin_page_tail();
 ?>

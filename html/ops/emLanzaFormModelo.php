@@ -4,22 +4,6 @@ require_once("../inc/utilidades.inc");
 require_once("../inc/util_ops.inc");
 require_once("../inc/db_ops.inc");
 
-#############################
-### INI : DATA      SELECT
-#############################
-
-#############################
-### FIN : DATA      SELECT
-#############################
-
-#############################
-### INI : FUNCTIONS SELECT
-#############################
-
-#############################
-### FIN : FUNCTIONS SELECT
-#############################
-
 
 db_init();
 
@@ -89,7 +73,7 @@ echo "<input type=\"hidden\"  name=". $nombre . " value=" . $modelo_id . " />";
 echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
 }
 end_table();
-echo "<label for=\"tra\" id=\"tra\">Traza</label>";
+//echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 
 }
 else
@@ -124,7 +108,7 @@ numeroVariable=1;
 ////////////////////////////////////////////////////
 function addModificableParameter()
 {
-document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+//document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 var elementoSimple = 'x'+numeroParameter;
 var elementoComplejo = 'xs'+numeroParameter;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
@@ -137,7 +121,7 @@ numeroParameter+=1;
 ////////////////////////////////////////////////////
 function delModificableParameter()
 {
-document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+//document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 for(var i = 1; i<= numeroParameter;i++)
 {
 	$('xs'+i).remove();
@@ -151,7 +135,7 @@ numeroParameter=1;
 ////////////////////////////////////////////////////
 function addVariable()
 {
-document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+//document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 var elementoSimple = 'z'+numeroVariable;
 var elementoComplejo = 'zs'+numeroVariable;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
@@ -178,7 +162,7 @@ numeroVariable=1;
 ////////////////////////////////////////////////////
 function addCurrents()
 {
-document.getElementById('tra').innerHTML = 'addRowTable!! '; 
+//document.getElementById('tra').innerHTML = 'addRowTable!! '; 
 var elementoSimple = 'y'+numeroCorriente;
 var elementoComplejo = 'ys'+numeroCorriente;
 var code = '<script>$(\"' + elementoSimple + '\").click(function(){\$(\"' + elementoComplejo + '\").remove();});</scr'+'ipt>' + '<style>' + elementoSimple + ':hover { background:red; } ' + elementoSimple + ' { color:blue; margin:5px; cursor:pointer; } ' + '</style>';
@@ -252,13 +236,15 @@ delCurrents();
 end_table();
 echo "<input type=\"hidden\"  name=modelNumber value=" . $modelNumber . " />";
 echo "<td><input type=\"submit\" value=\"Insert!\"></form></td>";
-echo "<label for=\"tra\" id=\"tra\">Traza</label>";
+//echo "<label for=\"tra\" id=\"tra\">Traza</label>";
 }
 }
+/*
 echo "<td>
 <a href=\"emListTaskForm.php\">". "Check Created Task" ."</a>
 <a href=\"home.php\">". "Back Home " ."</a>
 </td>
 ";
+*/
 admin_page_tail();
 ?>
