@@ -35,6 +35,7 @@ echo "<td width=\"15\">" . "Current Data File" . "</td>\n";
 echo "<td width=\"15\">" . "Work Parameters " . "</td>\n";
 echo "<td width=\"15\">" . "Work Parameters File " . "</td>\n";
 echo "<td width=\"15\">" . "Delete Data Files From SERVER!!" . "</td>\n";
+echo "<td width=\"15\">" . "Cancel Work " . "</td>\n";
 echo "</tr>";
 
 $dataAvailable=0;
@@ -85,6 +86,7 @@ foreach($user_workunits as $user_workunit) {
 				</td>
 				";
 			//END:Details
+			echo "<td></td><td><input type=\"checkbox\" name=\"cancel\" value=\"$user_workunitid\"" . "></td>\n";
 		}
 	}
 }
