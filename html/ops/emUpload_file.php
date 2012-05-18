@@ -1,50 +1,55 @@
 <?php
-require_once("../inc/db.inc");
-require_once("../inc/util.inc");
+require_once("../inc/db_ops.inc");
+require_once("../inc/util_ops.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/utilidades.inc");
 
 
 db_init();
-$user = get_logged_in_user();
+
+admin_page_head(tra("Creation New Application Version"));
+start_table();
 
 
   if ($_FILES["file"]["error"] > 0)
-    {
-    echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
-$file=$_FILES["file"];
-echo " size : " . $file['size'] . " error : " . $file['error'] . "<br>";
-echo " name : " . $file['name']  . "<br>";
-echo " type : " . $file['type']  . "<br>";
-echo " tmp_name : " . $file['tmp_name']  . "<br>";
-    }
+{
+	row1("ERROR uploading file ", '9');
+	echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+	$file=$_FILES["file"];
+	row2("Size", $file['size']);
+	row2("Error", $file['error']);
+	row2("Name", $file['name']);
+	row2("Type", $file['type']);
+	row2("Temporal Name", $file['tmp_name']);
+}
   else
     {
-    echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-    echo "Type: " . $_FILES["file"]["type"] . "<br />";
-    echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-    echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+	row1("SUCCESS uploading and creationg new app version", '9');
+	row2("File Upload", $_FILES["file"]["name"]);
+	row2("File Type", $_FILES["file"]["type"]);
+	row2("File Size (Kb)", ($_FILES["file"]["size"] / 1024));
+	//row2("Temp File ", $_FILES["file"]["tmp_name"] );
 
 $dataDir="../../backupEm/";
 $programName="emProgramName";
       move_uploaded_file($_FILES["file"]["tmp_name"],
       $dataDir . $programName);
-      echo "Stored in: " . $dataDir . $programName . "<br>";
+      //row2("Stored in ", $dataDir . $programName );
       $versiones=get_mysql_lastVersion("select max(version_num) from app_version,platform where platform.id=app_version.platformid");
       foreach($versiones as $version)
       {
 	      $lastVersion=$version["max(version_num)"];
       }
-echo "lastVersion : " . $lastVersion . "<br>";
+//row2("Last Version", $lastVersion);
 $queryMyVersion="select max(version_num) from app_version,platform where app_version.platformid=platform.id and platform.name='". $_REQUEST["platform"] . "'";
       $myVersions=get_mysql_myVersion($queryMyVersion);
       foreach($myVersions as $myVersion)
       {
 	      $myversion=$myVersion["max(version_num)"];
       }
-echo "myversion : " . $myversion . "<br>";
-echo "platform : " . $_REQUEST["platform"] . "<br>";
-echo "query  : " . $queryMyVersion . "<br>";
+//row2("My version Version", $myversion);
+row2("Platform", $_REQUEST["platform"]);
+//row2("Query", $queryMyVersion);
 list ($mayor, $minor) = convierteNumeroVersion($lastVersion);
 if($myversion < $lastVersion )
 { //Complete de current version with new platform.
@@ -58,9 +63,12 @@ else
       }
 }
       $nextVersion=$mayor.".".$minor;
-echo "mayor : " . $mayor . " minor:" . $minor . " nextVersion : " . $nextVersion . "<br>";
+//row2("Mayor", $mayor);
+//row2("Minor", $minor);
+row2("Version", $nextVersion);
       $salida=shell_exec('../../bin/creaNuevaVersion.sh '. $nextVersion . ' ' . $_REQUEST["platform"] );
 
     }
-
+end_table();
+admin_page_tail();
 ?> 
