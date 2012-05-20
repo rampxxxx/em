@@ -3,6 +3,17 @@ require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
 require_once("../inc/cache.inc");
+function HumanSize($Bytes)
+{
+	$Type=array("", "kilo", "mega", "giga", "tera", "peta", "exa", "zetta", "yotta");
+	$Index=0;
+	while($Bytes>=1024)
+	{
+		$Bytes/=1024;
+		$Index++;
+	}
+	return("".$Bytes." ".$Type[$Index]."bytes");
+}
 function get_mysql_user_workunit($query) {
     //$user_workunits = unserialize(get_cached_data(3600, "get_mysql_user_workunit".$query));
     //if ($user_workunits == false) {
@@ -26,7 +37,8 @@ page_head(tra("List Of Task Executed By The User "));
 //echo "<form method=get action=emListBorra.php>";
 echo form_tokens($user->authenticator);
 start_table("align=\"center\"");
-row1("Current finish works ", '9');
+$df_array =HumanSize(disk_free_space("."));
+row1("Current  Works "."[ Disk Free :(".$df_array.") ]", '9');
 
 echo "<tr><td>Work ID</td>";
 echo "<td width=\"15\">" . "Alias          " . "</td>\n";
@@ -66,7 +78,8 @@ foreach($user_workunits as $user_workunit) {
 			</td>
 			";
 		//END:Details
-		echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n";
+		echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n
+			<input type=hidden name=tipo value=delete>";
 		echo " </tr>"
 			;
 	}else{
@@ -86,14 +99,15 @@ foreach($user_workunits as $user_workunit) {
 				</td>
 				";
 			//END:Details
-			echo "<td></td><td><input type=\"checkbox\" name=\"cancel\" value=\"$user_workunitid\"" . "></td>\n";
+			echo "<td></td><td><input type=\"checkbox\" name=\"".$alias."\" value=\"$user_workunitid\"" . "></td>\n
+			<input type=hidden name=tipo value=cancel>";
 		}
 	}
 }
 
-if($dataAvailable==1){
-	echo "<td><input type=\"submit\" value=\"Delete!\"></form></td>";
-}
+//if($dataAvailable==1){
+	echo "<td><input type=\"submit\" value=\"Go!!\"></form></td>";
+//}
 echo "</tr>\n";
 
 

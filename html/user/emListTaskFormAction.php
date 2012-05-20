@@ -16,26 +16,46 @@ $user = get_logged_in_user();
 
 page_head(tra("List Of Deleted Files "));
 start_table();
-row1("Data Deleting.". '9');
-$contador=1;
-foreach($_REQUEST as $key => $value)
+
+$cancelacionTrabajos=false;
+foreach($_REQUEST as $name => $value)
 {
-	if($stcmp($key,"cancel")==0){
-		//lanzar comando de borrado.
+	//echo " name ".$name." value ".$value."\n";
+	if(strcmp($value,"cancel")==0){
+		$cancelacionTrabajos=true;
 	}else{
+		$tablaParametros[$value]=$name;
+	}
+
+}
+
+
+if($cancelacionTrabajos==true){
+	row1("Work Canceling .", '9');
+	foreach($tablaParametros as $work_id => $alias)
+	{
+		$salida=shell_exec('cd ../..;bin/cancel_jobs '.$work_id.' ' .$work_id.' >> /tmp/php.out 2>>/tmp/php.out ');
+		$result=mysql_query("delete from user_workunit where workunit_id = " . $work_id );
+		row2("Canceled Work ".$work_id, $alias);
+	}
+}else{
+	row1("Data Deleting.", '9');
+	$contador=1;
+	foreach($tablaParametros as $work_id => $name)
+	{
 		//echo "key : " . $key . " value : " . $value . "<br/>";
 		$pathBorrado="../../sample_results/";
-		$fichero0=$pathBorrado . $key . "_0.gz";
-		$fichero1=$pathBorrado . $key . "_1.gz";
+		$fichero0=$pathBorrado . $name . "_0.gz";
+		$fichero1=$pathBorrado . $name . "_1.gz";
 		$salida=shell_exec('rm -f ' . $fichero0 . " " . $fichero1);
 
 		row2("Deleted File", $fichero0);
 		row2("Deleted File", $fichero1);
-		$result=mysql_query("delete from user_workunit where workunit_id = " . $value );
-	}
-	$contador+=1;	
-} 
-row2("", " Deleted Database References ");
+		$result=mysql_query("delete from user_workunit where workunit_id = " . $work_id );
+		$contador+=1;	
+	} 
+	row2("", " Deleted Database References ");
+}
 
 
 end_table();
