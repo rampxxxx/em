@@ -46,13 +46,13 @@
     <task>
       <cmd>run_in_ops ./update_uotd.php</cmd>
       <period>1 days</period>
-      <disabled>1</disabled>
+      <disabled>0</disabled>
       <output>update_uotd.out</output>
     </task>
     <task>
       <cmd>run_in_ops ./update_forum_activities.php</cmd>
       <period>1 hour</period>
-      <disabled>1</disabled>
+      <disabled>0</disabled>
       <output>update_forum_activities.out</output>
     </task>
     <task>
@@ -64,7 +64,7 @@
     <task>
       <cmd>run_in_ops ./update_profile_pages.php</cmd>
       <period>24 hours</period>
-      <disabled>1</disabled>
+      <disabled>0</disabled>
       <output>update_profile_pages.out</output>
     </task>
     <task>
