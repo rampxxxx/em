@@ -21,7 +21,7 @@ $cancelacionTrabajos=false;
 foreach($_REQUEST as $name => $value)
 {
 	//echo " name ".$name." value ".$value."\n";
-	if(strcmp($value,"cancel")==0){
+	if(strcmp($name,"tipo")==0){
 		$cancelacionTrabajos=true;
 	}else{
 		$tablaParametros[$value]=$name;
