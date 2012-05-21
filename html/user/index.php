@@ -39,6 +39,28 @@ function show_nav() {
     $no_computing = parse_config($config, "<no_computing>");
     $no_web_account_creation = parse_bool($config, "no_web_account_creation");
     echo "<div class=\"mainnav\">
+
+        <h2 class=headline>Returning participants</h2>
+        <ul>
+    ";
+    if ($no_computing) {
+        echo "
+            <li><a href=\"bossa_apps.php\">Do work</a>
+            <li><a href=\"home.php\">Your account</a> - view stats, modify preferences
+            <li><a href=\"team.php\">Teams</a> - create or join a team
+        ";
+    } else {
+        echo "
+            <li><h3 class=headline > <a href=\"home.php\">Your account</a> - Create/List Tasks , stats, preferences </h3>
+            <li><a href=server_status.php>Server status</a>
+            <li><a href=\"team.php\">Teams</a> - create or join a team
+            <li><a href=\"cert1.php\">Certificate</a>
+            <li><a href=\"apps.php\">".tra("Applications")."</a>
+        ";
+    }
+    echo "
+        </ul>";
+    echo "<div class=\"mainnav\">
         <h2 class=headline>About ".PROJECT."</h2>
     ";
     if ($no_computing) {
@@ -90,8 +112,9 @@ function show_nav() {
         ";
     }
     echo "
-        </ul>
+        </ul>";
 
+    echo "
         <h2 class=headline>Returning participants</h2>
         <ul>
     ";
@@ -111,7 +134,8 @@ function show_nav() {
         ";
     }
     echo "
-        </ul>
+        </ul>";
+	echo"
         <h2 class=headline>".tra("Community")."</h2>
         <ul>
         <li><a href=\"profile_menu.php\">".tra("Profiles")."</a>
