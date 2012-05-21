@@ -113,28 +113,6 @@ function show_nav() {
     }
     echo "
         </ul>";
-
-    echo "
-        <h2 class=headline>Returning participants</h2>
-        <ul>
-    ";
-    if ($no_computing) {
-        echo "
-            <li><a href=\"bossa_apps.php\">Do work</a>
-            <li><a href=\"home.php\">Your account</a> - view stats, modify preferences
-            <li><a href=\"team.php\">Teams</a> - create or join a team
-        ";
-    } else {
-        echo "
-            <li><a href=\"home.php\">Your account</a> - view stats, modify preferences
-            <li><a href=server_status.php>Server status</a>
-            <li><a href=\"team.php\">Teams</a> - create or join a team
-            <li><a href=\"cert1.php\">Certificate</a>
-            <li><a href=\"apps.php\">".tra("Applications")."</a>
-        ";
-    }
-    echo "
-        </ul>";
 	echo"
         <h2 class=headline>".tra("Community")."</h2>
         <ul>
