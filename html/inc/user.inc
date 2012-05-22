@@ -311,7 +311,7 @@ function show_computing_private($user) {
 
 if($user->prefs->special_user[6]==1)
 {
-    row1(tra("Computing Task ;-)"));
+    row1(tra("EM Computing Task "));
 
     row2(tra("New Task!"), "<a href=\"emLanzaForm.php\">".tra("Create ")."</a>");
     row2(tra("Running Tasks"), "<a href=\"emListTaskForm.php\">".tra("List")."</a>");
@@ -479,6 +479,9 @@ function show_profile_link($user) {
 }
 
 function show_account_private($user) {
+    start_table();
+    show_computing_private($user);
+    end_table();
     start_table_noborder();
     echo "<tr><td valign=top>";
     start_table();
@@ -500,7 +503,6 @@ function show_account_private($user) {
     echo "</td><td valign=top>";
     start_table();
     show_community_private($user);
-    show_computing_private($user);
     end_table();
 
     echo "</td></tr></table>";
