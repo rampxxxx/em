@@ -26,11 +26,11 @@ if (!defined('SECURE_URL_BASE')) {
 function compruebaFloat($name,$value)
 {
 	$errorEnDatos=false;
-        if(filter_var($value, FILTER_VALIDATE_FLOAT))
+        if(filter_var($value, FILTER_VALIDATE_FLOAT)  || !filter_var($value, FILTER_VALIDATE_BOOLEAN))
         {
         }else
         {
-                echo "El parametro " . "(" . $name  . ") NO es FLOAT <br>";
+                //echo "El parametro " . "(" . $name  . ") NO es FLOAT <br>";
                 $errorEnDatos=true;
         }
 
@@ -50,7 +50,7 @@ echo "<br>";
         {
         }else
         {
-                echo "El parametro " . "(" . $name  . ") NO es INT <br>";
+                //echo "El parametro " . "(" . $name  . ") NO es INT <br>";
                 $errorEnDatos=true;
         }
 

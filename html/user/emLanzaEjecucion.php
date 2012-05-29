@@ -61,7 +61,9 @@ foreach($_REQUEST as $name => $value)
 	}
 	if(stristr($name, 'parameterInput') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($indiceParametros, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($indiceParametros, $value);
+		}
 		$parametros[$indiceParametros]=$value;
 	}
 	else if(stristr($name, 'burstSelect') != FALSE) 
@@ -70,65 +72,89 @@ foreach($_REQUEST as $name => $value)
 	}
 	else if(stristr($name, 'burstStart') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$burstStart=$value;
 	}
 	else if(stristr($name, 'burstEnd') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$burstEnd=$value;
 	}
 	else if(stristr($name, 'burstGap') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$burstGap=$value;
 	}
 	else if(stristr($name, 'stepStart') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stepStart=$value;
 	}
 	else if(stristr($name, 'stepEnd') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stepEnd=$value;
 	}
 	else if(stristr($name, 'stepIncrement') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stepIncrement=$value;
 	}
 	else if(stristr($name, 'stimStart') != FALSE) 
 	{
 		$indiceStimulus=filter_var($name, FILTER_SANITIZE_NUMBER_INT);
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$tmpStim=new stimulus;
 		$tmpStim->stimStart=$value;
 		$stimulusArray[$indiceStimulus]=$tmpStim;
 	}
 	else if(stristr($name, 'stimBcl') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stimulusArray[$indiceStimulus]->stimBcl=$value;
 	}
 	else if(stristr($name, 'stimDur') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stimulusArray[$indiceStimulus]->stimDur=$value;
 	}
 	else if(stristr($name, 'stimCur') != FALSE) 
 	{
-		$errorEnDatos=compruebaFloat($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaFloat($name, $value);
+		}
 		$stimulusArray[$indiceStimulus]->stimCur=$value;
 	}
 	else if(stristr($name, 'postFirst') != FALSE) 
 	{
-		$errorEnDatos=compruebaInt($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaInt($name, $value);
+		}
 		$postFirst=$value;
 	}
 	else if(stristr($name, 'postFrec') != FALSE) 
 	{
-		$errorEnDatos=compruebaInt($name, $value);
+		if(!$errorEnDatos){
+			$errorEnDatos=compruebaInt($name, $value);
+		}
 		$postFrec=$value;
 	}
 	else if(stristr($name, 'parSave') != FALSE) 
@@ -176,6 +202,8 @@ echo " id:(" . $id . ")"  . " Param : (" . $par . ")<br>";
 echo "count(paraSaveArray) :" . count($paraSaveArray) . "<br>";
 echo "count(curSaveArray) :" . count($curSaveArray) . "<br>";
 */
+
+/*
 if(count($paraSaveArray)==0 && count($curSaveArray)== 0){
 	$errorEnDatos=true;
 	row1("Work Creation ERROR!",'9');
@@ -184,6 +212,7 @@ if(count($paraSaveArray)==0 && count($curSaveArray)== 0){
 	row2("", "Are you sure?");
 	row2("", "Try again.");
 }
+*/
 
 
 if($errorEnDatos==true)

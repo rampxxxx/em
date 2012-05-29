@@ -5,6 +5,7 @@
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/countries.inc");
+require_once("../inc/utilidades.inc");
 
 page_head(tra("Simulation Workunit Creation"));
 
