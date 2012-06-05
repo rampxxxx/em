@@ -78,7 +78,8 @@ foreach($user_workunits as $user_workunit) {
 			</td>
 			";
 		//END:Details
-		echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n
+		//echo "<td><input type=\"checkbox\" name=\"$name\" value=\"$user_workunitid\"" . "></td>\n
+		echo "<td><input type=\"checkbox\" name=\"$user_workunitid\" value=\"$name\"" . "></td>\n
 			<input type=hidden name=tipo value=delete>";
 		echo " </tr>"
 			;
@@ -99,7 +100,8 @@ foreach($user_workunits as $user_workunit) {
 				</td>
 				";
 			//END:Details
-			echo "<td></td><td><input type=\"checkbox\" name=\"".$alias."\" value=\"$user_workunitid\"" . "></td>\n
+			//echo "<td></td><td><input type=\"checkbox\" name=\"".$alias."\" value=\"$user_workunitid\"" . "></td>\n
+			echo "<td></td><td><input type=\"checkbox\" name=\"".$user_workunitid."\" value=\"$alias\"" . "></td>\n
 			<input type=hidden name=tipo value=cancel>";
 		}
 	}

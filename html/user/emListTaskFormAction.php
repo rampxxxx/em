@@ -22,9 +22,13 @@ foreach($_REQUEST as $name => $value)
 {
 	//echo " name ".$name." value ".$value."\n";
 	if(strcmp($name,"tipo")==0){
-		$cancelacionTrabajos=true;
+		if(strcmp($value,"cancel")==0){
+			$cancelacionTrabajos=true;
+		}else{
+			$cancelacionTrabajos=false;
+		}
 	}else{
-		$tablaParametros[$value]=$name;
+		$tablaParametros[$name]=$value;
 	}
 
 }
