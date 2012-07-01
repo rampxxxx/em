@@ -547,7 +547,7 @@ addBurst();
 
 );
 row2(tra("#STEP %1 Defines total simulation time and time increment (time in msec)%2", "<br><span class=note>", "</span>"),
-    "Simulation initiation at<input name=stepStart type=text size=10 >ending at<input name=stepEnd type=text size=10>Increment <input name=stepIncrement type=text size=10>"
+    "Simulation initiation at<input name=stepStart type=text size=10 >increment <input name=stepEnd type=text size=10>ending at <input name=stepIncrement type=text size=10>"
 );
 row2(tra("<stimulus>#STIMULUS</stimulus> %1 Defines the stimulation protocol %2", "<br><span class=note>", "</span>"),
     "<st > </st> 
