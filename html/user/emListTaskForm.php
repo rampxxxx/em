@@ -12,7 +12,7 @@ function HumanSize($Bytes)
 		$Bytes/=1024;
 		$Index++;
 	}
-	return("".$Bytes." ".$Type[$Index]."bytes");
+	return("".round($Bytes,3)." ".$Type[$Index]."bytes");
 }
 function get_mysql_user_workunit($query) {
     //$user_workunits = unserialize(get_cached_data(3600, "get_mysql_user_workunit".$query));
